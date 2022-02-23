@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Horizontal - Mazer Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="main" class="layout-horizontal">
+            <header class="mb-5">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="logo">
+                            <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="header-top-right">
+
+                            <div class="dropdown">
+                                <a href="#" class="user-dropdown d-flex dropend" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <div class="avatar avatar-md2">
+                                        <img src="assets/images/faces/1.jpg" alt="Avatar">
+                                    </div>
+                                    <div class="text">
+                                        <h6 class="user-dropdown-name">Phạm Lệ Quyên</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">Chủ cửa hàng</p>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                                    aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Cập nhật</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="auth-login.html">Thoát</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Burger button responsive -->
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="main-navbar">
+                    <div class="container">
+                        <ul>
+
+
+
+                            <li class="menu-item  ">
+                                <a href="home.html" class='menu-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Tổng quan</span>
+                                </a>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-stack"></i>
+                                    <span>Báo cáo</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input.html">Bán hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input-group.html">Mua hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-select.html">Kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-radio.html">Công nợ</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-checkbox.html">Lợi nhuận</a>
+                                            </li>
+
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item active has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-grid-1x2-fill"></i>
+                                    <span>Cửa hàng</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="products.html">Hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input-group.html">Nhóm hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-select.html">Đơn vị tính</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-radio.html">Lô hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-checkbox.html">In tem mã</a>
+                                            </li>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-file-earmark-medical-fill"></i>
+                                    <span>Nhà cung cấp</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-quill.html">Danh sách</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-ckeditor.html">Nhóm nhà cung cấp</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-summernote.html">Đối tác giao hàng</a>
+                                            </li>
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-table"></i>
+                                    <span>Kho hàng</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable.html">Nhập kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable-jquery.html">Xuất kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable.html">Kiểm kê kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable-jquery.html">Tính giá xuất kho</a>
+                                            </li>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-plus-square-fill"></i>
+                                    <span>Ưu đãi</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="ui-widgets-chatbox.html">Chương trình KM</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="ui-widgets-pricing.html">Thẻ giảm giá</a>
+                                            </li>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Nhân viên</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-bootstrap-icons.html">Nhân viên bán hàng </a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-fontawesome.html">Ca làm việc</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-dripicons.html">Bank</a>
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-life-preserver"></i>
+                                    <span>Hỗ trợ</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+
+            </header>
+
+            <div class="content-wrapper container">
+
+                <div class="page-heading">
+                    <h3>THÊM MỚI HÀNG HÓA</h3>
+                    
+                    <p class="text-subtitle text-muted">Thêm mới hàng hóa trong cửa hàng</p>
+                </div>
+                <div class="page-content">
+                    <section id="multiple-column-form">
+                        <div class="row match-height">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>THÔNG TIN HÀNG HÓA</strong>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <form class="form">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Mã vạch</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Hệ thống tự động tạo mới khi để trống">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Tên hàng hóa</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Tên hàng hóa thường gọi">
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Giá bán</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0"
+                                                                    placeholder="Tên hàng hóa thường gọi">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Giá mua</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0"
+                                                                    placeholder="Tên hàng hóa thường gọi">
+                                                            </div>
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="flexSwitchCheckChecked" checked="">
+                                                                <label class="form-check-label"
+                                                                    for="flexSwitchCheckChecked">Tự chia theo giá
+                                                                    nhập</label>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+    
+    
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Định mức tồn kho</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-inline-block me-2 mb-1">
+                                                            <div class="form-check">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox"
+                                                                        class="form-check-input form-check-primary form-check-glow"
+                                                                        checked="" name="customCheck"
+                                                                        id="customColorCheck1">
+                                                                    <label class="form-check-label"
+                                                                        for="customColorCheck1">Quản lý theo lô/ hạn sử
+                                                                        dụng</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <div class="row">
+                                                                <h6>Cận date trước</h6>
+                                                                <div class="col-md-6 col-6">
+                                                                    <div class="form-group position-relative ">
+                                                                        <input type="number" class="form-control" value="0">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-6">
+                                                                    <fieldset class="form-group">
+                                                                        <select class="form-select" id="basicSelect">
+                                                                            <option>Ngày</option>
+                                                                            <option>Tháng</option>
+                                                                        </select>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Đơn vị tính cơ bản</h6>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-select" id="basicSelect">
+                                                                    <option>Tất cả</option>
+                                                                    <option>Cái</option>
+                                                                    <option>Chiếc</option>
+                                                                    <option>Gói</option>
+                                                                    <option>Lon</option>
+                                                                    <option>Chai</option>
+                                                                    <option>Thùng</option>
+                                                                    <option>Dây</option>
+                                                                    <option>Lốc</option>
+                                                                </select>
+                                                            </fieldset>
+                                                        </div>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckChecked" checked="">
+                                                            <label class="form-check-label"
+                                                                for="flexSwitchCheckChecked">Đang kinh doanh</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="multiple-column-form">
+                        <div class="row match-height">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>ĐƠN VỊ CHUYỂN ĐỔI </strong>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <form class="form">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Đơn vị tính cơ bản</h6>
+                                                            <fieldset class="form-group">
+                                                                <select class="form-select" id="basicSelect">
+                                                                    <option>Cái</option>
+                                                                    <option>Chiếc</option>
+                                                                    <option>Gói</option>
+                                                                    <option>Lon</option>
+                                                                    <option>Chai</option>
+                                                                    <option>Thùng</option>
+                                                                    <option>Dây</option>
+                                                                    <option>Lốc</option>
+                                                                </select>
+                                                            </fieldset>
+                                                        </div>
+    
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Tỉ lệ quy đổi</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0"
+                                                                    placeholder="Tên hàng hóa thường gọi">
+                                                            </div>
+                                                        </div>
+    
+    
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Giá nhập</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-12">
+                                                            <h6>Giá bán</h6>
+                                                            <div class="form-group position-relative">
+                                                                <input type="number" class="form-control" value="0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckChecked" checked="">
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked">Đơn
+                                                                vị nhập hàng mặc định</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                            </div>
+                        </div>
+                        
+                    </section>
+                </div>
+
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="container">
+                        <div class="float-start">
+                            <p>2021 &copy; Nhan111Oi</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Minh Anh Shop - 521/65 Cổ Nhuế 2, Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
+
+    <script src="assets/js/pages/horizontal-layout.js"></script>
+</body>
+
+</html>
