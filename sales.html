@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minh Anh Market</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/sales.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="main" class="layout-horizontal">
+            <header class="mb-5">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="logo">
+                            <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="header-top-right">
+
+                            <div class="dropdown">
+                                <a href="#" class="user-dropdown d-flex dropend" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <div class="avatar avatar-md2">
+                                        <img src="assets/images/faces/1.jpg" alt="Avatar">
+                                    </div>
+                                    <div class="text">
+                                        <h6 class="user-dropdown-name">Đoàn Như Quỳnh</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">Nhân viên bán hàng</p>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                                    aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Cập nhật</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="auth-login.html">Thoát</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Burger button responsive -->
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </header>
+
+            <div class="content-wrapper container-fluid">
+                <div class="page-content">
+                    <section id="multiple-column-form">
+                        <div class="row match-height">
+                            <div class="col-9">
+                                <div class="card full-height">
+                                    <div class="card-content">
+                                        <div class="card-body">
+
+                                            <div class="form">
+                                                <div class="row">
+                                                    <!-- <div class="col-md-12 col-12"> -->
+                                                    <div class="col-md-9 col-12">
+                                                        <div class="form-group position-relative  has-icon-left">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
+                                                                id="productCode">
+                                                            <div class="form-control-icon">
+                                                                <i
+                                                                    class="bi bi-file-earmark-break-fill text-primary"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 col-12">
+                                                        <div class="form-group position-relative">
+                                                            <input type="number" class="form-control" value="1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2 col-12">
+                                                        <fieldset class="form-group position-relative">
+                                                            <select class="form-select" id="basicSelect">
+                                                                <option>Giá bán lẻ</option>
+                                                                <option>Giá bán buôn</option>
+                                                            </select>
+                                                        </fieldset>
+
+                                                    </div>
+                                                    <hr>
+                                                    <!-- </div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless mb-0 table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 45%">TÊN HÀNG</th>
+                                                            <th style="width: 10%">ĐƠN VỊ</th>
+                                                            <th style="width: 10%">SỐ LƯỢNG</th>
+                                                            <th style="width: 15%">ĐƠN GIÁ</th>
+                                                            <th style="width: 15%">THÀNH TIỀN</th>
+                                                            <th style="width: 15%"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-bold-500">HỘP PHỞ BÒ PHỐ CỔ</td>
+                                                            <td>
+                                                                <fieldset class="form-group position-relative">
+                                                                    <select class="form-select" id="basicSelect">
+                                                                        <option>Hộp</option>
+                                                                        <option>Thùng</option>
+                                                                    </select>
+                                                                </fieldset>
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                <div class="form-group position-relative">
+                                                                    <input type="number" class="form-control" value="2">
+                                                                </div>
+                                                            </td>
+                                                            <td>9.000</td>
+                                                            <td class="text-primary text-bold-500">
+                                                                <strong>18.000</strong>
+                                                            </td>
+                                                            <td><a href="#"><i
+                                                                        class="badge-circle badge-circle-light-secondary font-medium-1"
+                                                                        data-feather="mail"></i></a></td>
+                                                            <td><a href="#"><i class="bi bi-trash text-danger"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-bold-500">MÌ GÓI HẢO HẢO CHUA CAY</td>
+                                                            <td>
+                                                                <fieldset class="form-group position-relative">
+                                                                    <select class="form-select" id="basicSelect">
+                                                                        <option>Hộp</option>
+                                                                        <option>Thùng</option>
+                                                                    </select>
+                                                                </fieldset>
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                <div class="form-group position-relative">
+                                                                    <input type="number" class="form-control" value="6">
+                                                                </div>
+                                                            </td>
+                                                            <td>5.000</td>
+                                                            <td class="text-primary text-bold-500">
+                                                                <strong>30.000</strong>
+                                                            </td>
+                                                            <td><a href="#"><i
+                                                                        class="badge-circle badge-circle-light-secondary font-medium-1"
+                                                                        data-feather="mail"></i></a></td>
+                                                            <td><a href="#"><i class="bi bi-trash text-danger"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-bold-500">THĂNG LONG VỎ CỨNG</td>
+                                                            <td>
+                                                                <fieldset class="form-group position-relative">
+                                                                    <select class="form-select" id="basicSelect">
+                                                                        <option>Bao</option>
+                                                                        <option>Cây</option>
+                                                                    </select>
+                                                                </fieldset>
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                <div class="form-group position-relative">
+                                                                    <input type="number" class="form-control" value="1">
+                                                                </div>
+                                                            </td>
+                                                            <td>10.000</td>
+                                                            <td class="text-primary text-bold-500">
+                                                                <strong>10.000</strong>
+                                                            </td>
+                                                            <td><a href="#"><i
+                                                                        class="badge-circle badge-circle-light-secondary font-medium-1"
+                                                                        data-feather="mail"></i></a></td>
+                                                            <td><a href="#"><i class="bi bi-trash text-danger"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-bold-500">KEM ĐÁNH RĂNG PS</td>
+                                                            <td>
+                                                                <fieldset class="form-group position-relative">
+                                                                    <select class="form-select" id="basicSelect">
+                                                                        <option>Tuýp</option>
+                                                                        <option>Thùng</option>
+                                                                    </select>
+                                                                </fieldset>
+                                                            </td>
+                                                            <td class="text-bold-500">
+                                                                <div class="form-group position-relative">
+                                                                    <input type="number" class="form-control" value="1">
+                                                                </div>
+                                                            </td>
+                                                            <td>23.000</td>
+                                                            <td class="text-primary text-bold-500">
+                                                                <strong>23.000</strong>
+                                                            </td>
+                                                            <td><a href="#"><i
+                                                                        class="badge-circle badge-circle-light-secondary font-medium-1"
+                                                                        data-feather="mail"></i></a></td>
+                                                            <td><a href="#"><i class="bi bi-trash text-danger"></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 ">
+                                <div class="card">
+                                    <div class="card-content  full-height">
+                                        <div class="card-body">
+                                            <i class="text-primary bi bi-calendar-date"></i> 25/02/2022 - 00:14
+                                            <br>
+                                            <br>
+                                            <div class="form">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-12">
+                                                        <div
+                                                            class="form-group position-relative has-icon-left input-group">
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Để trống nếu khách lẻ">
+                                                            <div class="form-control-icon">
+                                                                <i class="bi bi-person-fill text-primary"></i>
+                                                            </div>
+                                                            <button class="btn btn-primary" type="button"
+                                                                id="button-addon2">Thêm</button>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-12">
+                                                            <h6 class="badge bg-success">Tổng tiền</h6>
+
+                                                        </div>
+                                                        <div class="col-md-8 col-12">
+                                                            <div class="col-12 d-flex justify-content-end">
+                                                                <h2><strong>81.000 đ</strong></h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <h6 for="floatingTextarea">Ghi chú đơn hàng</h6>
+                                                    <textarea class="form-control half-height" placeholder="ghi chú về đơn hàng"
+                                                        id="floatingTextarea"></textarea>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid" style="position: absolute; bottom: 10px;">
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-check">
+                                                    <div class="checkbox">
+                                                        <input type="checkbox" id="checkbox1" class="form-check-input"
+                                                            checked="">
+                                                        <label for="checkbox1">In hóa đơn</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="col-md-12 col-12">
+                                                <button class="btn btn-success btn-lg btn-block">(F10) Thu tiền</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="container">
+                        <div class="float-start">
+                            <p>2021 &copy; Nhan111Oi</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Minh Anh Shop - 521/65 Cổ Nhuế 2, Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendors/jquery/jquery.min.js"></script>
+    <script src="assets/js/pages/horizontal-layout.js"></script>
+    
+    <script src="assets/js/mazer.js"></script> -->
+
+    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/pages/horizontal-layout.js"></script>
+
+    <script src="assets/vendors/jquery/jquery.min.js"></script>
+    <script src="assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+    <script src="assets/vendors/fontawesome/all.min.js"></script>
+
+    <script src="assets/js/mazer.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#productCode').focus();
+        });
+
+        $('#productCode').on("keypress", function (e) {
+            let qrCode = $('#productCode').val();
+            if (qrCode !== "") {
+                if (e.keyCode == 13) {
+                    alert(qrCode);
+                    return false; // prevent the button click from happening
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>
