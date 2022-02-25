@@ -4,12 +4,14 @@ using System.Text;
 
 namespace Mas.Core.Entities
 {
-    public class Unit
+    public class ProductGroup : BaseEntity
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
+        public string Code { get; set; }
+
         public string Description { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
