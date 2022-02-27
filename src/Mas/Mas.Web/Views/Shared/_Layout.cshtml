@@ -1,48 +1,286 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mas.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mas.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Mas.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minh Anh Market</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+    <div id="app">
+        <div id="main" class="layout-horizontal">
+            <header class="mb-5">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="logo">
+                            <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="header-top-right">
+
+                            <div class="dropdown">
+                                <a href="#" class="user-dropdown d-flex dropend" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <div class="avatar avatar-md2">
+                                        <img src="/assets/images/faces/1.jpg" alt="Avatar">
+                                    </div>
+                                    <div class="text">
+                                        <h6 class="user-dropdown-name">Phạm Lệ Quyên</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">Chủ cửa hàng</p>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                                    aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Cập nhật</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="auth-login.html">Thoát</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Burger button responsive -->
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="main-navbar">
+                    <div class="container">
+                        <ul>
+
+
+
+                            <li class="menu-item  ">
+                                <a href="home.html" class='menu-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Tổng quan</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="sales.html" class='menu-link'>
+                                    <i class="bi bi-plus-square-fill"></i>
+                                    <span>Bán hàng</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-stack"></i>
+                                    <span>Báo cáo</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input.html">Bán hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input-group.html">Mua hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-select.html">Kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-radio.html">Công nợ</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-checkbox.html">Lợi nhuận</a>
+                                            </li>
+
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item active has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-grid-1x2-fill"></i>
+                                    <span>Cửa hàng</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="products.html">Hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-input-group.html">Nhóm hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-select.html">Đơn vị tính</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-radio.html">Lô hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-element-checkbox.html">In tem mã</a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-file-earmark-medical-fill"></i>
+                                    <span>Nhà cung cấp</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-quill.html">Danh sách</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-ckeditor.html">Nhóm nhà cung cấp</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="form-editor-summernote.html">Đối tác giao hàng</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-table"></i>
+                                    <span>Kho hàng</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable.html">Nhập kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable-jquery.html">Xuất kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable.html">Kiểm kê kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="table-datatable-jquery.html">Tính giá xuất kho</a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Nhân viên</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-bootstrap-icons.html">Nhân viên bán hàng </a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-fontawesome.html">Ca làm việc</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="ui-icons-dripicons.html">Bank</a>
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-life-preserver"></i>
+                                    <span>Hỗ trợ</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+
+            </header>
+
+            <div class="content-wrapper container">
+
+                @RenderBody()
+
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="container">
+                        <div class="float-start">
+                            <p>2021 &copy; Nhan111Oi</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Minh Anh Shop - 521/65 Cổ Nhuế 2, Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
+    <script src="/assets/js/pages/dashboard.js"></script>
+
+    <script src="/assets/js/pages/horizontal-layout.js"></script>
+    <script>
+
+    </script>
 </body>
+
 </html>

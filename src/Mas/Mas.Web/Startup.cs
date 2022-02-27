@@ -1,4 +1,7 @@
+using Mas.Application;
+using Mas.Application.Options;
 using Mas.Core.AppDbContexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +32,15 @@ namespace Mas.Web
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddScoped<AppDbContext>();
             #endregion
+
+            services.Configure<AppOptions>(Configuration.GetSection("AppOptions"));
+
+            services.AddDependencies();
             services.AddControllersWithViews();
+
+            #region Authenticate
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookie => cookie.LoginPath = "/Home/Index");
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +61,7 @@ namespace Mas.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

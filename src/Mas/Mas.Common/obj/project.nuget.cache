@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "GziA6deJRP1aazLIRbDM83m8w4qplCR/Y0NrmknM/kyXMVINBi/p9H8jsxvoqVmZorejBbnQzX0IxmyZv62ioA==",
+  "dgSpecHash": "UzwgGfM9mJ04d4Dl6OEDRPOPWocRLr0nLaSA05ZmwuO4MdD9egrzhbA2hGRHcw5ZqS6TiXyp5jwLW0milbBVkw==",
   "success": true,
   "projectFilePath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.22\\microsoft.aspnetcore.cryptography.internal.3.1.22.nupkg.sha512",
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.22\\microsoft.aspnetcore.cryptography.keyderivation.3.1.22.nupkg.sha512",
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.22\\microsoft.extensions.configuration.3.1.22.nupkg.sha512",
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\3.1.22\\microsoft.extensions.configuration.abstractions.3.1.22.nupkg.sha512",
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.22\\microsoft.extensions.primitives.3.1.22.nupkg.sha512"
+  ],
   "logs": []
 }

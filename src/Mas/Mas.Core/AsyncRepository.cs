@@ -83,24 +83,71 @@ namespace Mas.Core
             return await query.FirstOrDefaultAsync();
         }
 
-        public virtual Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null)
+        public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null)
         {
             var query = GetQueryable(includes).Where(where);
+            if(includes != null)
+            {
+                foreach(var include in includes)
+                {
+                    query.Include(include);
+                }
+            }
+            return await query.FirstOrDefaultAsync();
         }
 
-        public virtual Task<PagedResult<TEntity>> FindPagedAsync(Expression<Func<TEntity, bool>> where = null, Expression<Func<TEntity, TEntity>> selector = null, IEnumerable<string> includes = null, int pageIndex = 1, int pageSize = 10)
+        public virtual async Task<PagedResult<TEntity>> FindPagedAsync(Expression<Func<TEntity, bool>> where = null, Expression<Func<TEntity, TEntity>> selector = null, IEnumerable<string> includes = null, int pageIndex = 1, int pageSize = 10)
         {
-            throw new NotImplementedException();
+            var query = GetQueryable();
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+
+            query = query.AsNoTracking();
+            pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+            pageSize = pageSize <= 0 ? 10 : pageSize;
+            int skip = pageIndex * pageSize;
+            var totalCount = await query.CountAsync();
+            query = query.Skip(skip).Take(pageSize);
+
+            return new PagedResult<TEntity>()
+            {
+                Items = await query.Select(selector).ToListAsync(),
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
         }
 
-        public virtual Task<PagedResult<TEntity>> FindPagedAsync(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> where = null, int pageIndex = 1, int pageSize = 10)
+        public virtual async Task<PagedResult<TEntity>> FindPagedAsync(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> where = null, int pageIndex = 1, int pageSize = 10)
         {
-            throw new NotImplementedException();
+            if(where != null)
+            {
+                query = query.Where(where);
+            }
+
+            query = query.AsNoTracking();
+            pageIndex = pageIndex <= 0 ? 1 : pageIndex;
+            pageSize = pageSize <= 0 ? 10 : pageSize;
+            int skip = pageIndex * pageSize;
+            var totalCount = await query.CountAsync();
+            query = query.Skip(skip).Take(pageSize);
+
+            return new PagedResult<TEntity>()
+            {
+                Items = await query.ToListAsync(),
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
         }
 
-        public virtual Task UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).Property(c => c.CreatedAt).IsModified = false;
+            await _context.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> GetQueryable(IEnumerable<string> includes = null)

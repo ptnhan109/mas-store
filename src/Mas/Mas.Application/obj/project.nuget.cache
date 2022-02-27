@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "qa6ARA20QB6QpP+mvSz3TrxzvA48O45OO8+8BXi6UPwnYQ5HKPMmcKvGVSqffordkBBvChXYmzTfvg8L7Bs5wQ==",
+  "dgSpecHash": "+Hq1ypV1IYgo5by46Z+dQfuCeDHCQHe7tLhEvi3pag8U2WDTqyyLaithF3uX9eSpsinvZoW9WHaH7WgjObCNdw==",
   "success": true,
   "projectFilePath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.22\\microsoft.aspnetcore.cryptography.internal.3.1.22.nupkg.sha512",
+    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.22\\microsoft.aspnetcore.cryptography.keyderivation.3.1.22.nupkg.sha512",
     "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",
     "C:\\Users\\Nhan111Oi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
