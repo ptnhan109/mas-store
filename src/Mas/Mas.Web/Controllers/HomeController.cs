@@ -62,15 +62,12 @@ namespace Mas.Web.Controllers
             return RedirectToAction("Dashboard","Dashboard");
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
-            return View();
-        }
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return RedirectToAction("Index", "Home");
         }
     }
 }
