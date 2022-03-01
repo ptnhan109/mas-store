@@ -1,6 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+
+<!DOCTYPE html>
 <html lang="en">
 
+@using Mas.Application.UserServices.Dtos;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,8 +20,9 @@
     <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/app.css">
     <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
-</head>
 
+    <script src="/assets/vendors/jquery/jquery.min.js"></script>
+</head>
 <body>
     <div id="app">
         <div id="main" class="layout-horizontal">
@@ -36,8 +41,8 @@
                                         <img src="/assets/images/faces/1.jpg" alt="Avatar">
                                     </div>
                                     <div class="text">
-                                        <h6 class="user-dropdown-name">Phạm Lệ Quyên</h6>
-                                        <p class="user-dropdown-status text-sm text-muted">Chủ cửa hàng</p>
+                                        <h6 class="user-dropdown-name">@Context.Session.GetString("Name")</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">@Context.Session.GetString("Role")</p>
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg"
@@ -252,9 +257,7 @@
             </header>
 
             <div class="content-wrapper container">
-
                 @RenderBody()
-
             </div>
 
             <footer>
@@ -273,10 +276,6 @@
     </div>
     <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
-
-    <script src="/assets/vendors/apexcharts/apexcharts.js"></script>
-    <script src="/assets/js/pages/dashboard.js"></script>
-
     <script src="/assets/js/pages/horizontal-layout.js"></script>
     <script>
 

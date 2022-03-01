@@ -33,6 +33,8 @@ namespace Mas.Core
 
         Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null);
 
+        Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null, Expression<Func<TEntity, TEntity>> selector = null);
+
         Task<PagedResult<TEntity>> FindPagedAsync(Expression<Func<TEntity, bool>> where = null, Expression<Func<TEntity, TEntity>> selector = null, IEnumerable<string> includes = null, int pageIndex = 1, int pageSize = 10);
 
         Task<PagedResult<TEntity>> FindPagedAsync(IQueryable<TEntity> query,Expression<Func<TEntity,bool>> where = null, int pageIndex = 1, int pageSize = 10);

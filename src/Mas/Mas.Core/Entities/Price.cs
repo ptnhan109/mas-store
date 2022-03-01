@@ -9,17 +9,11 @@ namespace Mas.Core.Entities
     {
         public int ParentUnitId { get; set; }
 
-        public int ChildUnitId { get; set; }
-
         public int TransferQuantity { get; set; }
 
         public double ParentImportPrice { get; set; }
-        
-        public double ChildImportPrice { get; set; }
 
         public double ParentSellPrice { get; set; }
-
-        public double ChildSellPrice { get; set; }
 
         public Guid ProductId { get; set; }
 

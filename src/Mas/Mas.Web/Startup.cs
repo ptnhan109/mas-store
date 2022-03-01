@@ -36,10 +36,22 @@ namespace Mas.Web
             services.Configure<AppOptions>(Configuration.GetSection("AppOptions"));
 
             services.AddDependencies();
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromHours(8);
+            });
+
             services.AddControllersWithViews();
 
             #region Authenticate
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookie => cookie.LoginPath = "/Home/Index");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Home/Index";
+                options.Cookie.Name = "mas.cookie";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(8);
+                options.SlidingExpiration = true;
+            });
             #endregion
         }
 
@@ -58,7 +70,7 @@ namespace Mas.Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

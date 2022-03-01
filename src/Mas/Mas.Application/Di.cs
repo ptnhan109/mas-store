@@ -1,4 +1,6 @@
-﻿using Mas.Application.UserServices;
+﻿using Mas.Application.CategoryServices;
+using Mas.Application.ProductServices;
+using Mas.Application.UserServices;
 using Mas.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,6 +15,8 @@ namespace Mas.Application
         {
             service.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<ICategoryService,CategoryService>();
+            service.AddScoped<IProductService, ProductService>();
         }
     }
 }

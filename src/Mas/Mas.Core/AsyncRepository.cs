@@ -52,7 +52,7 @@ namespace Mas.Core
         public virtual async Task DeleteRangeAsync(IEnumerable<Guid> ids)
         {
             var entities = _context.Set<TEntity>().Where(c => ids.Contains(c.Id));
-            if(entities.Count() > 0)
+            if (entities.Count() > 0)
             {
                 _context.Set<TEntity>().RemoveRange(entities);
                 await _context.SaveChangesAsync();
@@ -68,9 +68,24 @@ namespace Mas.Core
         public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null)
         {
             var query = GetQueryable(includes);
-            if(where != null)
+            if (where != null)
             {
                 query = query.Where(where);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null, Expression<Func<TEntity, TEntity>> selector = null)
+        {
+            var query = GetQueryable(includes);
+            if (where != null)
+            {
+                query = query.Where(where);
+            }
+            if (selector != null)
+            {
+                return await query.Select(selector).ToListAsync();
             }
 
             return await query.ToListAsync();
@@ -86,9 +101,9 @@ namespace Mas.Core
         public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null)
         {
             var query = GetQueryable(includes).Where(where);
-            if(includes != null)
+            if (includes != null)
             {
-                foreach(var include in includes)
+                foreach (var include in includes)
                 {
                     query.Include(include);
                 }
@@ -122,7 +137,7 @@ namespace Mas.Core
 
         public virtual async Task<PagedResult<TEntity>> FindPagedAsync(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> where = null, int pageIndex = 1, int pageSize = 10)
         {
-            if(where != null)
+            if (where != null)
             {
                 query = query.Where(where);
             }
@@ -155,7 +170,7 @@ namespace Mas.Core
             var queryable = _context.Set<TEntity>();
             if (includes != null)
             {
-                foreach(var include in includes)
+                foreach (var include in includes)
                 {
                     queryable.Include(include);
                 }
@@ -163,5 +178,7 @@ namespace Mas.Core
 
             return queryable;
         }
+
+
     }
 }

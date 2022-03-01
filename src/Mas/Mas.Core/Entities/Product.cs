@@ -13,13 +13,21 @@ namespace Mas.Core.Entities
 
         public bool IsActive { get; set; }
 
-        public Guid PriceId { get; set; }
-
-        [ForeignKey(nameof(PriceId))]
         public virtual ICollection<Price> Price { get; set; }
 
         public double DefaultSellPrice { get; set; }
 
         public double DefaultImportPrice { get; set; }
+
+        public Guid CategoryId { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public virtual Category Category { get; set; }
+
+        public int Inventory { get; set; }
+
+        public int? CloseToDate { get; set; }
+
+        public int UnitId { get; set; }
     }
 }

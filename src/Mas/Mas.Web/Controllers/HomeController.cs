@@ -1,9 +1,11 @@
 ﻿using Mas.Application.UserServices;
 using Mas.Application.UserServices.Dtos;
 using Mas.Common;
+using Mas.Core.Contants;
 using Mas.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -32,16 +34,18 @@ namespace Mas.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var model = new LoginModel();
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(LoginModel request)
         {
-            var user = await _service.Authenticate(request);
+             var user = await _service.Authenticate(request);
             if (user == null)
             {
-                return View();
+                request.Message = "Sai tên đăng nhập hoặc mật khẩu.";
+                return View(request);
             }
 
             var claims = new List<Claim>() {
@@ -58,6 +62,9 @@ namespace Mas.Web.Controllers
             {
                 IsPersistent = request.IsRemember
             });
+            HttpContext.Session.SetString(ContantSessions.Name, user.Name);
+            HttpContext.Session.SetString(ContantSessions.Role, ContantRole.GetRole(user.Role));
+
 
             return RedirectToAction("Dashboard","Dashboard");
         }

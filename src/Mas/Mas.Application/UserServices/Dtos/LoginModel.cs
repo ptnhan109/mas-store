@@ -11,5 +11,7 @@ namespace Mas.Application.UserServices.Dtos
         public string Password { get; set; }
 
         public bool IsRemember { get; set; }
+
+        public string Message { get; set; } = string.Empty;
     }
 }
