@@ -14,294 +14,224 @@
     <p class="text-subtitle text-muted">Thêm mới hàng hóa trong cửa hàng</p>
 </div>
 <div class="page-content">
-    <section id="multiple-column-form">
-        <div class="row match-height">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>THÔNG TIN HÀNG HÓA</strong>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form class="form">
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <div class="col-md-12 col-12">
-                                            <h6>Mã vạch</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="text" class="form-control"
-                                                       placeholder="Hệ thống tự động tạo mới khi để trống" name="BarCode" id="txtBarCode">
+    <form asp-action="AddProduct" asp-controller="Admin" id="addProductForm">
+        <section id="multiple-column-form">
+            <div class="row match-height">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>THÔNG TIN HÀNG HÓA</strong>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="form">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="col-md-12 col-12">
+                                                <h6>Mã vạch</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Hệ thống tự động tạo mới khi để trống" name="BarCode" id="txtBarCode">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 col-12">
-                                            <h6>Tên hàng hóa</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="text" class="form-control"
-                                                       placeholder="Tên hàng hóa thường gọi" name="Name" id="txtName">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-12">
-                                            <h6>Giá bán</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0" name="DefaultSellPrice" id="txtDefaultSellPrice">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-12">
-                                            <h6>Giá mua</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0" name="DefaultImportPrice" id="txtDefaultImportPrice">
+                                            <div class="col-md-12 col-12">
+                                                <h6>Tên hàng hóa</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Tên hàng hóa thường gọi" name="Name" id="txtName">
+                                                </div>
                                             </div>
 
+                                            <div class="col-md-12 col-12">
+                                                <h6>Giá bán</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="DefaultSellPrice" id="txtDefaultSellPrice">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <h6>Giá nhập</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="DefaultImportPrice" id="txtDefaultImportPrice">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="IsSplitByImportPrice">
+                                                            <label class="form-check-label"
+                                                                   for="IsSplitByImportPrice">
+                                                                Tự chia theo giá
+                                                                nhập
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="IsActive" name="IsActive">
+                                                            <label class="form-check-label"
+                                                                   for="IsActive">Đang kinh doanh</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+
+
                                         </div>
-                                        <div class="col-md-12 col-12">
-                                            <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox"
-                                                               id="IsSplitByImportPrice">
+                                        <div class="col-md-6 col-12">
+                                            <div class="col-md-12 col-12">
+                                                <h6>Định mức tồn kho</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="Inventory" id="txtInventory">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <h6>Danh mục hàng</h6>
+                                                <fieldset class="form-group">
+                                                    <select class="form-select" id="drpCategory" name="CategoryId">
+                                                        <option value="" disabled selected>Tất cả</option>
+                                                    </select>
+                                                </fieldset>
+                                            </div>
+
+
+                                            <div class="col-md-12 col-12">
+                                                <h6>Đơn vị tính cơ bản</h6>
+                                                <fieldset class="form-group">
+                                                    <select class="form-select" id="dtpUnit" name="UnitId">
+
+                                                        <option value="">Tất cả</option>
+                                                        @foreach (var unit in units)
+                                                        {
+                                                            <option value='@unit.Id'>@unit.Name</option>
+                                                        }
+                                                    </select>
+                                                </fieldset>
+                                            </div>
+                                            <br />
+                                            <div class="d-inline-block me-2 mb-1" id="IsConsignment">
+                                                <div class="form-check">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                               class="form-check-input form-check-success form-check-glow"
+                                                               checked="" name="customCheck">
                                                         <label class="form-check-label"
-                                                               for="IsSplitByImportPrice">
-                                                            Tự chia theo giá
-                                                            nhập
+                                                               for="customColorCheck1">
+                                                            Quản lý theo lô/ hạn sử
+                                                            dụng
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox"
-                                                               id="IsActive" name="IsActive">
-                                                        <label class="form-check-label"
-                                                               for="IsActive">Đang kinh doanh</label>
+                                            </div>
+                                            <div class="col-md-12 col-12" id="consignment">
+                                                <div class="row">
+                                                    <h6>Cận date trước</h6>
+                                                    <div class="col-md-6 col-6">
+                                                        <div class="form-group position-relative ">
+                                                            <input type="number" class="form-control" value="0" name="CloseToDate" id="txtCloseToDate">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-6">
+                                                        <fieldset class="form-group">
+                                                            <select class="form-select" id="basicSelect">
+                                                                <option>Ngày</option>
+                                                                <option>Tháng</option>
+                                                            </select>
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <br>
-
-
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="col-md-12 col-12">
-                                            <h6>Định mức tồn kho</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0" name="Inventory" id="txtInventory">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-12">
-                                            <h6>Danh mục hàng</h6>
-                                            <fieldset class="form-group">
-                                                <select class="form-select" id="drpCategory" name="CategoryId">
-                                                    <option value="" disabled selected>Tất cả</option>
-                                                </select>
-                                            </fieldset>
-                                        </div>
-
-
-                                        <div class="col-md-12 col-12">
-                                            <h6>Đơn vị tính cơ bản</h6>
-                                            <fieldset class="form-group">
-                                                <select class="form-select" id="dtpUnit" name="UnitId">
-
-                                                    <option value="">Tất cả</option>
-                                                    @foreach (var unit in units)
-                                                    {
-                                                        <option value='@unit.Id'>@unit.Name</option>
-                                                    }
-                                                </select>
-                                            </fieldset>
-                                        </div>
-                                        <br />
-                                        <div class="d-inline-block me-2 mb-1" id="IsConsignment">
-                                            <div class="form-check">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox"
-                                                           class="form-check-input form-check-success form-check-glow"
-                                                           checked="" name="customCheck">
-                                                    <label class="form-check-label"
-                                                           for="customColorCheck1">
-                                                        Quản lý theo lô/ hạn sử
-                                                        dụng
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-12" id="consignment">
-                                            <div class="row">
-                                                <h6>Cận date trước</h6>
-                                                <div class="col-md-6 col-6">
-                                                    <div class="form-group position-relative ">
-                                                        <input type="number" class="form-control" value="0" name="CloseToDate" id="txtCloseToDate">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-6">
-                                                    <fieldset class="form-group">
-                                                        <select class="form-select" id="basicSelect">
-                                                            <option>Ngày</option>
-                                                            <option>Tháng</option>
-                                                        </select>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="multiple-column-form">
-        <div class="row match-height">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <strong>ĐƠN VỊ CHUYỂN ĐỔI </strong>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form class="form" asp-action="AddProduct" method="POST" id="addProductForm">
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <div class="col-md-12 col-12">
-                                            <h6>Đơn vị tính cơ bản</h6>
-                                            <fieldset class="form-group">
-                                                <select class="form-select" name="ParentUnitId" id="txtParentUnitId">
-                                                    <option value="" disabled selected>Tất cả</option>
-                                                    @foreach (var unit in units)
-                                                    {
-                                                        <option value='@unit.Id'>@unit.Name</option>
-                                                    }
-                                                </select>
-                                            </fieldset>
-                                        </div>
-
-                                        <div class="col-md-12 col-12">
-                                            <h6>Tỉ lệ quy đổi</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0" name="TransferQuantity" id="txtTransferQuantity">
+        </section>
+        <section id="multiple-column-form">
+            <div class="row match-height">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>ĐƠN VỊ CHUYỂN ĐỔI </strong>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="form">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="col-md-12 col-12">
+                                                <h6>Đơn vị tính cơ bản</h6>
+                                                <fieldset class="form-group">
+                                                    <select class="form-select" name="ParentUnitId" id="txtParentUnitId">
+                                                        <option value="" disabled selected>Tất cả</option>
+                                                        @foreach (var unit in units)
+                                                        {
+                                                            <option value='@unit.Id'>@unit.Name</option>
+                                                        }
+                                                    </select>
+                                                </fieldset>
                                             </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <h6>Tỉ lệ quy đổi</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="TransferQuantity" id="txtTransferQuantity">
+                                                </div>
+                                            </div>
+
+
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="col-md-12 col-12">
+                                                <h6>Giá nhập</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="ParentImportPrice">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-12">
+                                                <h6>Giá bán</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="ParentSellPrice">
+                                                </div>
+                                            </div>
 
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox"
+                                                       id="flexSwitchCheckChecked" checked="">
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                    Đơn vị nhập hàng mặc định
+                                                </label>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="col-md-12 col-12">
-                                            <h6>Giá nhập</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-12">
-                                            <h6>Giá bán</h6>
-                                            <div class="form-group position-relative">
-                                                <input type="number" class="form-control" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="flexSwitchCheckChecked" checked="">
-                                            <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                Đơn vị nhập hàng mặc định
-                                            </label>
-                                        </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <a><i class="bi bi-plus"></i> Thêm đơn vị</a>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary me-1 mb-1" id="addProduct">Thêm mới mặt hàng</button>
+                    <button type="button" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                </div>
             </div>
-            <div class="col-12 d-flex justify-content-end">
-                <button type="button" class="btn btn-primary me-1 mb-1" id="addProduct">Thêm mới mặt hàng</button>
-                <button type="button" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-            </div>
-        </div>
+        </section>
+    </form>
 
-    </section>
 </div>
 <script>
-    $(document).ready(function(){
-        $("#txtBarCode").focus();
-        GetCategories();
-
-        $('#txtBarCode').keypress(function (e) {
-            if (e.which == '13') {
-                $("#txtName").focus();
-            }
-        });
-
-        $("#txtBarCode, #txtName, #dtpUnit, #drpCategory, #TransferQuantity").change(function(){
-            $(this).removeClass("is-invalid");
-        });
-        
-        $("#addProduct").click(function(){
-            let isValid = ValidateInput();
-            if(isValid == false){
-                return;
-            }
-            $("#addProductForm").submit();
-        });
-    });
-
-    function GetCategories(){
-        let url = '@Url.Action("Categories","Admin")';
-        $.ajax({
-            url : url,
-            success: function(categories){
-                console.log(categories);
-                let html = "";
-                categories.forEach((category) => {
-                    html += '<option value="';
-                    html += category.id;
-                    html += '">';
-                    html += category.name;
-                    html += '</option>';
-                });
-                $("#drpCategory").append(html);
-            }
-        });
-    }
-
-    function ValidateInput(){
-        let barCode = $("#txtBarCode").val();
-        if(barCode == ''){
-            $("#txtBarCode").addClass("is-invalid");
-            return false;
-        }
-        
-        let name = $("#txtName").val();
-        if(name == ''){
-            $("#txtName").addClass("is-invalid");
-            return false;
-        }
-        let unitId = $("#dtpUnit").val();
-        if(unitId == ''){
-            $("#dtpUnit").addClass("is-invalid");
-            return false;
-        }
-
-        let category = $("#drpCategory").val();
-
-        if(category == ''){
-            $("#drpCategory").addClass("is-invalid");
-            return false;
-        }
-
-        let parentUnit = $("#txtParentUnitId").val();
-        if(parentUnit != ''){
-            let tranfer = $("#TransferQuantity").val();
-            if(tranfer < 1){
-                return false;
-            }
-        }
-
-    }
-
+    var categoryUrl = '@Url.Action("Categories","Admin")';
 </script>
-
 <script src="~/assets/js/components/add-product.js"></script>
