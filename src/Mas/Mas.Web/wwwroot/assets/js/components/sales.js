@@ -11,11 +11,9 @@
             alert("Hãy nhập từ khóa");
         }
     });
-
-
-
     
 });
+var products = [];
 const currencyFractionDigits = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: 'VND',
@@ -51,6 +49,7 @@ function AddProductToCart(barcode) {
             });
             if (!isExsit) {
                 AppendProductHtml(data);
+                products.push(data);
             }
             $("#productCode").val("");
         }
@@ -71,11 +70,15 @@ function AppendProductHtml(data) {
         if (element.isDefault) {
             sellPrice = element.sellPrice;
             quantity = element.quantity;
-            html += '<option selected>';
+            html += '<option selected value="';
+            html += element.barCode;
+            html +='">';
             html += element.unit.name;
             html += '</option>';
         } else {
-            html += '<option>';
+            html += '<option value="';
+            html += element.barCode;
+            html +='">';
             html += element.unit.name;
             html += '</option>';
         }
@@ -101,7 +104,28 @@ function AppendProductHtml(data) {
         let price = $(this).closest("tr").find("td:nth-child(4)").attr("product-price");
         let quantity = $(this).val();
         let money = (price * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-        console.log(money);
+        $(this).closest("tr").find("strong.item-price-total").html(money);
+        updateTotalMoney();
+    });
+
+    $("select.form-select").change(function () {
+        let currentBarCode = $(this).val();
+        alert(currentBarCode);
+        let priceChange;
+        products.forEach(function (product) {
+            product.prices.forEach(function (price) {
+                if (price.barCode == currentBarCode) {
+                    priceChange = price;
+                }
+            });
+        });
+        $(this).closest("tr").attr("barcode", priceChange.barCode);
+        $(this).closest("tr").find("td:nth-child(4)").attr("product-price", priceChange.sellPrice);
+        $(this).closest("tr").find("strong.item-price").html(priceChange.sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+
+        let quantity = $(this).closest("tr").find("td:nth-child(3)").find("input[type=number]").val();
+        let money = (priceChange.sellPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+
         $(this).closest("tr").find("strong.item-price-total").html(money);
         updateTotalMoney();
     });
@@ -125,4 +149,6 @@ function updateTotalMoney() {
     $("#order-total-money").html(t + "đ");
 }
 
-/*function remove*/
+function getProductInCaches(barCode) {
+    
+}
