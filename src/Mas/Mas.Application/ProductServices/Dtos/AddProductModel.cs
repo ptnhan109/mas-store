@@ -11,8 +11,6 @@ namespace Mas.Application.ProductServices.Dtos
 
         public string Name { get; set; }
 
-        public bool IsActive { get; set; }
-
         public double DefaultSellPrice { get; set; }
 
         public double DefaultImportPrice { get; set; }
@@ -34,33 +32,60 @@ namespace Mas.Application.ProductServices.Dtos
 
         public double? ParentSellPrice { get; set; }
 
-        public Price ToPrice(Guid productId) => new Price()
-        {
-            Id = Guid.NewGuid(),
-            ParentUnitId = ParentUnitId.Value,
-            TransferQuantity = TransferQuantity.Value,
-            ParentImportPrice = ParentImportPrice.Value,
-            ParentSellPrice = ParentSellPrice.Value,
-            UpdatedAt = DateTime.Now,
-            CreatedAt = DateTime.Now,
-            ProductId = productId
-        };
+        public string TransferBarCode { get; set; }
 
-        public Product ToProduct() => new Product()
+        public virtual Product ToProduct()
         {
-            BarCode = BarCode,
-            Name = Name,
-            IsActive = IsActive,
-            DefaultSellPrice = DefaultSellPrice,
-            DefaultImportPrice = DefaultImportPrice,
-            Inventory = Inventory,
-            Id = Guid.NewGuid(),
-            CategoryId = CategoryId,
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
-            CloseToDate = CloseToDate,
-            UnitId = UnitId
-        };
+            Guid id = Guid.NewGuid();
+            var product = new Product()
+            {
+                Id = id,
+                BarCode = BarCode,
+                CategoryId = CategoryId,
+                Name = Name,
+                Inventory = Inventory,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            var defaultPrice = new Price()
+            {
+                BarCode = BarCode,
+                UnitId = UnitId,
+                TransferQuantity = 1,
+                Id = Guid.NewGuid(),
+                ImportPrice = DefaultImportPrice,
+                SellPrice = DefaultSellPrice,
+                ProductId = id,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                IsDefault = true
+            };
+
+            var prices = new List<Price>() { defaultPrice };
+
+            if(ParentUnitId != null)
+            {
+                var price = new Price()
+                {
+                    BarCode = TransferBarCode,
+                    Id = Guid.NewGuid(),
+                    ImportPrice = ParentImportPrice.Value,
+                    SellPrice = ParentSellPrice.Value,
+                    ProductId = id,
+                    IsDefault = false,
+                    TransferQuantity = TransferQuantity.Value,
+                    UnitId = ParentUnitId.Value,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                prices.Add(price);
+            }
+
+            product.Prices = prices;
+
+            return product;
+        }
         
     }
 }

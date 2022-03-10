@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 @using Mas.Application.UserServices.Dtos;
 <head>
@@ -19,8 +19,12 @@
     <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/app.css">
-    <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="~/assets/js/common.js"></script>
+    <script>
+        var categoryUrl = '@Url.Action("Categories","Admin")';
+    </script>
     <script src="/assets/vendors/jquery/jquery.min.js"></script>
 </head>
 <body>
@@ -131,7 +135,7 @@
                                         <ul class="submenu-group">
 
                                             <li class="submenu-item ">
-                                                <a href="products.html">Hàng hóa</a>
+                                                <a href="@Url.Action("Products","Admin")">Hàng hóa</a>
                                             </li>
                                             <li class="submenu-item ">
                                                 <a href="form-element-input-group.html">Nhóm hàng hóa</a>

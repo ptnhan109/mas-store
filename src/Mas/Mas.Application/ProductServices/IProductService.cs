@@ -1,4 +1,5 @@
 ﻿using Mas.Application.ProductServices.Dtos;
+using Mas.Common;
 using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,15 @@ namespace Mas.Application.ProductServices
     public interface IProductService
     {
         Task<Product> AddProduct(AddProductModel model);
+
+        Task<PagedResult<ProductItem>> Products(string keyword, Guid? category, int? page = 1, int? pageSize = 10);
+
+        Task DeleteProduct(Guid id);
+
+        Task UpdateProduct(Product product);
+
+        Task<ProductDetail> GetProductAsync(Guid id);
+
+        Task<ProductSell> GetProductAsync(string barcode);
     }
 }

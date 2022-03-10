@@ -17,8 +17,6 @@ namespace Mas.Core.AppDbContexts
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<ProductGroup> ProductGroups { get; set; }
-
         public DbSet<User> Users { get; set; }
     }
 }

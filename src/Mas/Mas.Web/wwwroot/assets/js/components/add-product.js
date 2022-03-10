@@ -1,11 +1,38 @@
 ﻿$(document).ready(function () {
 
     $("#txtBarCode").focus();
-    GetCategories();
-
+    
+    $("#consignment").hide();
     $('#txtBarCode').keypress(function (e) {
         if (e.which == '13') {
             $("#txtName").focus();
+        }
+    });
+
+    $("input[type=number]").change(function () {
+        if ($(this).val() < 0) {
+            $(this).val(0);
+        }
+    });
+
+    $("#txtTransferQuantity").change(function () {
+        console.log($("#IsSplitByImportPrice").val());
+        if ($("#IsSplitByImportPrice").checked) {
+            let importPrice = $("#txtParentImportPrice").val();
+            if (importPrice > 0) {
+                let price = Math.round(importPrice / (this).val());
+                $("#txtDefaultImportPrice").val(price);
+            }
+        }
+    });
+
+    $("#txtParentImportPrice").change(function () {
+        if ($("#IsSplitByImportPrice").val()) {
+            let quantity = $("#txtTransferQuantity").val();
+            if (quantity > 0) {
+                let price = Math.round($(this).val() / quantity);
+                $("#txtDefaultImportPrice").val(price);
+            }
         }
     });
 
@@ -29,32 +56,14 @@
         }
     });
 
-    $("#IsSplitByImportPrice").change(function () {
-        if (this.checked) {
-            $("#txtDefaultImportPrice").attr("disabled");
-        } else {
-            $("#txtDefaultImportPrice").removeAttr("disabled");
-        }
-    })
+    //$("#IsSplitByImportPrice").change(function () {
+    //    if (this.checked) {
+    //        $("#txtDefaultImportPrice").attr("disabled","disabled");
+    //    } else {
+    //        $("#txtDefaultImportPrice").removeAttr("disabled");
+    //    }
+    //});
 });
-
-function GetCategories() {
-    $.ajax({
-        url: categoryUrl,
-        success: function (categories) {
-            console.log(categories);
-            let html = "";
-            categories.forEach((category) => {
-                html += '<option value="';
-                html += category.id;
-                html += '">';
-                html += category.name;
-                html += '</option>';
-            });
-            $("#drpCategory").append(html);
-        }
-    });
-}
 
 function ValidateInput() {
     let barCode = $("#txtBarCode").val();
@@ -88,4 +97,18 @@ function ValidateInput() {
             return false;
         }
     }
+
+    let defaultSell = $("#txtDefaultSellPrice").val();
+    if (defaultSell < 1) {
+        $("#txtDefaultSellPrice").addClass("is-invalid");
+        return false;
+    }
+
+    let defaultImport = $("#txtDefaultImportPrice").val();
+    if (defaultImport < 1) {
+        $("#txtDefaultImportPrice").addClass("is-invalid");
+        return false;
+    }
+
+
 }

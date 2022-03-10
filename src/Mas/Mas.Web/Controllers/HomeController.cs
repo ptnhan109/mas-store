@@ -2,6 +2,7 @@
 using Mas.Application.UserServices.Dtos;
 using Mas.Common;
 using Mas.Core.Contants;
+using Mas.Core.Enums;
 using Mas.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -65,8 +66,12 @@ namespace Mas.Web.Controllers
             HttpContext.Session.SetString(ContantSessions.Name, user.Name);
             HttpContext.Session.SetString(ContantSessions.Role, ContantRole.GetRole(user.Role));
 
+            if(user.Role == EnumRole.Admin)
+            {
+                return RedirectToAction("Dashboard", "Dashboard");
+            }
 
-            return RedirectToAction("Dashboard","Dashboard");
+            return RedirectToAction("Sales", "Employee");
         }
 
         [HttpGet]

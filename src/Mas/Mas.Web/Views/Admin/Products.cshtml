@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>HÀNG HÓA</h3>
+            <p class="text-subtitle text-muted">Quản lý hàng hóa trong cửa hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hàng hóa</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <a href="@Url.Action("AddProduct","Admin")" class="btn btn-success me-1 mb-1">
+                        <i class="bi bi-lock-open"></i> Thêm mới
+                    </a>
+                    <button type="submit" class="btn btn-success me-1 mb-1">Nhập từ Excel</button>
+                    <button type="submit" class="btn btn-success me-1 mb-1">Xuất file</button>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+
+
+                                    <div class="col-md-8 col-12">
+                                        <h6>Tìm kiếm</h6>
+                                        <div class="form-group position-relative has-icon-left">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên hàng / mã vạch / mô tả" name="keyword" id="keyword">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpCategory" name="categoryId">
+                                                <option value="" selected>Tất cả</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetProducts(1);">
+                                            Lọc mặt
+                                            hàng
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh mục hàng hóa
+            </div>
+            <div class="card-body">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã vạch</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá bán</th>
+                            <th>Đơn vị</th>
+                            <th>Danh mục</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblProducts">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    @*<div class="dataTable-info">Hiển thị từ @((Model.PageIndex - 1) * Model.PageSize + 1) đến @(Model.PageIndex * Model.PageSize + 1) của @Model.TotalCount</div>*@
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<script src="/assets/vendors/jquery/jquery.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendors/fontawesome/all.min.js"></script>
+
+<script src="/assets/js/mazer.js"></script>
+<script>
+    $(document).ready(function () {
+        GetCategories();
+        GetProducts(1);
+
+    });
+    function GetProducts(page) {
+        let url = '@Url.Action("ProductsPaging", "Admin")';
+        let keyword = $("#keyword").val();
+        let cate = $("#drpCategory").val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {
+                keyword : keyword,
+                categoryId : cate,
+                page : page
+            },
+            success: function (data) {
+                let html = '';
+                if (data.items.length > 0) {
+                    data.items.forEach(function (product, index) {
+                        html += '<tr id="prod-';
+                        html += product.id;
+                        html += '"><td>';
+                        html += index + 1;
+                        html += '</td><td>';
+                        html += product.barCode;
+                        html += '</td><td><strong>';
+                        html += product.name;
+                        html += '</strong></td><td>';
+                        html += product.defaultSell;
+                        html += '</td><td> <span class="';
+                        html += product.unit.description;
+                        html += '">';
+                        html += product.unit.name;
+                        html += '</span></td><td>';
+                        html += product.category;
+                        html += '</td><td>';
+                        html += '<a href="javascript:;" class="product-update" product-id=';
+                        html += product.id;
+                        html += '><i class="fa fa-edit text-primary"></i></a>&nbsp;';
+                        html += '<a href="javascript:;" class="product-delete" product-id="';
+                        html += product.id;
+                        html += '"><i class="fa fa-trash text-danger"></i></a>';
+                        html += '<td>';
+                        html += '</tr>'
+                    });
+                    $("#tblProducts").html(html);
+
+                    generatePaging(page, data.totalPage, GetProducts);
+
+                    $("a.product-delete").click(function () {
+
+                        let id = $(this).attr("product-id");
+                        $('#prod-' + id).addClass("d-none");
+                        DeleteProduct(id);
+                    });
+
+                    $("a.product-update").click(function () {
+
+                        let url = '@Url.Action("UpdateProduct","Admin")' + '?id=' + $(this).attr("product-id");
+                        window.location.href = url;
+                    });
+                } else {
+
+                }
+            }
+            });
+    }
+
+    function DeleteProduct(id) {
+        let deleteUrl = '@Url.Action("DeleteProduct", "Admin")' +'?id=' + id;
+        $.ajax({
+            url: deleteUrl,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                showMessage('danger', data);
+            }
+        });
+    }
+</script>

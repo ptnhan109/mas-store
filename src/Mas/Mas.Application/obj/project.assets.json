@@ -5822,7 +5822,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nhan111Oi\\.nuget\\packages\\": {}
+    "C:\\Users\\trong\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5830,11 +5830,11 @@
       "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
       "projectName": "Mas.Application",
       "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
-      "packagesPath": "C:\\Users\\Nhan111Oi\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
       "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Nhan111Oi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5904,7 +5904,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }

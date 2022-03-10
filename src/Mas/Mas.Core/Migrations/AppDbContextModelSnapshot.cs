@@ -51,22 +51,28 @@ namespace Mas.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("BarCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("ParentImportPrice")
+                    b.Property<double>("ImportPrice")
                         .HasColumnType("float");
 
-                    b.Property<double>("ParentSellPrice")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ParentUnitId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<double>("SellPrice")
+                        .HasColumnType("float");
+
                     b.Property<int>("TransferQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -91,32 +97,14 @@ namespace Mas.Core.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("CloseToDate")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("DefaultImportPrice")
-                        .HasColumnType("float");
-
-                    b.Property<double>("DefaultSellPrice")
-                        .HasColumnType("float");
 
                     b.Property<int>("Inventory")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ProductGroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -125,35 +113,7 @@ namespace Mas.Core.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ProductGroupId");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Mas.Core.Entities.ProductGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductGroups");
                 });
 
             modelBuilder.Entity("Mas.Core.Entities.User", b =>
@@ -188,7 +148,7 @@ namespace Mas.Core.Migrations
             modelBuilder.Entity("Mas.Core.Entities.Price", b =>
                 {
                     b.HasOne("Mas.Core.Entities.Product", "Product")
-                        .WithMany("Price")
+                        .WithMany("Prices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -201,10 +161,6 @@ namespace Mas.Core.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Mas.Core.Entities.ProductGroup", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ProductGroupId");
                 });
 #pragma warning restore 612, 618
         }

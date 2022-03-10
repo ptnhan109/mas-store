@@ -23,6 +23,7 @@ namespace Mas.Core
 
         Task DeleteRangeAsync(IEnumerable<TEntity> entities);
 
+        Task DeleteRangeAsync(Expression<Func<TEntity, bool>> where = null);
 
         Task UpdateAsync(TEntity entity);
 

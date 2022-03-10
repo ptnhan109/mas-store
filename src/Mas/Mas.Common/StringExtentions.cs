@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -23,6 +24,12 @@ namespace Mas.Common
         public static bool IsCompare(this string input, string hashed, string secret)
         {
             return input.ToHashedString(secret).Equals(hashed);
+        }
+
+        public static string ToCurrencyFormat(this double input)
+        {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); 
+            return input.ToString("#,###", cul.NumberFormat);
         }
     }
 }

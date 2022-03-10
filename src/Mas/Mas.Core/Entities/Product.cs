@@ -11,13 +11,7 @@ namespace Mas.Core.Entities
 
         public string Name { get; set; }
 
-        public bool IsActive { get; set; }
-
-        public virtual ICollection<Price> Price { get; set; }
-
-        public double DefaultSellPrice { get; set; }
-
-        public double DefaultImportPrice { get; set; }
+        public virtual ICollection<Price> Prices { get; set; }
 
         public Guid CategoryId { get; set; }
 
@@ -25,9 +19,5 @@ namespace Mas.Core.Entities
         public virtual Category Category { get; set; }
 
         public int Inventory { get; set; }
-
-        public int? CloseToDate { get; set; }
-
-        public int UnitId { get; set; }
     }
 }

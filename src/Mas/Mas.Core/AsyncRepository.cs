@@ -59,6 +59,13 @@ namespace Mas.Core
             }
         }
 
+        public async Task DeleteRangeAsync(Expression<Func<TEntity, bool>> where = null)
+        {
+            var query = GetQueryable();
+            var deletes = await query.Where(where).Select(c => c.Id).ToListAsync();
+            await DeleteRangeAsync(deletes);
+        }
+
         public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities)
         {
             _context.Set<TEntity>().RemoveRange(entities);
@@ -95,7 +102,7 @@ namespace Mas.Core
         {
             var query = GetQueryable(includes);
 
-            return await query.FirstOrDefaultAsync();
+            return await query.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public virtual async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> where = null, IEnumerable<string> includes = null)
@@ -145,7 +152,7 @@ namespace Mas.Core
             query = query.AsNoTracking();
             pageIndex = pageIndex <= 0 ? 1 : pageIndex;
             pageSize = pageSize <= 0 ? 10 : pageSize;
-            int skip = pageIndex * pageSize;
+            int skip = (pageIndex -1) * pageSize;
             var totalCount = await query.CountAsync();
             query = query.Skip(skip).Take(pageSize);
 
@@ -167,18 +174,18 @@ namespace Mas.Core
 
         public IQueryable<TEntity> GetQueryable(IEnumerable<string> includes = null)
         {
-            var queryable = _context.Set<TEntity>();
+            var queryable = _context.Set<TEntity>().AsQueryable();
             if (includes != null)
             {
                 foreach (var include in includes)
                 {
-                    queryable.Include(include);
+                    queryable = queryable.Include(include);
                 }
             }
 
             return queryable;
         }
 
-
+        
     }
 }
