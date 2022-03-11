@@ -120,7 +120,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="cart-list">
-
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -216,6 +215,59 @@
         </div>
     </div>
 
+    @*Discount modal*@
+<div class="modal fade text-left modal-borderless" id="modal-discount" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">Border-Less</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form form-horizontal">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Đơn giá</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="text" id="modal-product-price" class="form-control" name="fname" product-price="0" readonly="readonly">
+                                </div>
+                                <input id="modal-barcode" hidden type="text" />
+                                <div class="col-md-4">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <input type="radio" class="btn-check" name="isPercent" id="success-outlined" value="1" checked="">
+                                        <label class="btn btn-outline-primary btn-sm" for="success-outlined">%</label>
+
+                                        <input type="radio" class="btn-check" name="isPercent" id="danger-outlined" value="0">
+                                        <label class="btn btn-outline-primary btn-sm" for="danger-outlined">Giá trị</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <input type="number" id="value-discount" class="form-control" min="0" value="0" placeholder="Nhập giá trị cần triết khấu">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hủy bỏ</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block" id="appendDiscount">Áp dụng</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
@@ -229,6 +281,9 @@
     <script src="/assets/js/mazer.js"></script>
     <script>
         var urlGetProd = '@Url.Action("GetProduct","Employee")';
+        
+
+
     </script>
     <script src="~/assets/js/components/sales.js"></script>
 </body>

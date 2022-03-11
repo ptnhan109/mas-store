@@ -53,13 +53,29 @@ namespace Mas.Application.ProductServices
             {
                 Expression<Func<Price, bool>> expPrice = c => c.BarCode.Equals(barcode);
 
-                var price = await _priceRepository.FindAsync(expPrice, new List<string>() { "Product" });
+                var price = await _priceRepository.FindAsync(expPrice, new List<string>() { "Product", "Product.Prices" });
                 if(price is null)
                 {
                     return default;
                 }
+                var prodParent = price.Product;
+                prodParent.BarCode = price.BarCode;
+                var prices = prodParent.Prices.ToList();
+                prices.ForEach(price =>
+                {
+                    if(price.BarCode == barcode)
+                    {
+                        price.IsDefault = true;
+                    }
+                    else
+                    {
+                        price.IsDefault = false;
+                    }
+                });
 
-                return new ProductSell(price.Product);
+                prodParent.Prices = prices;
+
+                return new ProductSell(prodParent);
             }
 
             return new ProductSell(prod);

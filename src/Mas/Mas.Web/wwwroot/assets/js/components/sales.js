@@ -87,9 +87,9 @@ function AppendProductHtml(data) {
     html += quantity;
     html += '"></div></td><td product-price="';
     html += sellPrice;
-    html +='"><strong class="item-price">';
+    html +='"><a href="javascript:;" class="add-discount"><strong class="item-price">';
     html += sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-    html += '</strong></td><td class="text-primary text-bold-500"><strong class="item-price-total">';
+    html += '</strong></a></td><td class="text-primary text-bold-500"><strong class="item-price-total">';
     html += (sellPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     html += '</strong></td><td><a href="javascript:;"><i class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>';
     html += '<td><a href="javascript:;" class="product-remove" barcode="';
@@ -108,9 +108,55 @@ function AppendProductHtml(data) {
         updateTotalMoney();
     });
 
+    $("a.add-discount").click(function () {
+        let name = $(this).closest("tr").find("td:nth-child(1)").html();
+        let price = $(this).closest("tr").find("td:nth-child(4)").attr("product-price");
+        let barcode = $(this).closest("tr").attr("barcode");
+
+        $("#modal-barcode").val(barcode);
+        $("#modal-product-price").attr("product-price", price);
+        $("#modal-product-price").val((+price).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+        $("#discount-title").html(name);
+        $("#modal-discount").modal("show");
+    });
+
+    $("#appendDiscount").click(function () {
+        let barcode = $("#modal-barcode").val();
+        let value = $("#value-discount").val();
+        let currentPrice = $("#modal-product-price").attr("product-price");
+        let newValue;
+        let discountValue;
+        let isPercent = $("input[name=isPercent]:checked").val();
+        if (isPercent == "1") {
+            discountValue = Math.round(currentPrice * value / 100);
+            newValue = currentPrice - discountValue;
+        } else {
+            newValue = currentPrice - value;
+            discountValue = value;
+        }
+
+
+        $("#cart-list > tr").each(function () {
+            console.log($(this).attr("barcode"));
+            //if ($(this).attr("barcode") == barcode) {
+            //    alert($(this).attr("barcode"));
+            //    $(this).find("td:nth-child(4)").attr("product-price", newValue);
+            //    let html = '<p><small class="text-danger">-' + discountValue + '</small></p>';
+            //    $(this).find("td:nth-child(4)").append(html);
+            //    let quantity = $(this).find("input[type=number]").val();
+            //    $(this).find("strong.item-price-total").html((newValue * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+            //    updateTotalMoney();
+            //    return false;
+            //}
+        });
+
+
+        $("#modal-barcode").val();
+        $("#value-discount").val(0);
+    });
+
     $("select.form-select").change(function () {
         let currentBarCode = $(this).val();
-        alert(currentBarCode);
         let priceChange;
         products.forEach(function (product) {
             product.prices.forEach(function (price) {
@@ -147,8 +193,4 @@ function updateTotalMoney() {
     })
     let t = money.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     $("#order-total-money").html(t + "đ");
-}
-
-function getProductInCaches(barCode) {
-    
 }

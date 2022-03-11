@@ -1,7 +1,11 @@
-.full-height{
+.full-height {
     height: 79vh !important;
 }
 
-.half-height{
+.half-height {
     height: 30vh !important;
+}
+
+.mgr-b-0 {
+    margin-bottom: 0 !important;
 }
