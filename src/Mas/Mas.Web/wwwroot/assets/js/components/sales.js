@@ -11,6 +11,40 @@
             alert("Hãy nhập từ khóa");
         }
     });
+
+    $("#appendDiscount").click(function () {
+        let barcode = $("#modal-barcode").val();
+        let value = $("#value-discount").val();
+        let currentPrice = $("#modal-product-price").attr("product-price");
+        let newValue;
+        let discountValue;
+        let isPercent = $("input[name=isPercent]:checked").val();
+        if (isPercent == "1") {
+            discountValue = Math.round(currentPrice * value / 100);
+            newValue = currentPrice - discountValue;
+        } else {
+            newValue = currentPrice - value;
+            discountValue = value;
+        }
+
+        $("#cart-list").find("tr").each(function (index, row) {
+            let barcodeItem = $(row).attr("barcode");
+
+            if (barcodeItem === barcode) {
+                $(row).find("td:nth-child(4)").attr("product-price", newValue);
+                let html = '<p><small class="text-danger">-' + discountValue + '</small></p>';
+                $(row).find("td:nth-child(4) > p").remove();
+                $(row).find("td:nth-child(4)").append(html);
+                let quantity = $(this).find("input[type=number]").val();
+                $(row).find("strong.item-price-total").html((newValue * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+                updateTotalMoney();
+                $("#modal-discount").modal("show");
+                $("#modal-barcode").val();
+                $("#value-discount").val(0);
+                return false;
+            }
+        });
+    });
     
 });
 var products = [];
@@ -94,7 +128,10 @@ function AppendProductHtml(data) {
     html += '</strong></td><td><a href="javascript:;"><i class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>';
     html += '<td><a href="javascript:;" class="product-remove" barcode="';
     html += data.barCode;
-    html +='"><i class="bi bi-trash text-danger"></i></a></td></tr>';
+    html += '"><i class="bi bi-trash text-danger"></i></a></td>';
+    html += '<td class="d-none" product-price="';
+    html += sellPrice;
+    html +='"></td></tr>';
 
     $("#cart-list").append(html);
     totalMoney += sellPrice;
@@ -110,7 +147,7 @@ function AppendProductHtml(data) {
 
     $("a.add-discount").click(function () {
         let name = $(this).closest("tr").find("td:nth-child(1)").html();
-        let price = $(this).closest("tr").find("td:nth-child(4)").attr("product-price");
+        let price = $(this).closest("tr").find("td:nth-child(8)").attr("product-price");
         let barcode = $(this).closest("tr").attr("barcode");
 
         $("#modal-barcode").val(barcode);
@@ -120,40 +157,7 @@ function AppendProductHtml(data) {
         $("#modal-discount").modal("show");
     });
 
-    $("#appendDiscount").click(function () {
-        let barcode = $("#modal-barcode").val();
-        let value = $("#value-discount").val();
-        let currentPrice = $("#modal-product-price").attr("product-price");
-        let newValue;
-        let discountValue;
-        let isPercent = $("input[name=isPercent]:checked").val();
-        if (isPercent == "1") {
-            discountValue = Math.round(currentPrice * value / 100);
-            newValue = currentPrice - discountValue;
-        } else {
-            newValue = currentPrice - value;
-            discountValue = value;
-        }
-
-
-        $("#cart-list > tr").each(function () {
-            console.log($(this).attr("barcode"));
-            //if ($(this).attr("barcode") == barcode) {
-            //    alert($(this).attr("barcode"));
-            //    $(this).find("td:nth-child(4)").attr("product-price", newValue);
-            //    let html = '<p><small class="text-danger">-' + discountValue + '</small></p>';
-            //    $(this).find("td:nth-child(4)").append(html);
-            //    let quantity = $(this).find("input[type=number]").val();
-            //    $(this).find("strong.item-price-total").html((newValue * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
-            //    updateTotalMoney();
-            //    return false;
-            //}
-        });
-
-
-        $("#modal-barcode").val();
-        $("#value-discount").val(0);
-    });
+    
 
     $("select.form-select").change(function () {
         let currentBarCode = $(this).val();
@@ -167,6 +171,7 @@ function AppendProductHtml(data) {
         });
         $(this).closest("tr").attr("barcode", priceChange.barCode);
         $(this).closest("tr").find("td:nth-child(4)").attr("product-price", priceChange.sellPrice);
+        $(this).closest("tr").find("td:nth-child(8)").attr("product-price", priceChange.sellPrice);
         $(this).closest("tr").find("strong.item-price").html(priceChange.sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
 
         let quantity = $(this).closest("tr").find("td:nth-child(3)").find("input[type=number]").val();
