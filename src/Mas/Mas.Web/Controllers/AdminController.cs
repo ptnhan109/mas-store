@@ -1,6 +1,7 @@
 ﻿using Mas.Application.CategoryServices;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
+using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ICategoryService _catSerivce;

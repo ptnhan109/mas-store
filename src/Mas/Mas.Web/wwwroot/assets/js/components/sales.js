@@ -1,4 +1,10 @@
-﻿$(document).ready(function () {
+﻿const currencyFractionDigits = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'VND',
+}).resolvedOptions().maximumFractionDigits;
+
+var totalMoney = 0;
+$(document).ready(function () {
     $('#productCode').focus();
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
@@ -10,6 +16,10 @@
         } else {
             alert("Hãy nhập từ khóa");
         }
+    });
+
+    $("#btn-checkout").click(function () {
+        GetBill();
     });
 
     $("#appendDiscount").click(function () {
@@ -34,26 +44,32 @@
                 $(row).find("td:nth-child(4)").attr("product-price", newValue);
                 let html = '<p><small class="text-danger">-' + discountValue + '</small></p>';
                 $(row).find("td:nth-child(4) > p").remove();
-                $(row).find("td:nth-child(4)").append(html);
+                if (discountValue > 0) {
+                    $(row).find("td:nth-child(4)").append(html);
+                }
+                
                 let quantity = $(this).find("input[type=number]").val();
                 $(row).find("strong.item-price-total").html((newValue * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
                 updateTotalMoney();
-                $("#modal-discount").modal("show");
+                $("#modal-discount").modal("hide");
                 $("#modal-barcode").val();
                 $("#value-discount").val(0);
                 return false;
             }
         });
     });
-    
+
+    $("#btn-order-discount").click(function () {
+        $("#modal-order-discount").modal("show");
+    });
+
+    $("#order-append-discount").click(function () {
+        DiscountOrder();
+        $("#modal-order-discount").modal("hide");
+    });
 });
 var products = [];
-const currencyFractionDigits = new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'VND',
-}).resolvedOptions().maximumFractionDigits;
 
-var totalMoney = 0;
 function AddProductToCart(barcode) {
     let url = urlGetProd + '?barcode=' + barcode;
     $.ajax({
@@ -195,7 +211,78 @@ function updateTotalMoney() {
         let quantity = $(this).find("td:nth-child(3)").find("input[type=number]").val();
         let price = $(this).find("td:nth-child(4)").attr("product-price");
         money += quantity * price;
-    })
+    });
     let t = money.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     $("#order-total-money").html(t + "đ");
+    $("#order-total-money").attr("total-money", money);
+    DiscountOrder();
+}
+
+function DiscountOrder() {
+    let current = $("#order-total-money").attr("total-money");
+    let isPercent = $("input[name=isPercent-order]:checked").val();
+    let value = $("#order-value-discount").val();
+    let discount;
+    let newValue;
+    if (isPercent == 1) {
+        discount = Math.round(current * value / 100);
+    } else {
+        discount = value;
+    }
+    newValue = current - discount;
+
+    $("#order-discount-money").html(discount.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+    $("#order-total-money-checkout").attr("total-money", newValue);
+    $("#order-total-money-checkout").html(newValue.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+}
+
+// ===========================================================================================================================
+
+function GetBill() {
+    let items = [];
+    $("#cart-list > tr").each(function () {
+        let barcode = $(this).attr("barcode");
+        let name = $(this).find("td:nth-child(1)").text();
+        let unit = $(this).find("td:nth-child(2)").find("select.form-select option:selected").text();
+        let quantity = $(this).find("td:nth-child(3)").find("input[type=number]").val();
+        let price = $(this).find("td:nth-child(8)").attr("product-price");
+        let afterDiscount = $(this).find("td:nth-child(4)").attr("product-price");
+        let discount = price - afterDiscount;
+        items.push({
+            Name: name,
+            UnitName: unit,
+            BarCode: barcode,
+            CurrentPrice: +price,
+            Discount: +discount,
+            Quantity: +quantity
+        });
+        let customer = $("#customer-name").val();
+        if (customer == "" || customer == undefined) {
+            customer = "Khách lẻ";
+        }
+        let note = $("#order-note").val();
+        let totalAmount = 0;
+        let totalDiscount = 0;
+        items.forEach(function (item) {
+            totalAmount += item.CurrentPrice * item.Quantity;
+            totalDiscount += item.Discount * item.Quantity;
+        });
+        let totalCheckout = totalAmount - totalDiscount;
+        let request = {
+            CustomerName: customer,
+            Note: note,
+            InvoiceDetails: items
+        };
+        $.ajax({
+            url: invoiceUrl,
+            type: "POST",
+            dataType:"json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: JSON.stringify(request),
+            success: function (data) {
+
+            }
+        })
+    });
 }

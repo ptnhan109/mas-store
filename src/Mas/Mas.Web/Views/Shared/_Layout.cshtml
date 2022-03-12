@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="~/assets/js/common.js"></script>
+    <link href="~/assets/css/common.css" rel="stylesheet" />
     <script>
         var categoryUrl = '@Url.Action("Categories","Admin")';
     </script>
@@ -51,7 +52,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg"
                                     aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Cập nhật</a></li>
+                                    <li><a class="dropdown-item" href="javascript:;">Cập nhật</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -73,21 +74,21 @@
 
 
                             <li class="menu-item  ">
-                                <a href="home.html" class='menu-link'>
+                                <a href="javascript:;" class='menu-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Tổng quan</span>
                                 </a>
                             </li>
 
                             <li class="menu-item">
-                                <a href="sales.html" class='menu-link'>
+                                <a href="@Url.Action("Sales","Employee")" class='menu-link'>
                                     <i class="bi bi-plus-square-fill"></i>
                                     <span>Bán hàng</span>
                                 </a>
                             </li>
 
                             <li class="menu-item  has-sub">
-                                <a href="#" class='menu-link'>
+                                <a href="javascript:;" class='menu-link'>
                                     <i class="bi bi-stack"></i>
                                     <span>Báo cáo</span>
                                 </a>
@@ -98,19 +99,19 @@
 
                                         <ul class="submenu-group">
                                             <li class="submenu-item ">
-                                                <a href="form-element-input.html">Bán hàng</a>
+                                                <a href="javascript:;">Bán hàng</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-input-group.html">Mua hàng</a>
+                                                <a href="javascript:;">Mua hàng</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-select.html">Kho</a>
+                                                <a href="javascript:;">Kho</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-radio.html">Công nợ</a>
+                                                <a href="javascript:;">Công nợ</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-checkbox.html">Lợi nhuận</a>
+                                                <a href="javascript:;">Lợi nhuận</a>
                                             </li>
 
 
@@ -138,16 +139,16 @@
                                                 <a href="@Url.Action("Products","Admin")">Hàng hóa</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-input-group.html">Nhóm hàng hóa</a>
+                                                <a href="javascript:;">Nhóm hàng hóa</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-select.html">Đơn vị tính</a>
+                                                <a href="javascript:;">Đơn vị tính</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-radio.html">Lô hàng</a>
+                                                <a href="javascript:;">Lô hàng</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-element-checkbox.html">In tem mã</a>
+                                                <a href="javascript:;">In tem mã</a>
                                             </li>
                                         </ul>
 
@@ -170,13 +171,13 @@
                                         <ul class="submenu-group">
 
                                             <li class="submenu-item ">
-                                                <a href="form-editor-quill.html">Danh sách</a>
+                                                <a href="javascript:;">Danh sách</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-editor-ckeditor.html">Nhóm nhà cung cấp</a>
+                                                <a href="javascript:;">Nhóm nhà cung cấp</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="form-editor-summernote.html">Đối tác giao hàng</a>
+                                                <a href="javascript:;">Đối tác giao hàng</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -198,16 +199,16 @@
                                         <ul class="submenu-group">
 
                                             <li class="submenu-item ">
-                                                <a href="table-datatable.html">Nhập kho</a>
+                                                <a href="javascript:;">Nhập kho</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="table-datatable-jquery.html">Xuất kho</a>
+                                                <a href="javascript:;">Xuất kho</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="table-datatable.html">Kiểm kê kho</a>
+                                                <a href="javascript:;">Kiểm kê kho</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="table-datatable-jquery.html">Tính giá xuất kho</a>
+                                                <a href="javascript:;">Tính giá xuất kho</a>
                                             </li>
                                         </ul>
 
@@ -228,13 +229,13 @@
                                         <ul class="submenu-group">
 
                                             <li class="submenu-item ">
-                                                <a href="ui-icons-bootstrap-icons.html">Nhân viên bán hàng </a>
+                                                <a href="javascript:;">Nhân viên bán hàng </a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="ui-icons-fontawesome.html">Ca làm việc</a>
+                                                <a href="javascript:;">Ca làm việc</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="ui-icons-dripicons.html">Bank</a>
+                                                <a href="javascript:;">Bank</a>
                                             </li>
 
                                         </ul>
@@ -247,7 +248,7 @@
 
 
                             <li class="menu-item">
-                                <a href="#" class='menu-link'>
+                                <a href="javascript:;" class='menu-link'>
                                     <i class="bi bi-life-preserver"></i>
                                     <span>Hỗ trợ</span>
                                 </a>

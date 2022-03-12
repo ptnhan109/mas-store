@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mas.Web.Controllers
 {
-    
     public class DashboardController : Controller
     {
         [Authorize]

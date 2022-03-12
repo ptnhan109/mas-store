@@ -1,6 +1,8 @@
-﻿using Mas.Application.ProductServices;
+﻿using Mas.Application.InvoiceServices.Dtos;
+using Mas.Application.ProductServices;
 using Mas.Core;
 using Mas.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
 {
+    //[Authorize]
     public class EmployeeController : Controller
     {
         private readonly IProductService _service;
@@ -28,6 +31,12 @@ namespace Mas.Web.Controllers
             var prod = await _service.GetProductAsync(barcode);
 
             return Json(prod);
+        }
+
+        [HttpPost]
+        public string PrintInvoices([FromBody] AddInvoiceRequest request)
+        {
+            return default;
         }
     }
 }

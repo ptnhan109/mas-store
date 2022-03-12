@@ -49,7 +49,7 @@ namespace Mas.Web
             {
                 options.LoginPath = "/Home/Index";
                 options.Cookie.Name = "mas.cookie";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(8);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
                 options.SlidingExpiration = true;
             });
             #endregion
