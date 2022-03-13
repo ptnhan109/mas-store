@@ -232,6 +232,7 @@ function DiscountOrder() {
     newValue = current - discount;
 
     $("#order-discount-money").html(discount.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+    $("#order-discount-money").attr("order-discount", discount);
     $("#order-total-money-checkout").attr("total-money", newValue);
     $("#order-total-money-checkout").html(newValue.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
 }
@@ -240,6 +241,13 @@ function DiscountOrder() {
 
 function GetBill() {
     let items = [];
+    let customer = $("#customer-name").val();
+    if (customer == "" || customer == undefined) {
+        customer = "Khách lẻ";
+    }
+
+    let note = $("#order-note").val();
+    let discount = $("#order-discount-money").attr("order-discount");
     $("#cart-list > tr").each(function () {
         let barcode = $(this).attr("barcode");
         let name = $(this).find("td:nth-child(1)").text();
@@ -256,33 +264,48 @@ function GetBill() {
             Discount: +discount,
             Quantity: +quantity
         });
-        let customer = $("#customer-name").val();
-        if (customer == "" || customer == undefined) {
-            customer = "Khách lẻ";
-        }
-        let note = $("#order-note").val();
+        
         let totalAmount = 0;
         let totalDiscount = 0;
         items.forEach(function (item) {
             totalAmount += item.CurrentPrice * item.Quantity;
-            totalDiscount += item.Discount * item.Quantity;
         });
-        let totalCheckout = totalAmount - totalDiscount;
-        let request = {
-            CustomerName: customer,
-            Note: note,
-            InvoiceDetails: items
-        };
-        $.ajax({
-            url: invoiceUrl,
-            type: "POST",
-            dataType:"json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: JSON.stringify(request),
-            success: function (data) {
-
-            }
-        })
     });
+
+    let request = {
+        CustomerName: customer,
+        Note: note,
+        Discount: +discount,
+        InvoiceDetails: items
+    };
+
+    $.ajax({
+        url: invoiceUrl,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        data: JSON.stringify(request),
+        success: function (data) {
+            PrintInvoice(data);
+        }
+    })
+}
+
+function PrintInvoice(html) {
+    var frame1 = document.createElement('iframe');
+    frame1.name = "frame1";
+    frame1.style.position = "absolute";
+    frame1.style.top = "-1000000px";
+    document.body.appendChild(frame1);
+    var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(html);
+    frameDoc.document.close();
+    setTimeout(function () {
+        window.frames["frame1"].focus();
+        window.frames["frame1"].print();
+        document.body.removeChild(frame1);
+    }, 200);
+    return false;
 }
