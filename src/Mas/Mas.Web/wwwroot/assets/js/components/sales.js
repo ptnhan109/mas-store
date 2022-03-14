@@ -19,7 +19,8 @@ $(document).ready(function () {
     });
 
     $("#btn-checkout").click(function () {
-        GetBill();
+        AddInvoices();
+        CleanOrder();
     });
 
     $("#appendDiscount").click(function () {
@@ -112,7 +113,10 @@ function AppendProductHtml(data) {
     let quantity;
     let html = '<tr barcode="';
     html += data.barCode;
-    html += '"';
+    html += '" ';
+    html += 'prod-id="';
+    html += data.id;
+    html += '" ';
     html += '><td class="text-bold-500" style="text-transform: uppercase;">';
     html += data.name;
     html += '</td><td><fieldset class="form-group position-relative"><select class="form-select" id="basicSelect">';
@@ -239,7 +243,7 @@ function DiscountOrder() {
 
 // ===========================================================================================================================
 
-function GetBill() {
+function AddInvoices() {
     let items = [];
     let customer = $("#customer-name").val();
     if (customer == "" || customer == undefined) {
@@ -250,19 +254,22 @@ function GetBill() {
     let discount = $("#order-discount-money").attr("order-discount");
     $("#cart-list > tr").each(function () {
         let barcode = $(this).attr("barcode");
+        let id = $(this).attr("prod-id");
         let name = $(this).find("td:nth-child(1)").text();
         let unit = $(this).find("td:nth-child(2)").find("select.form-select option:selected").text();
         let quantity = $(this).find("td:nth-child(3)").find("input[type=number]").val();
         let price = $(this).find("td:nth-child(8)").attr("product-price");
         let afterDiscount = $(this).find("td:nth-child(4)").attr("product-price");
         let discount = price - afterDiscount;
+
         items.push({
             Name: name,
             UnitName: unit,
             BarCode: barcode,
             CurrentPrice: +price,
             Discount: +discount,
-            Quantity: +quantity
+            Quantity: +quantity,
+            ProductId : id
         });
         
         let totalAmount = 0;
@@ -279,17 +286,32 @@ function GetBill() {
         InvoiceDetails: items
     };
 
+    if ($('#is-print-invoice').is(":checked")) {
+        $.ajax({
+            url: invoiceUrl,
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: JSON.stringify(request),
+            success: function (data) {
+                PrintInvoice(data);
+            }
+        });
+    }
+
     $.ajax({
-        url: invoiceUrl,
+        url: addInvoiceUrl,
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         traditional: true,
         data: JSON.stringify(request),
         success: function (data) {
-            PrintInvoice(data);
+            showMessage("success", data);
         }
-    })
+    });
+    
 }
 
 function PrintInvoice(html) {
@@ -307,5 +329,12 @@ function PrintInvoice(html) {
         window.frames["frame1"].print();
         document.body.removeChild(frame1);
     }, 200);
+
     return false;
+}
+
+function CleanOrder() {
+    $("#cart-list").html();
+    $("#order-value-discount").val(0);
+    updateTotalMoney();
 }

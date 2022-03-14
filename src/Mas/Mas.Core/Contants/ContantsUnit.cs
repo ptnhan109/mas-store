@@ -28,5 +28,7 @@ namespace Mas.Core.Contants
         };
 
         public static Unit GetUnit(int id) => Units().FirstOrDefault(c => c.Id == id);
+
+        public static int GetId(string name) => Units().FirstOrDefault(c => c.Name.ToLower().Equals(name.ToLower())).Id;
     }
 }

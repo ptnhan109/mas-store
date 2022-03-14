@@ -1,4 +1,5 @@
-﻿using Mas.Application.InvoiceServices.Dtos;
+﻿using Mas.Application.InvoiceServices;
+using Mas.Application.InvoiceServices.Dtos;
 using Mas.Application.ProductServices;
 using Mas.Common;
 using Mas.Core;
@@ -18,10 +19,12 @@ namespace Mas.Web.Controllers
     public class EmployeeController : Controller
     {
         private readonly IProductService _service;
+        private readonly IInvoiceService _invoiceService;
 
-        public EmployeeController(IProductService service)
+        public EmployeeController(IProductService service, IInvoiceService invoiceService)
         {
             _service = service;
+            _invoiceService = invoiceService;
         }
         public IActionResult Sales()
         {
@@ -73,6 +76,13 @@ namespace Mas.Web.Controllers
             templates = templates.Replace("{checkout}", (beforeDiscount - request.Discount).ToCurrencyFormat());
 
             return Json(templates);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddInvoice([FromBody] AddInvoiceRequest request)
+        {
+            await _invoiceService.AddAsync(request);
+            return Json("Thanh toán thành công");
         }
     }
 }

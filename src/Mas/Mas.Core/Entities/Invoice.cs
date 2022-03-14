@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mas.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -15,6 +16,8 @@ namespace Mas.Core.Entities
         public double Discount { get; set; }
 
         public double Amount { get; set; }
+
+        public EnumInvoice Type { get; set; }
 
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }

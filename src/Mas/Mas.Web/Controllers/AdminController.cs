@@ -1,4 +1,5 @@
 ﻿using Mas.Application.CategoryServices;
+using Mas.Application.CategoryServices.Dtos;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
 using Mas.Core.Enums;
@@ -23,6 +24,7 @@ namespace Mas.Web.Controllers
             _catSerivce = catSerivce;
             _prodService = prodService;
         }
+        #region PRODUCT
         [HttpGet]
         public IActionResult AddProduct()
         {
@@ -60,7 +62,7 @@ namespace Mas.Web.Controllers
         public async Task<IActionResult> UpdateProduct(Guid id)
         {
             var product = await _prodService.GetProductAsync(id);
-            if(product is null)
+            if (product is null)
             {
                 return RedirectToAction("NotFound", "Redirect");
             }
@@ -76,12 +78,18 @@ namespace Mas.Web.Controllers
             return RedirectToAction("Products");
         }
 
+        #endregion
+
+        #region CATEGORY
+
         [HttpGet]
-        public IActionResult Sales()
+        public async Task<ActionResult> GetCategories()
         {
-            return View("Sales");
+            await Task.Yield();
+            return View();
         }
 
+        #endregion
         #region API
         [HttpGet]
         public async Task<JsonResult> Categories()
@@ -89,6 +97,20 @@ namespace Mas.Web.Controllers
             var categories = await _catSerivce.Categories();
 
             return Json(categories);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddCategory([FromBody] AddCatRequest request)
+        {
+            await _catSerivce.AddAsync(request);
+            return Json("Thêm mới danh mục thành công");
+        }
+
+        [HttpPut]
+        public async Task<JsonResult> UpdateCategory([FromBody] UpdateCatRequest request)
+        {
+            await _catSerivce.UpdateAsync(request);
+            return Json("Cập nhật danh mục thành công.");
         }
         #endregion
     }

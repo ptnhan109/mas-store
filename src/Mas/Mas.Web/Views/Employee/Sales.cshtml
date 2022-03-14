@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/assets/css/sales.css">
     <link rel="stylesheet" href="/assets/css/app.css">
     <link href="~/assets/css/common.css" rel="stylesheet" />
+    <script src="~/assets/js/common.js"></script>
 </head>
 
 <body>
@@ -198,7 +199,7 @@
                                             <div class="col-md-12 col-12">
                                                 <div class="form-check">
                                                     <div class="checkbox">
-                                                        <input type="checkbox" id="checkbox1" class="form-check-input"
+                                                        <input type="checkbox" id="is-print-invoice" class="form-check-input"
                                                                checked="">
                                                         <label for="checkbox1">In hóa đơn</label>
                                                     </div>
@@ -353,7 +354,7 @@
     <script>
         var urlGetProd = '@Url.Action("GetProduct","Employee")';
         var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
-
+        var addInvoiceUrl = '@Url.Action("AddInvoice","Employee")';
 
     </script>
     <script src="~/assets/js/components/sales.js"></script>

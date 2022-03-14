@@ -13,5 +13,9 @@ namespace Mas.Core.Entities
         public string Description { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public string Location { get; set; }
     }
 }

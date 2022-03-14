@@ -18,5 +18,11 @@ namespace Mas.Core.AppDbContexts
         public DbSet<Product> Products { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Invoice> Invoices { get; set; }
+
+        public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

@@ -18,6 +18,12 @@ namespace Mas.Application.CategoryServices
         {
             this._repository = repository;
         }
+
+        public async Task<Category> AddAsync(AddCatRequest request)
+        {
+            return await _repository.AddAsync(request.ToEntity());
+        }
+
         public async Task<IEnumerable<CategoryItem>> Categories()
         {
             Expression<Func<Category, CategoryItem>> selector = c => new CategoryItem(c);
@@ -25,6 +31,11 @@ namespace Mas.Application.CategoryServices
 
             return categories.Select(c => new CategoryItem(c))
                 .ToList();
+        }
+
+        public async Task UpdateAsync(UpdateCatRequest request)
+        {
+            await _repository.UpdateAsync(request.ToEntity());
         }
     }
 }
