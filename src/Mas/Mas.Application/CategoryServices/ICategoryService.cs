@@ -14,5 +14,7 @@ namespace Mas.Application.CategoryServices
         Task<Category> AddAsync(AddCatRequest request);
 
         Task UpdateAsync(UpdateCatRequest request);
+
+        Task DeleteAsync(Guid id);
     }
 }

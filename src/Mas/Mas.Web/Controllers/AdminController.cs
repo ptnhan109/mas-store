@@ -1,5 +1,6 @@
 ﻿using Mas.Application.CategoryServices;
 using Mas.Application.CategoryServices.Dtos;
+using Mas.Application.Helper;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
 using Mas.Core.Enums;
@@ -90,6 +91,14 @@ namespace Mas.Web.Controllers
         }
 
         #endregion
+
+        #region BARCODE
+        public async Task<IActionResult> BarCode()
+        {
+            await Task.Yield();
+            return View();
+        }
+        #endregion
         #region API
         [HttpGet]
         public async Task<JsonResult> Categories()
@@ -111,6 +120,25 @@ namespace Mas.Web.Controllers
         {
             await _catSerivce.UpdateAsync(request);
             return Json("Cập nhật danh mục thành công.");
+        }
+        
+        [HttpGet]
+        public async Task<JsonResult> DeleteCategory(Guid id)
+        {
+            await _catSerivce.DeleteAsync(id);
+            return Json("Xóa danh mục thành công.");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<JsonResult> GenerateBarcode(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return Json(false);
+            }
+            await BarCodeHelper.GenerateBarCode(data);
+            return Json(true);
         }
         #endregion
     }

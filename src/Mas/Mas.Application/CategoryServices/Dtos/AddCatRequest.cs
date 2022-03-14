@@ -21,7 +21,8 @@ namespace Mas.Application.CategoryServices.Dtos
             Description = Description,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Code = string.Empty
+            Code = string.Empty,
+            IsDeleted = false
         };
     }
 

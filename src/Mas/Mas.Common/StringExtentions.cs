@@ -31,5 +31,6 @@ namespace Mas.Common
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); 
             return input.ToString("#,###", cul.NumberFormat);
         }
+
     }
 }

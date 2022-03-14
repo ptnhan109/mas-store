@@ -202,6 +202,7 @@
             })
         })
     });
+
     function AddCategory() {
         let name = $("#category-name").val();
         let location = $("#category-location").val();
@@ -227,6 +228,7 @@
             }
         });
     }
+
     function GetCategories() {
         let categoryUrl = "@Url.Action("Categories","Admin")";
         $.ajax({
@@ -272,8 +274,32 @@
 
                     $("#modal-update-category").modal("show");
                 });
+
+                $("a.product-delete").click(function () {
+                    let row = $(this).closest("tr");
+                    let id = row.attr("category-id");
+                    row.remove();
+                    DeleteCategory(id);
+                });
             }
         });
+    }
+
+    function DeleteCategory(id) {
+        let url = "@Url.Action("DeleteCategory","Admin")";
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                id: id
+            },
+            success: function (data) {
+                showMessage("danger", data);
+            }
+        })
     }
 </script>
 

@@ -27,10 +27,18 @@ namespace Mas.Application.CategoryServices
         public async Task<IEnumerable<CategoryItem>> Categories()
         {
             Expression<Func<Category, CategoryItem>> selector = c => new CategoryItem(c);
-            var categories = await _repository.FindAllAsync(null,null);
+            Expression<Func<Category, bool>> where = c => !c.IsDeleted;
+            var categories = await _repository.FindAllAsync(where, null);
 
             return categories.Select(c => new CategoryItem(c))
                 .ToList();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var cate = await _repository.FindAsync(id);
+            cate.IsDeleted = true;
+            await _repository.UpdateAsync(cate);
         }
 
         public async Task UpdateAsync(UpdateCatRequest request)

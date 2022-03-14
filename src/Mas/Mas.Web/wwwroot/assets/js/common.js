@@ -133,3 +133,4 @@ function showMessage(type, message) {
         }
     }
 }
+
