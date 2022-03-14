@@ -7,6 +7,8 @@ using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
@@ -129,7 +131,6 @@ namespace Mas.Web.Controllers
             return Json("Xóa danh mục thành công.");
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<JsonResult> GenerateBarcode(string data)
         {
@@ -139,6 +140,24 @@ namespace Mas.Web.Controllers
             }
             await BarCodeHelper.GenerateBarCode(data);
             return Json(true);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> PrintBarcode([FromBody] PrintBarcode request)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "print-barcode.html");
+            string templates = System.IO.File.ReadAllText(path);
+            templates = templates.Replace("{name}", request.Name);
+            StringBuilder items = new StringBuilder();
+            for(int i = 0; i < request.Quantity; i++)
+            {
+                items.Append(@"<img src='/assets/barcode/barcode.png' />");
+            }
+
+            templates = templates.Replace("{content}", items.ToString());
+
+            await Task.Yield();
+            return Json(templates);
         }
         #endregion
     }

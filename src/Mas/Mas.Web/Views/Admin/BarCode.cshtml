@@ -20,13 +20,6 @@
                     <div class="card-content">
                         <div class="card-body" style="height: 300px;">
                             <form class="form form-horizontal">
-                                <div>
-                                    <p>
-                                        1.Ba số đầu là mã số quốc gia. <br />
-                                        2.Bốn số tiếp theo là mã mặt hàng.<br />
-                                        3.Số cuối cùng là số kiểm tra C.<br />
-                                    </p>
-                                </div>
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-2">
@@ -34,7 +27,6 @@
                                         </div>
                                         <div class="col-md-10 form-group">
                                             <input type="text" id="barcode-content" class="form-control" name="fname" placeholder="Nhập mã vạch cần in">
-
                                         </div>
                                         <div class="col-md-2">
                                         </div>
@@ -42,11 +34,20 @@
                                             <button type="button" id="btn-random-barcode" class="btn btn-primary btn-block">Tạo ngẫu nhiên</button>
                                         </div>
                                         <br />
+                                        <br />
+                                        <div class="col-md-2">
+                                            <label>Tên sản phẩm</label>
+                                        </div>
+                                        <div class="col-md-10 form-group">
+                                            <input type="text" id="barcode-name" class="form-control" name="fname" placeholder="Tên sản phẩm hiển thị file in">
+                                        </div>
+                                        <br />
+                                        <br />
                                         <div class="col-md-2" style="margin-top: 2px;">
                                             <label>Số lượng</label>
                                         </div>
                                         <div class="col-md-10 form-group" style="margin-top: 2px;">
-                                            <input type="number" id="barcode-print-quantity" class="form-control" value="0">
+                                            <input type="number" id="barcode-print-quantity" class="form-control" value="1" min="1" max="48">
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="button" id="barcode-generate" class="btn btn-primary me-1 mb-1">Tạo mã vạch</button>
@@ -73,7 +74,7 @@
                                             <img src="~/assets/barcode/default.png" id="barcode-image"/>
                                         </div>
                                         <div class="col-sm-12 d-flex justify-content-end" style="margin-top: 134px;">
-                                            <button type="submit" class="btn btn-primary btn-block">Tải xuống</button>
+                                            <a href="~/assets/barcode/barcode.png" download="barcode" class="btn btn-primary btn-block">Tải xuống</a>
                                         </div>
                                     </div>
                                 </div>
@@ -88,9 +89,33 @@
 </div>
 <script>
     $(document).ready(function () {
+        let isPrint = false;
+
         $("#btn-random-barcode").click(function () {
             let random = randomNumber(13);
             $("#barcode-content").val(random);
+        });
+
+        $("#bar-code-print").click(function () {
+            let quantity = $("#barcode-print-quantity").val();
+            let name = $("#barcode-name").val();
+            let url = "@Url.Action("PrintBarcode","Admin")";
+            let request = {
+                Name: name,
+                Quantity: +quantity
+            };
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(request),
+                success: function (data) {
+                    PrintBarCode(data);
+                }
+            });
         });
 
         $("#barcode-generate").click(function () {
@@ -110,6 +135,7 @@
             }
         })
     });
+
     function randomNumber(length) {
         var result = '';
         var characters = '0123456789';
@@ -119,5 +145,24 @@
                 charactersLength));
         }
         return result;
+    }
+
+    function PrintBarCode(html) {
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write(html);
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 200);
+
+        return false;
     }
 </script>
