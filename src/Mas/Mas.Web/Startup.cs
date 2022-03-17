@@ -4,6 +4,7 @@ using Mas.Core.AppDbContexts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,10 @@ namespace Mas.Web
             });
 
             services.AddControllersWithViews();
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
 
             #region Authenticate
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -51,6 +56,7 @@ namespace Mas.Web
                 options.Cookie.Name = "mas.cookie";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
                 options.SlidingExpiration = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
             #endregion
         }

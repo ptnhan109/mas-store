@@ -35,10 +35,10 @@ namespace Mas.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProduct([FromForm] AddProductModel request)
+        public async Task<JsonResult> AddProduct([FromBody] AddProductModel request)
         {
             var prod = await _prodService.AddProduct(request);
-            return View();
+            return Json(true);
         }
 
         [HttpGet]

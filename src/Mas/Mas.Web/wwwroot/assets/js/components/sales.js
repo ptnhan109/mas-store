@@ -8,13 +8,13 @@ $(document).ready(function () {
     $('#productCode').focus();
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
-        if (qrCode !== "") {
-            if (e.keyCode == 13) {
+        if (e.keyCode == 13) {
+            if (qrCode !== "") {
                 AddProductToCart(qrCode);
                 return false;
+            } else {
+                alert("Hãy nhập từ khóa");
             }
-        } else {
-            alert("Hãy nhập từ khóa");
         }
     });
 

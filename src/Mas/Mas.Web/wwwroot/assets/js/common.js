@@ -15,7 +15,6 @@
                 html += '</option>';
             });
             $("#drpCategory").append(html);
-            console.log(html);
         }
     });
 }

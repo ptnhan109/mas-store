@@ -39,16 +39,10 @@ namespace Mas.Application.ProductServices.Dtos
             CreatedAt = product.CreatedAt;
             UpdatedAt = product.UpdatedAt;
 
-            var price = product.Prices.FirstOrDefault(c => !c.IsDefault);
-            if (price != null)
+            var prices = product.Prices.Where(c => !c.IsDefault);
+            if (prices.Any())
             {
-                ParentUnitId = price.UnitId;
-                TransferQuantity = price.TransferQuantity;
-                TransferId = price.Id;
-                ParentImportPrice = price.ImportPrice;
-                ParentSellPrice = price.SellPrice;
-                TransferBarCode = price.BarCode;
-
+                Prices = prices.Select(c => new AddPriceModel(c)).ToList();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Mas.Application.ProductServices.Dtos
@@ -23,16 +24,7 @@ namespace Mas.Application.ProductServices.Dtos
 
         public int UnitId { get; set; }
 
-
-        public int? ParentUnitId { get; set; }
-
-        public int? TransferQuantity { get; set; }
-
-        public double? ParentImportPrice { get; set; }
-
-        public double? ParentSellPrice { get; set; }
-
-        public string TransferBarCode { get; set; }
+        public List<AddPriceModel> Prices { get; set; }
 
         public virtual Product ToProduct()
         {
@@ -64,28 +56,58 @@ namespace Mas.Application.ProductServices.Dtos
 
             var prices = new List<Price>() { defaultPrice };
 
-            if(ParentUnitId != null)
+            if (Prices.Any())
             {
-                var price = new Price()
-                {
-                    BarCode = TransferBarCode,
-                    Id = Guid.NewGuid(),
-                    ImportPrice = ParentImportPrice.Value,
-                    SellPrice = ParentSellPrice.Value,
-                    ProductId = id,
-                    IsDefault = false,
-                    TransferQuantity = TransferQuantity.Value,
-                    UnitId = ParentUnitId.Value,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                };
-                prices.Add(price);
+                prices.AddRange(Prices.Select(c => c.ToPrice(id)));
             }
 
             product.Prices = prices;
 
             return product;
         }
-        
+
+    }
+
+    public class AddPriceModel
+    {
+        public int ParentUnitId { get; set; }
+
+        public int TransferQuantity { get; set; }
+
+        public double ParentImportPrice { get; set; }
+
+        public double ParentSellPrice { get; set; }
+
+        public string TransferBarCode { get; set; }
+        public AddPriceModel()
+        {
+
+        }
+
+        public AddPriceModel(Price entity)
+        {
+            ParentImportPrice = entity.ImportPrice;
+            ParentSellPrice = entity.SellPrice;
+            TransferQuantity = entity.TransferQuantity;
+            ParentUnitId = entity.UnitId;
+            TransferBarCode = entity.BarCode;
+        }
+
+        public Price ToPrice(Guid id)
+        {
+            return new Price()
+            {
+                BarCode = TransferBarCode,
+                Id = Guid.NewGuid(),
+                ImportPrice = ParentImportPrice,
+                SellPrice = ParentSellPrice,
+                ProductId = id,
+                IsDefault = false,
+                TransferQuantity = TransferQuantity,
+                UnitId = ParentUnitId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+        }
     }
 }

@@ -14,7 +14,7 @@
     <p class="text-subtitle text-muted">Thêm mới hàng hóa trong cửa hàng</p>
 </div>
 <div class="page-content">
-    <form asp-action="AddProduct" asp-controller="Admin" id="addProductForm">
+    <div id="addProductForm">
         <section id="multiple-column-form">
             <div class="row match-height">
                 <div class="col-12">
@@ -138,6 +138,10 @@
                                                 </div>
                                             </div>
 
+
+                                        </div>
+                                        <div class="col-12 col-md-12 d-flex justify-content-end">
+                                            <a href="javascript:;" class="btn btn-success add-transfer-session btn-sm">Thêm đơn vị chuyển đổi</a>
                                         </div>
                                     </div>
                                 </div>
@@ -148,82 +152,11 @@
             </div>
         </section>
         <div id="add-transfer">
-            <section id="multiple-column-form" class="transfer-session">
-                <div class="row match-height">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong>ĐƠN VỊ CHUYỂN ĐỔI </strong>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="form">
-                                        <div class="row">
-                                            <div class="col-md-12 col-12 row">
-                                                <div class="col-md-5 col-5">
-                                                    <h6>Mã vạch</h6>
-                                                    <div class="form-group position-relative">
-                                                        <input type="text" class="form-control" id="txtTransferBarCodePrice" name="TransferBarCode" placeholder="Hệ thống tự tạo khi để trống">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5 col-5">
-
-                                                    <h6>Đơn vị tính cơ bản</h6>
-                                                    <fieldset class="form-group">
-                                                        <select class="form-select" name="ParentUnitId" id="txtParentUnitId">
-                                                            <option value="" disabled selected>Tất cả</option>
-                                                            @foreach (var unit in units)
-                                                            {
-                                                                <option value='@unit.Id'>@unit.Name</option>
-                                                            }
-                                                        </select>
-                                                    </fieldset>
-                                                </div>
-
-                                                <div class="col-md-2 col-5">
-                                                    <h6>Tỉ lệ quy đổi</h6>
-                                                    <div class="form-group position-relative">
-                                                        <input type="number" class="form-control" value="0" name="TransferQuantity" id="txtTransferQuantity">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-12 row">
-                                                <div class="col-md-6 col-12">
-                                                    <h6>Giá nhập</h6>
-                                                    <div class="form-group position-relative">
-                                                        <input type="number" class="form-control" value="0" min="0" name="ParentImportPrice" id="txtParentImportPrice">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <h6>Giá bán</h6>
-                                                    <div class="form-group position-relative">
-                                                        <input type="number" class="form-control" value="0" name="ParentSellPrice">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-check form-switch col-12 col-md-12">
-                                                    <input class="form-check-input" type="checkbox"
-                                                           id="flexSwitchCheckChecked" checked="">
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">
-                                                        Đơn vị nhập hàng mặc định
-                                                    </label>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-12 d-flex justify-content-end">
-                                            <a href="javascript:;" class="btn btn-success add-transfer-session btn-sm">Thêm</a> &nbsp;
-                                            <a href="javascript:;" class="btn btn-danger btn-sm">Xóa</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <table id="list-prices">
+            </table>
+            
         </div>
-    </form>
+    </div>
 
 </div>
 <div class="col-12 d-flex justify-content-end">
@@ -232,5 +165,81 @@
 </div>
 <script>
     GetCategories();
+    var addProdUrl = "@Url.Action("AddProduct","Admin")";
 </script>
 <script src="~/assets/js/components/add-product.js"></script>
+
+<div class="d-none" id="item-price-html">
+    <section id="multiple-column-form" class="transfer-session">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>ĐƠN VỊ CHUYỂN ĐỔI </strong>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-md-12 col-12 row">
+                                        <div class="col-md-5 col-5">
+                                            <h6>Mã vạch</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="text" class="form-control" name="TransferBarCode" placeholder="Hệ thống tự tạo khi để trống">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 col-5">
+
+                                            <h6>Đơn vị tính cơ bản</h6>
+                                            <fieldset class="form-group">
+                                                <select class="form-select" name="ParentUnitId">
+                                                    <option value="" disabled selected>Tất cả</option>
+                                                    @foreach (var unit in units)
+                                                    {
+                                                        <option value='@unit.Id'>@unit.Name</option>
+                                                    }
+                                                </select>
+                                            </fieldset>
+                                        </div>
+
+                                        <div class="col-md-2 col-5">
+                                            <h6>Tỉ lệ quy đổi</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control" value="0" name="TransferQuantity">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-12 row">
+                                        <div class="col-md-6 col-12">
+                                            <h6>Giá nhập</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control" value="0" min="0" name="ParentImportPrice">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <h6>Giá bán</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control" value="0" name="ParentSellPrice">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-check form-switch col-12 col-md-12">
+                                            <input class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckChecked" >
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                Đơn vị nhập hàng mặc định
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <a href="javascript:;" class="btn btn-danger btn-sm remove-transfer">Xóa</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

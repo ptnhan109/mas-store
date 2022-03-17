@@ -14,16 +14,14 @@ namespace Mas.Core.Contants
             new Unit(){Id=2,Name ="Bao",Description = "badge bg-secondary"},
             new Unit(){Id=3,Name ="Gói",Description = "badge bg-success"},
             new Unit(){Id=4,Name ="Chiếc",Description = "badge bg-danger"},
-            new Unit(){Id=5,Name ="Chiếc",Description = "badge bg-warning"},
-            new Unit(){Id=6,Name ="Chiếc",Description = "badge bg-info"},
+            new Unit(){Id=5,Name ="Chai",Description = "badge bg-warning"},
+            new Unit(){Id=6,Name ="Hộp",Description = "badge bg-info"},
             new Unit(){Id=7,Name ="Lốc",Description = "badge bg-light"},
             new Unit(){Id=8,Name ="Cuộn",Description = "badge bg-dark"},
-            new Unit(){Id=9,Name ="Dây",Description = "badge bg-primary"},
+            new Unit(){Id=9,Name ="Cây",Description = "badge bg-primary"},
             new Unit(){Id=10,Name ="Đôi",Description = "badge bg-secondary"},
-            new Unit(){Id=11,Name ="Hộp",Description = "badge bg-success"},
-            new Unit(){Id=12,Name ="Lần",Description = "badge bg-warning"},
-            new Unit(){Id=13,Name ="Mét",Description = "badge bg-info"},
-            new Unit(){Id=14,Name ="Thùng",Description = "badge bg-light"},
+            new Unit(){Id=11,Name ="Mét",Description = "badge bg-info"},
+            new Unit(){Id=12,Name ="Thùng",Description = "badge bg-light"},
 
         };
 
