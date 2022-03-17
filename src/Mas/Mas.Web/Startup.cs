@@ -1,6 +1,7 @@
 using Mas.Application;
 using Mas.Application.Options;
 using Mas.Core.AppDbContexts;
+using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Mas.Web
@@ -57,6 +59,13 @@ namespace Mas.Web
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
                 options.SlidingExpiration = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.AccessDeniedPath = "/Redirect/Unauthorize";
+            });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, EnumRole.Admin.ToString()));
+                opt.AddPolicy("Employee", policy => policy.RequireClaim(ClaimTypes.Role, EnumRole.Admin.ToString(),EnumRole.Employee.ToString()));
             });
             #endregion
         }

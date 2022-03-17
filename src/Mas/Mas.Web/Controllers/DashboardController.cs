@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mas.Web.Controllers
 {
+    [Authorize(Policy = "Admin")]
     public class DashboardController : Controller
     {
-        [Authorize]
         public IActionResult Dashboard()
         {
             return View();

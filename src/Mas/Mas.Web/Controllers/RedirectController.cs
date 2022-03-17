@@ -12,5 +12,10 @@ namespace Mas.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult UnAuthorize()
+        {
+            return View();
+        }
     }
 }

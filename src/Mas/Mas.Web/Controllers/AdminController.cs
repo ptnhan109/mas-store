@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Admin")]
     public class AdminController : Controller
     {
         private readonly ICategoryService _catSerivce;
@@ -38,7 +38,7 @@ namespace Mas.Web.Controllers
         public async Task<JsonResult> AddProduct([FromBody] AddProductModel request)
         {
             var prod = await _prodService.AddProduct(request);
-            return Json(true);
+            return Json("Thêm mới hàng hóa thành công");
         }
 
         [HttpGet]
@@ -123,7 +123,7 @@ namespace Mas.Web.Controllers
             await _catSerivce.UpdateAsync(request);
             return Json("Cập nhật danh mục thành công.");
         }
-        
+
         [HttpGet]
         public async Task<JsonResult> DeleteCategory(Guid id)
         {
@@ -149,7 +149,7 @@ namespace Mas.Web.Controllers
             string templates = System.IO.File.ReadAllText(path);
             templates = templates.Replace("{name}", request.Name);
             StringBuilder items = new StringBuilder();
-            for(int i = 0; i < request.Quantity; i++)
+            for (int i = 0; i < request.Quantity; i++)
             {
                 items.Append(@"<img src='/assets/barcode/barcode.png' />");
             }
