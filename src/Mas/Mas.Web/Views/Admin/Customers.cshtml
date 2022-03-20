@@ -1,0 +1,199 @@
+﻿
+@using Mas.Core.Contants;
+@{
+    ViewData["Title"] = "Khách hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>KHÁCH HÀNG</h3>
+            <p class="text-subtitle text-muted">Quản lý khách hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Khách hàng</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <a href="javascript:;" class="btn btn-success me-1 mb-1" id="add-customer">
+                        <i class="bi bi-lock-open"></i> Thêm mới khách hàng
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+
+
+                                    <div class="col-md-8 col-12">
+                                        <h6>Tìm kiếm</h6>
+                                        <div class="form-group position-relative has-icon-left">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên khách hàng / mã vạch / mô tả" name="keyword" id="keyword">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm khách hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpCategory" name="categoryId">
+                                                <option value="" selected>Tất cả</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1">
+                                            Lọc khách hàng
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh mục hàng hóa
+            </div>
+            <div class="card-body">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã khách hàng</th>
+                            <th>Họ tên</th>
+                            <th>Khu vực</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-list">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<div class="modal fade text-left modal-" id="modal-add-customer" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">THÊM MỚI KHÁCH HÀNG</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="first-name-column">Họ tên</label>
+                                <input type="text" id="customer-name" class="form-control" placeholder="Tên khách hàng">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="last-name-column">Số điện thoại</label>
+                                <input type="text" id="customer-phone" class="form-control" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="city-column">Mã khách hàng</label>
+                                <input type="text" id="customer-code" class="form-control" placeholder="Tự sinh khi để trống">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="city-column">Khu vực</label>
+                                <select class="form-select" id="customer-province" name="CategoryId">
+                                    @foreach (var province in ContantsAddress.Provinces)
+                                    {
+                                        <option value="@province">@province</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="country-floating">Địa chỉ chi tiết</label>
+                                <input type="text" id="customer-address" class="form-control" placeholder="Địa chỉ chi tiết">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="company-column">Thư điện tử</label>
+                                <input type="text" id="customer-mail" class="form-control" placeholder="Thư điện tử">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="email-id-column">Nhóm khách hàng</label>
+                                <select class="form-select" id="customer-province" name="CategoryId">
+                                    @foreach (var province in ContantsAddress.Provinces)
+                                    {
+                                        <option value="@province">@province</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pd-t-0">
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hủy bỏ</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block" id="btn-add-customer">Thêm mới</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/vendors/jquery/jquery.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendors/fontawesome/all.min.js"></script>
+
+<script src="/assets/js/mazer.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#add-customer").click(function () {
+            $("#modal-add-customer").modal("show");
+        });
+    });
+</script>
+

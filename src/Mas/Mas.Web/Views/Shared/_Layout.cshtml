@@ -142,9 +142,6 @@
                                                 <a href="@Url.Action("GetCategories","Admin")">Nhóm hàng hóa</a>
                                             </li>
                                             <li class="submenu-item ">
-                                                <a href="javascript:;">Đơn vị tính</a>
-                                            </li>
-                                            <li class="submenu-item ">
                                                 <a href="javascript:;">Lô hàng</a>
                                             </li>
                                             <li class="submenu-item ">
@@ -161,7 +158,7 @@
                             <li class="menu-item  has-sub">
                                 <a href="#" class='menu-link'>
                                     <i class="bi bi-file-earmark-medical-fill"></i>
-                                    <span>Nhà cung cấp</span>
+                                    <span>Danh mục</span>
                                 </a>
                                 <div class="submenu ">
                                     <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
@@ -170,15 +167,46 @@
 
                                         <ul class="submenu-group">
 
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Danh sách</a>
+                                            <li class="submenu-item  has-sub">
+                                                <a href="javascript:;"
+                                                   class='submenu-link'>Khách hàng</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("Customers","Admin")" class="subsubmenu-link">Danh sách</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("CustomerGroups","Admin")" class="subsubmenu-link">Nhóm khách hàng</a>
+                                                    </li>
+
+                                                </ul>
+
                                             </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Nhóm nhà cung cấp</a>
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="javascript:;"
+                                                   class='submenu-link'>Nhà cung cấp</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="javascript:;" class="subsubmenu-link">Danh sách</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="javascript:;" class="subsubmenu-link">Nhóm nhà cung cấp</a>
+                                                    </li>
+
+                                                </ul>
+
                                             </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Đối tác giao hàng</a>
-                                            </li>
+
                                         </ul>
                                     </div>
                                 </div>

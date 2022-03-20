@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Mas.Core\Mas.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ManufactureServices\" />
+  </ItemGroup>
+
 </Project>

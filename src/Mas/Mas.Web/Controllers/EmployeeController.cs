@@ -26,6 +26,7 @@ namespace Mas.Web.Controllers
             _service = service;
             _invoiceService = invoiceService;
         }
+        [Route("ban-hang")]
         public IActionResult Sales()
         {
             return View();

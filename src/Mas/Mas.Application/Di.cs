@@ -1,4 +1,6 @@
 ﻿using Mas.Application.CategoryServices;
+using Mas.Application.CustomerGroupServices;
+using Mas.Application.CustomerServices;
 using Mas.Application.InvoiceServices;
 using Mas.Application.ProductServices;
 using Mas.Application.UserServices;
@@ -19,6 +21,8 @@ namespace Mas.Application
             service.AddScoped<ICategoryService,CategoryService>();
             service.AddScoped<IProductService, ProductService>();
             service.AddScoped<IInvoiceService, InvoiceService>();
+            service.AddScoped<ICustomerService, CustomerService>();
+            service.AddScoped<ICustomerGroupService, CustomerGroupService>();
         }
     }
 }

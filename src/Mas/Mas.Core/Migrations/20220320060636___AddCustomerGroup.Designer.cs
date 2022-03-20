@@ -4,14 +4,16 @@ using Mas.Core.AppDbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mas.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220320060636___AddCustomerGroup")]
+    partial class __AddCustomerGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,11 +71,11 @@ namespace Mas.Core.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Mail")
                         .HasColumnType("nvarchar(max)");
@@ -120,7 +122,7 @@ namespace Mas.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerGroups");
+                    b.ToTable("CustomerGroup");
                 });
 
             modelBuilder.Entity("Mas.Core.Entities.Invoice", b =>
@@ -208,66 +210,6 @@ namespace Mas.Core.Migrations
                     b.ToTable("InvoiceDetails");
                 });
 
-            modelBuilder.Entity("Mas.Core.Entities.Manufacture", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("GroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Mail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("Manufactures");
-                });
-
-            modelBuilder.Entity("Mas.Core.Entities.ManufactureGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ManufactureGroups");
-                });
-
             modelBuilder.Entity("Mas.Core.Entities.Price", b =>
                 {
                     b.Property<Guid>("Id")
@@ -323,6 +265,9 @@ namespace Mas.Core.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("CustomerGroupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Inventory")
                         .HasColumnType("int");
 
@@ -335,6 +280,8 @@ namespace Mas.Core.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CustomerGroupId");
 
                     b.ToTable("Products");
                 });
@@ -371,7 +318,7 @@ namespace Mas.Core.Migrations
             modelBuilder.Entity("Mas.Core.Entities.Customer", b =>
                 {
                     b.HasOne("Mas.Core.Entities.CustomerGroup", "CustomerGroup")
-                        .WithMany("Customers")
+                        .WithMany()
                         .HasForeignKey("GroupId");
                 });
 
@@ -397,13 +344,6 @@ namespace Mas.Core.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Mas.Core.Entities.Manufacture", b =>
-                {
-                    b.HasOne("Mas.Core.Entities.ManufactureGroup", "Group")
-                        .WithMany("Manufactures")
-                        .HasForeignKey("GroupId");
-                });
-
             modelBuilder.Entity("Mas.Core.Entities.Price", b =>
                 {
                     b.HasOne("Mas.Core.Entities.Product", "Product")
@@ -420,6 +360,10 @@ namespace Mas.Core.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Mas.Core.Entities.CustomerGroup", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CustomerGroupId");
                 });
 #pragma warning restore 612, 618
         }

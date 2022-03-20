@@ -1,5 +1,8 @@
 ﻿using Mas.Application.CategoryServices;
 using Mas.Application.CategoryServices.Dtos;
+using Mas.Application.CustomerGroupServices;
+using Mas.Application.CustomerGroupServices.Dtos;
+using Mas.Application.CustomerServices;
 using Mas.Application.Helper;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
@@ -18,22 +21,30 @@ namespace Mas.Web.Controllers
     {
         private readonly ICategoryService _catSerivce;
         private readonly IProductService _prodService;
+        private readonly ICustomerService _cusService;
+        private readonly ICustomerGroupService _cusGroupService;
 
         public AdminController(
             ICategoryService catSerivce,
-            IProductService prodService
+            IProductService prodService,
+            ICustomerService cusService,
+            ICustomerGroupService cusGroupService
             )
         {
             _catSerivce = catSerivce;
             _prodService = prodService;
+            _cusService = cusService;
+            _cusGroupService = cusGroupService;
         }
         #region PRODUCT
+        [Route("quan-tri/them-san-pham")]
         [HttpGet]
         public IActionResult AddProduct()
         {
             return View();
         }
 
+        
         [HttpPost]
         public async Task<JsonResult> AddProduct([FromBody] AddProductModel request)
         {
@@ -41,6 +52,7 @@ namespace Mas.Web.Controllers
             return Json("Thêm mới hàng hóa thành công");
         }
 
+        [Route("quan-tri/san-pham")]
         [HttpGet]
         public IActionResult Products()
         {
@@ -61,6 +73,7 @@ namespace Mas.Web.Controllers
             return Json("Đã xóa một sản phẩm");
         }
 
+        [Route("quan-tri/cap-nhat-san-pham")]
         [HttpGet]
         public async Task<IActionResult> UpdateProduct(Guid id)
         {
@@ -85,6 +98,7 @@ namespace Mas.Web.Controllers
 
         #region CATEGORY
 
+        [Route("quan-tri/danh-muc")]
         [HttpGet]
         public async Task<ActionResult> GetCategories()
         {
@@ -95,10 +109,63 @@ namespace Mas.Web.Controllers
         #endregion
 
         #region BARCODE
+        [Route("quan-tri/ma-vach")]
         public async Task<IActionResult> BarCode()
         {
             await Task.Yield();
             return View();
+        }
+        #endregion
+
+        #region CUSTOMER
+        [Route("quan-tri/khach-hang")]
+        [HttpGet]
+        public IActionResult Customers()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetCustomers(string keyword, Guid group)
+        {
+            var customers = await _cusService.GetCustomers(keyword, group);
+
+            return Json(customers);
+        }
+
+        [Route("quan-tri/nhom-khach-hang")]
+        [HttpGet]
+        public IActionResult CustomerGroups()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCustomerGroups()
+        {
+            var groups = await _cusGroupService.CustomerGroups();
+
+            return Json(groups);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddCustomerGroup([FromBody] AddCustomerGroup request)
+        {
+            await _cusGroupService.AddAsync(request);
+            return Json("Thêm mới nhóm khách hàng thành công");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> DeleteCustomerGroup(Guid id)
+        {
+            await _cusGroupService.DeleteAsync(id);
+            return Json("Xóa nhóm khách hàng thành công");
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateCustomerGroup([FromBody] UpdateCustomerGroup request)
+        {
+            await _cusGroupService.UpdateAsync(request);
+            return Json("Cập nhật nhóm người dùng thành công");
         }
         #endregion
         #region API

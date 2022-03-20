@@ -10,8 +10,6 @@ namespace Mas.Application.ProductServices.Dtos
     {
         public Guid Id { get; set; }
 
-        public Guid? TransferId { get; set; }
-
         public Guid DefaultPriceId { get; set; }
 
         public DateTime CreatedAt { get; set; }
