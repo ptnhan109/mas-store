@@ -72,7 +72,9 @@ $(document).ready(function () {
 var products = [];
 
 function AddProductToCart(barcode) {
-    let url = urlGetProd + '?barcode=' + barcode;
+    let isWholeSale = $("#saleType").val();
+    let url = urlGetProd + '?barcode=' + barcode + '&isWholeSale=' + isWholeSale;
+
     $.ajax({
         url: url,
         success: function (data) {

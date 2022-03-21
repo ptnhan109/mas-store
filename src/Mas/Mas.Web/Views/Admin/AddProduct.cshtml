@@ -41,13 +41,6 @@
                                                            placeholder="Tên hàng hóa thường gọi" name="Name" id="txtName">
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12 col-12">
-                                                <h6>Giá bán</h6>
-                                                <div class="form-group position-relative">
-                                                    <input type="number" class="form-control" value="0" name="DefaultSellPrice" id="txtDefaultSellPrice">
-                                                </div>
-                                            </div>
                                             <div class="col-md-12 col-12">
                                                 <h6>Giá nhập</h6>
                                                 <div class="form-group position-relative">
@@ -55,6 +48,13 @@
                                                 </div>
 
                                             </div>
+                                            <div class="col-md-12 col-12">
+                                                <h6 class="text-danger">Giá bán lẻ</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="DefaultSellPrice" id="txtDefaultSellPrice">
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12 col-12">
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
@@ -105,38 +105,13 @@
                                                     </select>
                                                 </fieldset>
                                             </div>
-                                            <br />
-                                            <div class="d-inline-block me-2 mb-1" id="IsConsignment">
-                                                <div class="form-check">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox"
-                                                               class="form-check-input form-check-success form-check-glow" name="customCheck">
-                                                        <label class="form-check-label"
-                                                               for="customColorCheck1">
-                                                            Quản lý theo lô/ hạn sử
-                                                            dụng
-                                                        </label>
-                                                    </div>
+                                            <div class="col-md-12 col-12">
+                                                <h6 class="text-danger">Giá bán buôn</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="0" name="defaultWholeSalPrice" id="txtDefaultWholeSalePrice">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12 col-12" id="consignment">
-                                                <div class="row">
-                                                    <h6>Cận date trước</h6>
-                                                    <div class="col-md-6 col-6">
-                                                        <div class="form-group position-relative ">
-                                                            <input type="number" class="form-control" value="0" name="CloseToDate" id="txtCloseToDate">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-6">
-                                                        <fieldset class="form-group">
-                                                            <select class="form-select" id="basicSelect">
-                                                                <option>Ngày</option>
-                                                                <option>Tháng</option>
-                                                            </select>
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
 
 
                                         </div>
@@ -161,11 +136,11 @@
 </div>
 <div class="col-12 d-flex justify-content-end">
     <button type="button" class="btn btn-primary me-1 mb-1" id="addProduct">Thêm mới mặt hàng</button>
-    <button type="button" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</button>
+    <a href="@Url.Action("Products","Admin")" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</a>
 </div>
 <script>
     GetCategories();
-    var addProdUrl = "@Url.Action("AddProduct","Admin")";
+    var addProdUrl = "@Url.Action("AddProductJson", "Admin")";
 </script>
 <script src="~/assets/js/components/add-product.js"></script>
 
@@ -210,22 +185,28 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-12 row">
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <h6>Giá nhập</h6>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control" value="0" min="0" name="ParentImportPrice">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
-                                            <h6>Giá bán</h6>
+                                        <div class="col-md-4 col-12">
+                                            <h6 class="text-danger">Giá bán lẻ</h6>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control" value="0" name="ParentSellPrice">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <h6 class="text-danger">Giá bán buôn</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control" value="0" name="ParentWholeSalePrice">
                                             </div>
                                         </div>
 
                                         <div class="form-check form-switch col-12 col-md-12">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="flexSwitchCheckChecked" >
+                                                   id="flexSwitchCheckChecked">
                                             <label class="form-check-label" for="flexSwitchCheckChecked">
                                                 Đơn vị nhập hàng mặc định
                                             </label>

@@ -45,9 +45,8 @@ namespace Mas.Web.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public async Task<JsonResult> AddProduct([FromBody] AddProductModel request)
+        public async Task<JsonResult> AddProductJson([FromBody] AddProductModel request)
         {
             var prod = await _prodService.AddProduct(request);
             return Json("Thêm mới hàng hóa thành công");

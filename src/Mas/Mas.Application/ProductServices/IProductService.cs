@@ -20,6 +20,6 @@ namespace Mas.Application.ProductServices
 
         Task<ProductDetail> GetProductAsync(Guid id);
 
-        Task<ProductSell> GetProductAsync(string barcode);
+        Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale);
     }
 }

@@ -16,6 +16,8 @@ namespace Mas.Application.ProductServices.Dtos
 
         public double DefaultImportPrice { get; set; }
 
+        public double WholeSellPrice { get; set; }
+
         public int Inventory { get; set; }
 
         public Guid CategoryId { get; set; }
@@ -51,7 +53,8 @@ namespace Mas.Application.ProductServices.Dtos
                 ProductId = id,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                IsDefault = true
+                IsDefault = true,
+                WholeSalePrice = WholeSellPrice
             };
 
             var prices = new List<Price>() { defaultPrice };
@@ -79,6 +82,9 @@ namespace Mas.Application.ProductServices.Dtos
         public double ParentSellPrice { get; set; }
 
         public string TransferBarCode { get; set; }
+
+        public double WholeSalePrice { get; set; }
+
         public AddPriceModel()
         {
 
@@ -91,6 +97,7 @@ namespace Mas.Application.ProductServices.Dtos
             TransferQuantity = entity.TransferQuantity;
             ParentUnitId = entity.UnitId;
             TransferBarCode = entity.BarCode;
+            WholeSalePrice = entity.WholeSalePrice;
         }
 
         public Price ToPrice(Guid id)
@@ -106,7 +113,8 @@ namespace Mas.Application.ProductServices.Dtos
                 TransferQuantity = TransferQuantity,
                 UnitId = ParentUnitId,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                WholeSalePrice = WholeSalePrice
             };
         }
     }

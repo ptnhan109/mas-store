@@ -45,7 +45,7 @@ namespace Mas.Application.ProductServices
             return new ProductDetail(product);
         }
 
-        public async Task<ProductSell> GetProductAsync(string barcode)
+        public async Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale)
         {
             Expression<Func<Product, bool>> expression = c => c.BarCode.Equals(barcode);
             var prod = await _repository.FindAsync(expression, new List<string>() { "Category", "Prices" });
@@ -75,10 +75,10 @@ namespace Mas.Application.ProductServices
 
                 prodParent.Prices = prices;
 
-                return new ProductSell(prodParent);
+                return new ProductSell(prodParent,isWholeSale);
             }
 
-            return new ProductSell(prod);
+            return new ProductSell(prod,isWholeSale);
         }
 
         public async Task<PagedResult<ProductItem>> Products(string keyword, Guid? category, int? page = 1, int? pageSize = 10)

@@ -17,6 +17,8 @@ namespace Mas.Core.Entities
 
         public double SellPrice { get; set; }
 
+        public double WholeSalePrice { get; set; }
+
         public Guid ProductId { get; set; }
 
         public bool IsDefault { get; set; }

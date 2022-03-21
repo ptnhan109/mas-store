@@ -32,6 +32,7 @@
         let unit = $("#dtpUnit").val();
         let importPrice = $("#txtDefaultImportPrice").val();
         let sellPrice = $("#txtDefaultSellPrice").val();
+        let wholeSellPrice = $("#txtDefaultWholeSalePrice").val();
 
         var prices = [];
 
@@ -41,13 +42,15 @@
             let parentTransfer = $(this).find("input[name=TransferQuantity]").val();
             let parentImport = $(this).find("input[name=ParentImportPrice]").val();
             let parentSell = $(this).find("input[name=ParentSellPrice]").val();
+            let parentWholeSellPrice = $("input[name=ParentWholeSalePrice]").val();
 
             prices.push({
                 ParentUnitId: +parentUnit,
                 TransferQuantity: +parentTransfer,
                 ParentImportPrice: +parentImport,
                 ParentSellPrice: +parentSell,
-                TransferBarCode: parentBarCode
+                TransferBarCode: parentBarCode,
+                WholeSalePrice: +parentWholeSellPrice
             });
         });
 
@@ -60,7 +63,8 @@
             CategoryId: category,
             CloseToDate: 0, // TODO:
             UnitId: +unit,
-            Prices: prices
+            Prices: prices,
+            WholeSellPrice: +wholeSellPrice
         };
 
         // submit
@@ -98,16 +102,6 @@
             });
         }
     });
-
-
-
-    //$("#IsSplitByImportPrice").change(function () {
-    //    if (this.checked) {
-    //        $("#txtDefaultImportPrice").attr("disabled","disabled");
-    //    } else {
-    //        $("#txtDefaultImportPrice").removeAttr("disabled");
-    //    }
-    //});
 });
 
 function ValidateInput() {
@@ -152,6 +146,12 @@ function ValidateInput() {
     let defaultImport = $("#txtDefaultImportPrice").val();
     if (defaultImport < 1) {
         $("#txtDefaultImportPrice").addClass("is-invalid");
+        return false;
+    }
+
+    let defaultWholeSellPrice = $("#txtDefaultWholeSalePrice").val();
+    if (defaultWholeSellPrice < 1) {
+        $("#txtDefaultWholeSalePrice").addClass("is-invalid");
         return false;
     }
 

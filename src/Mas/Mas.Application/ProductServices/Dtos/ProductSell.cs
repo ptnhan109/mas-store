@@ -17,12 +17,12 @@ namespace Mas.Application.ProductServices.Dtos
         
         public List<PriceItem> Prices { get; set; }
 
-        public ProductSell(Product product)
+        public ProductSell(Product product, bool isWholeSale)
         {
             Id = product.Id;
             Name = product.Name;
             BarCode = product.BarCode;
-            Prices = product.Prices.Select(c => new PriceItem(c)).ToList();
+            Prices = product.Prices.Select(c => new PriceItem(c, isWholeSale)).ToList();
         }
     }
 
@@ -41,11 +41,18 @@ namespace Mas.Application.ProductServices.Dtos
 
         public bool IsDefault { get; set; }
 
-        public PriceItem(Price price)
+        public PriceItem(Price price, bool isWholeSale)
         {
             BarCode = price.BarCode;
             Unit = ContantsUnit.GetUnit(price.UnitId);
-            SellPrice = price.SellPrice;
+            if (isWholeSale)
+            {
+                SellPrice = price.WholeSalePrice;
+            }
+            else
+            {
+                SellPrice = price.SellPrice;
+            }
             Discount = 0;
             Quantity = 1;
             TotalMoney = SellPrice * Quantity;

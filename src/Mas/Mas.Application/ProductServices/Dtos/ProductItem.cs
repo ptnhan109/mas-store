@@ -26,6 +26,8 @@ namespace Mas.Application.ProductServices.Dtos
 
         public string DefaultImport { get; set; }
 
+        public string DefaultWholeSellPrice { get; set; }
+
         public ProductItem(Product entity)
         {
             var price = entity?.Prices?.FirstOrDefault(c => c.IsDefault);
@@ -37,6 +39,7 @@ namespace Mas.Application.ProductServices.Dtos
             DefaultSell = price?.SellPrice.ToCurrencyFormat();
             DefaultImport = price?.ImportPrice.ToCurrencyFormat();
             Unit = GetUnits(price.UnitId);
+            DefaultWholeSellPrice = price?.WholeSalePrice.ToCurrencyFormat();
         }
 
         public static ProductItem FromEntity(Product entity) => new ProductItem(entity);

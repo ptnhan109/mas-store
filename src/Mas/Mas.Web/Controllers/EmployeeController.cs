@@ -33,9 +33,9 @@ namespace Mas.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetProduct(string barcode)
+        public async Task<JsonResult> GetProduct(string barcode, bool isWholeSale)
         {
-            var prod = await _service.GetProductAsync(barcode);
+            var prod = await _service.GetProductAsync(barcode, isWholeSale);
 
             return Json(prod);
         }
@@ -51,8 +51,8 @@ namespace Mas.Web.Controllers
             templates = templates.Replace("{note}", request.Note);
             StringBuilder items = new StringBuilder();
             double beforeDiscount = 0;
-            
-            for(int i = 0; i < request.InvoiceDetails.Count; i++)
+
+            for (int i = 0; i < request.InvoiceDetails.Count; i++)
             {
                 var invoice = request.InvoiceDetails[i];
                 var afterDiscount = invoice.CurrentPrice - invoice.Discount;
