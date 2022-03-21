@@ -3,6 +3,7 @@ using Mas.Application.CategoryServices.Dtos;
 using Mas.Application.CustomerGroupServices;
 using Mas.Application.CustomerGroupServices.Dtos;
 using Mas.Application.CustomerServices;
+using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
@@ -44,7 +45,7 @@ namespace Mas.Web.Controllers
             return View();
         }
 
-        
+
         [HttpPost]
         public async Task<JsonResult> AddProduct([FromBody] AddProductModel request)
         {
@@ -124,13 +125,46 @@ namespace Mas.Web.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<JsonResult> GetCustomers(string keyword, Guid group)
+        public async Task<JsonResult> GetCustomers(string keyword, Guid? group, int? page = 1, int? pageSize = 20)
         {
             var customers = await _cusService.GetCustomers(keyword, group);
 
             return Json(customers);
         }
+
+        [HttpPost]
+        public async Task<JsonResult> AddCustomer([FromBody] AddCustomerRequest request)
+        {
+            await _cusService.AddCustomer(request);
+
+            return Json("Thêm mới khách hàng thành công.");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetCustomer(Guid id)
+        {
+            return Json(await _cusService.GetCustomer(id));
+        }
+        
+        [HttpGet]
+        public async Task<JsonResult> DeleteCustomer(Guid id)
+        {
+            await _cusService.DeleteCustomer(id);
+
+            return Json("Đã xóa khách hàng");
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
+        {
+            await _cusService.UpdateCustomer(request);
+
+            return Json("Cập nhật thông tin khách hàng thành công.");
+        }
+
 
         [Route("quan-tri/nhom-khach-hang")]
         [HttpGet]
@@ -168,6 +202,7 @@ namespace Mas.Web.Controllers
             return Json("Cập nhật nhóm người dùng thành công");
         }
         #endregion
+
         #region API
         [HttpGet]
         public async Task<JsonResult> Categories()

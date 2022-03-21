@@ -1,4 +1,5 @@
 ﻿using Mas.Application.CustomerServices.Dtos;
+using Mas.Common;
 using Mas.Core;
 using Mas.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,23 +29,36 @@ namespace Mas.Application.CustomerServices
         public async Task DeleteCustomer(Guid id)
         {
             var entity = await _repository.FindAsync(id);
-            if(entity != null)
+            if (entity != null)
             {
                 entity.IsDeleted = true;
                 await _repository.UpdateAsync(entity);
             }
         }
 
-        public async Task<List<Customer>> GetCustomers(string keyword, Guid? group)
+        public async Task<CustomerItem> GetCustomer(Guid id)
         {
-            Expression<Func<Customer, bool>> filter = c => c.Name.Contains(keyword) && !c.IsDeleted;
-            var query = _repository.GetQueryable();
-            if(group != null)
+            var entity = await _repository.FindAsync(id, null);
+            return new CustomerItem(entity);
+        }
+
+        public async Task<PagedResult<CustomerItem>> GetCustomers(string keyword, Guid? group, int? page = 1, int? pageSize = 20)
+        {
+            var query = _repository.GetQueryable().Include("CustomerGroup").Where(c => !c.IsDeleted);
+
+            if (group != null)
             {
                 query = query.Where(c => c.GroupId == group.Value);
             }
 
-            return await query.ToListAsync();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(c => c.Name.Contains(keyword));
+            }
+
+            var paged = await _repository.FindPagedAsync(query,null,page.Value,pageSize.Value);
+
+            return paged.ChangeType(CustomerItem.FromEntity);
         }
 
         public async Task UpdateCustomer(UpdateCustomerRequest request)

@@ -15,27 +15,6 @@
         }
     });
 
-    //$("#txtTransferQuantity").change(function () {
-    //    console.log($("#IsSplitByImportPrice").val());
-    //    if ($("#IsSplitByImportPrice").checked) {
-    //        let importPrice = $("#txtParentImportPrice").val();
-    //        if (importPrice > 0) {
-    //            let price = Math.round(importPrice / (this).val());
-    //            $("#txtDefaultImportPrice").val(price);
-    //        }
-    //    }
-    //});
-
-    //$("#txtParentImportPrice").change(function () {
-    //    if ($("#IsSplitByImportPrice").val()) {
-    //        let quantity = $("#txtTransferQuantity").val();
-    //        if (quantity > 0) {
-    //            let price = Math.round($(this).val() / quantity);
-    //            $("#txtDefaultImportPrice").val(price);
-    //        }
-    //    }
-    //});
-
     $("#txtBarCode, #txtName, #dtpUnit, #drpCategory").change(function () {
         $(this).removeClass("is-invalid");
     });
@@ -84,7 +63,6 @@
             Prices: prices
         };
 
-        console.log(request);
         // submit
         $.ajax({
             url: addProdUrl,
