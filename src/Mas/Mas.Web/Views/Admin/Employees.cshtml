@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewData["Title"] = "Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>KHÁCH HÀNG</h3>
+            <p class="text-subtitle text-muted">Quản lý khách hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:;">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Khách hàng</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <a href="javascript:;" class="btn btn-success me-1 mb-1" id="btn-add-employee">
+                        <i class="bi bi-lock-open"></i> Thêm mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh sách nhân viên
+
+                <div class="col-12 d-flex justify-content-end">
+                    <fieldset class="form-group">
+                        <select class="form-select" id="filter-roles" name="categoryId">
+                            <option value="" selected>Tất cả</option>
+                            <option value="0" >Quản trị</option>
+                            <option value="1" >Nhân viên</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <table class="table" id="tbl-customer">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Họ tên</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Ảnh</th>
+                            <th>Nhóm</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employees-list">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+<div class="modal fade text-left modal-" id="modal-add-employee" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">THÊM MỚI NHÂN VIÊN</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" enctype="multipart/form-data" id="form-employee">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="city-column">Họ tên</label>
+                                <input type="text" id="employee-name" class="form-control" placeholder="Họ tên">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="last-name-column">Mật khẩu</label>
+                                <input type="password" id="employee-password" class="form-control" placeholder="Mật khẩu">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="first-name-column">Tên đăng nhập</label>
+                                <input type="text" id="employee-username" class="form-control" placeholder="Tên đăng nhập">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="city-column">Vai trò</label>
+                                <select class="form-select" id="employee-role" name="CategoryId">
+                                    <option value="0">Chủ cửa hàng</option>
+                                    <option value="1">Nhân viên</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="country-floating">Số điện thoại</label>
+                                <input type="text" id="employee-phone" class="form-control" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="company-column">Ảnh đại diện</label>
+                                <input type="file" id="employee-image" class="form-control" placeholder="Thư điện tử">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pd-t-0">
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hủy bỏ</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1" id="btn-submit-employee">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Thêm mới</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/vendors/jquery/jquery.min.js"></script>
+<script src="/assets/vendors/fontawesome/all.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        GetEmployees();
+
+        $("#btn-add-employee").click(function () {
+            $("#modal-add-employee").modal("show");
+        });
+
+        $("#btn-submit-employee").click(function () {
+            var form_Data = new FormData();
+            form_Data.append("Username", $("#employee-username").val());
+            form_Data.append("Password", $("#employee-password").val());
+            form_Data.append("Name", $("#employee-name").val());
+            form_Data.append("Role", $("#employee-role").val());
+            form_Data.append("Avatar", $("#employee-image").get(0).files[0]);
+            console.log(form_Data);
+
+            $.ajax({
+                url: '@Url.Action("AddEmployee","Admin")',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: form_Data,
+                success: function (result) {
+                    $("#modal-add-employee").modal("hide");
+                    GetEmployees();
+                    showMessage("success", result);
+                }
+            });
+        });
+    });
+
+    function GetEmployees() {
+        let role = $("#filter-roles").val();
+        let url = '@Url.Action("GetEmployees","Admin")';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {
+                role: role
+            },
+            success: function (data) {
+                let html = "";
+                data.forEach(function (element, index) {
+                    html += '<tr id="';
+                    html += element.id;
+                    html += '"><td>';
+                    html += index + 1;
+                    html += '</td><td>';
+                    html += element.name;
+                    html += '</td><td>';
+                    html += element.username;
+                    html += '</td><td><div class="avatar avatar-md"><img src="';
+                    html += element.image;
+                    html += '" alt="Avatar"></div>';
+                    html += '</td><td>';
+                    if (element.role == 0) {
+                        html += '<span class="badge bg-light-success">Quản lý</span>';
+                    } else {
+                        html += '<span class="badge bg-light-secondary">Nhân viên</span>'
+                    }
+                    html += '</td><td>';
+                    html += '<a href="javascript:;" class="product-update" product-id=';
+                    html += element.id;
+                    html += '><i class="fa fa-edit text-primary"></i></a>&nbsp;';
+                    html += '<a href="javascript:;" class="product-delete" product-id="';
+                    html += element.id;
+                    html += '"><i class="fa fa-trash text-danger"></i></a>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+
+                $("#employees-list").html(html);
+            }
+
+        });
+    }
+            
+</script>

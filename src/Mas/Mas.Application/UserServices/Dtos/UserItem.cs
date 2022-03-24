@@ -16,11 +16,15 @@ namespace Mas.Application.UserServices.Dtos
 
         public EnumRole Role { get; set; }
 
+        public string Image { get; set; }
+
         public UserItem(User user)
         {
             Username = user.Username;
             Role = user.Role;
             Name = user.Name;
+            Id = user.Id;
+            Image = user.Image;
         }
     }
 }

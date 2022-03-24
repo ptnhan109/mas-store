@@ -7,6 +7,8 @@ using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
+using Mas.Application.UserServices;
+using Mas.Application.UserServices.Dtos;
 using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,18 +26,21 @@ namespace Mas.Web.Controllers
         private readonly IProductService _prodService;
         private readonly ICustomerService _cusService;
         private readonly ICustomerGroupService _cusGroupService;
+        private readonly IUserService _userService;
 
         public AdminController(
             ICategoryService catSerivce,
             IProductService prodService,
             ICustomerService cusService,
-            ICustomerGroupService cusGroupService
+            ICustomerGroupService cusGroupService,
+            IUserService userService
             )
         {
             _catSerivce = catSerivce;
             _prodService = prodService;
             _cusService = cusService;
             _cusGroupService = cusGroupService;
+            _userService = userService;
         }
         #region PRODUCT
         [Route("quan-tri/them-san-pham")]
@@ -200,6 +205,29 @@ namespace Mas.Web.Controllers
             await _cusGroupService.UpdateAsync(request);
             return Json("Cập nhật nhóm người dùng thành công");
         }
+        #endregion
+
+        #region USERS
+        [Route("quan-tri/nhan-vien")]
+        public IActionResult Employees(EnumRole? role)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetEmployees(EnumRole? role)
+        {
+            var users = await _userService.GetUsers(role);
+            return Json(users);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddEmployee([FromForm] AddUserRequest request)
+        {
+            await _userService.AddUser(request);
+
+            return Json("Thêm mới nhân viên thành công.");
+        } 
         #endregion
 
         #region API
