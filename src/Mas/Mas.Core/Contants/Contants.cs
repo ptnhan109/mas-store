@@ -10,6 +10,7 @@ namespace Mas.Core.Contants
         public const string Username = nameof(Username);
         public const string Name = nameof(Name);
         public const string Role = nameof(Role);
+        public const string Avatar = nameof(Avatar);
     }
 
     public class ContantRole

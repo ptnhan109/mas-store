@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -218,7 +219,7 @@ namespace Mas.Web.Controllers
         public async Task<JsonResult> GetEmployees(EnumRole? role)
         {
             var users = await _userService.GetUsers(role);
-            return Json(users);
+            return Json(users.Where(c => !c.Username.ToLower().Equals("admin")));
         }
 
         [HttpPost]
@@ -227,7 +228,31 @@ namespace Mas.Web.Controllers
             await _userService.AddUser(request);
 
             return Json("Thêm mới nhân viên thành công.");
-        } 
+        }
+        
+        [HttpGet]
+        public async Task<JsonResult> DeleteEmployee(Guid id)
+        {
+            await _userService.DeleteUser(id);
+
+            return Json("Xóa nhân viên thành công.");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetEmployee(Guid id)
+        {
+            var user = await _userService.GetUser(id);
+
+            return Json(user);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateEmployee([FromForm] UpdateUserRequest request)
+        {
+            await _userService.UpdateUser(request);
+
+            return Json("Cập nhật nhân viên thành công.");
+        }
         #endregion
 
         #region API

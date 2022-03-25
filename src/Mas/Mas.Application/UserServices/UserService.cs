@@ -8,6 +8,7 @@ using Mas.Core.Enums;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Mas.Application.UserServices
         public async Task AddUser(AddUserRequest request)
         {
             string hashedPwd = request.Password.ToHashedString(_options.Secret);
-            string image = await request.Avatar.ToUpload(ContantsFolder.Avatar);
+
             var entity = new User()
             {
                 Id = Guid.NewGuid(),
@@ -39,9 +40,19 @@ namespace Mas.Application.UserServices
                 PasswordHash = hashedPwd,
                 Role = request.Role,
                 Username = request.Username,
-                Image = image,
                 Phone = request.Phone
             };
+
+            if (request.Avatar != null)
+            {
+                string image = await request.Avatar.ToUpload(ContantsFolder.Avatar);
+                entity.Image = image;
+            }
+            else
+            {
+                entity.Image = string.Empty;
+            }
+
 
             await _repository.AddAsync(entity);
         }
@@ -57,6 +68,18 @@ namespace Mas.Application.UserServices
             }
 
             return new UserItem(user);
+        }
+
+        public async Task DeleteUser(Guid id)
+        {
+            var entity = await _repository.FindAsync(id);
+            if(entity != null)
+            {
+                string filePath = entity.Image;
+                await _repository.DeleteAsync(id);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+                await FileExtentions.Remove(path);
+            }
         }
 
         public async Task<User> GetUser(Guid id)
@@ -79,17 +102,26 @@ namespace Mas.Application.UserServices
 
         public async Task UpdateUser(UpdateUserRequest request)
         {
-            var user = new User()
+            var entity = await _repository.FindAsync(request.Id);
+
+            entity.Name = request.Name;
+            entity.Role = request.Role;
+            entity.Username = request.Username;
+            entity.UpdatedAt = DateTime.Now;
+            entity.Phone = request.Phone;
+
+            if (!string.IsNullOrEmpty(request.Password))
             {
-                CreatedAt = DateTime.Now,
-                Id = request.Id,
-                Name = request.Name,
-                PasswordHash = request.Password.ToHashedString(_options.Secret),
-                Role = request.Role,
-                UpdatedAt = DateTime.Now,
-                Username = request.Username
-            };
-            await _repository.UpdateAsync(user);
+                entity.PasswordHash = request.Password.ToHashedString(_options.Secret);
+            }
+
+            if(request.Avatar != null)
+            {
+                string image = await request.Avatar.ToUpload(ContantsFolder.Avatar);
+                entity.Image = image;
+            }
+
+            await _repository.UpdateAsync(entity);
         }
     }
 }

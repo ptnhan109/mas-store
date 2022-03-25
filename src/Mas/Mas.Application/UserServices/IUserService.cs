@@ -20,6 +20,6 @@ namespace Mas.Application.UserServices
 
         Task UpdateUser(UpdateUserRequest request);
 
-
+        Task DeleteUser(Guid id);
     }
 }

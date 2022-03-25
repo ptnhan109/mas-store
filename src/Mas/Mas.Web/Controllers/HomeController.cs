@@ -65,8 +65,18 @@ namespace Mas.Web.Controllers
             {
                 IsPersistent = request.IsRemember
             });
+
             HttpContext.Session.SetString(ContantSessions.Name, user.Name);
             HttpContext.Session.SetString(ContantSessions.Role, ContantRole.GetRole(user.Role));
+
+            if (string.IsNullOrEmpty(user.Image))
+            {
+                HttpContext.Session.SetString(ContantSessions.Avatar, ContantsFolder.Avatar);
+            }
+            else
+            {
+                HttpContext.Session.SetString(ContantSessions.Avatar, user.Image);
+            }
 
             if(user.Role == EnumRole.Admin)
             {

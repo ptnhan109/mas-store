@@ -40,7 +40,7 @@
                                 <a href="#" class="user-dropdown d-flex dropend" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     <div class="avatar avatar-md2">
-                                        <img src="/assets/images/faces/1.jpg" alt="Avatar">
+                                        <img src="@Context.Session.GetString("Avatar")" alt="Avatar">
                                     </div>
                                     <div class="text">
                                         <h6 class="user-dropdown-name">@Context.Session.GetString("Name")</h6>

@@ -42,8 +42,8 @@
                     <fieldset class="form-group">
                         <select class="form-select" id="filter-roles" name="categoryId">
                             <option value="" selected>Tất cả</option>
-                            <option value="0" >Quản trị</option>
-                            <option value="1" >Nhân viên</option>
+                            <option value="0">Quản trị</option>
+                            <option value="1">Nhân viên</option>
                         </select>
                     </fieldset>
                 </div>
@@ -100,13 +100,13 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="last-name-column">Mật khẩu</label>
-                                <input type="password" id="employee-password" class="form-control" placeholder="Mật khẩu">
+                                <input type="password" id="employee-password" class="form-control" autocomplete="off" placeholder="Mật khẩu">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="first-name-column">Tên đăng nhập</label>
-                                <input type="text" id="employee-username" class="form-control" placeholder="Tên đăng nhập">
+                                <input type="text" id="employee-username" class="form-control" autocomplete="off" placeholder="Tên đăng nhập">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
@@ -146,6 +146,78 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade text-left modal-" id="modal-update-employee" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">CẬP NHẬT NHÂN VIÊN</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" enctype="multipart/form-data" id="form-employee-update">
+                    <div class="row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <input hidden id="update-employee-id" />
+                                <label for="city-column">Họ tên</label>
+                                <input type="text" id="update-employee-name" class="form-control" placeholder="Họ tên">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="last-name-column">Mật khẩu</label>
+                                <input type="password" id="update-employee-password" class="form-control" autocomplete="off" placeholder="Để trống nếu không thay đổi mật khẩu">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="first-name-column">Tên đăng nhập</label>
+                                <input type="text" id="update-employee-username" class="form-control" autocomplete="off" placeholder="Tên đăng nhập">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="city-column">Vai trò</label>
+                                <select class="form-select" id="update-employee-role" name="CategoryId">
+                                    <option value="0">Chủ cửa hàng</option>
+                                    <option value="1">Nhân viên</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="country-floating">Số điện thoại</label>
+                                <input type="text" id="update-employee-phone" class="form-control" placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <div class="form-group">
+                                <label for="company-column">Ảnh đại diện</label>
+                                <input type="file" id="update-employee-image" class="form-control" placeholder="Thư điện tử">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pd-t-0">
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hủy bỏ</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1" id="btn-submit-update-employee">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Thêm mới</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
 <script src="/assets/vendors/fontawesome/all.min.js"></script>
 <script>
@@ -158,12 +230,22 @@
         });
 
         $("#btn-submit-employee").click(function () {
-            var form_Data = new FormData();
+            AddEmployee();
+        });
+
+        $("#btn-submit-update-employee").click(function () {
+            UpdateEmployee();
+        });
+    });
+
+    function AddEmployee() {
+        var form_Data = new FormData();
             form_Data.append("Username", $("#employee-username").val());
             form_Data.append("Password", $("#employee-password").val());
             form_Data.append("Name", $("#employee-name").val());
             form_Data.append("Role", $("#employee-role").val());
             form_Data.append("Avatar", $("#employee-image").get(0).files[0]);
+            form_Data.append("Phone", $("#employee-phone").val());
             console.log(form_Data);
 
             $.ajax({
@@ -178,8 +260,7 @@
                     showMessage("success", result);
                 }
             });
-        });
-    });
+    }
 
     function GetEmployees() {
         let role = $("#filter-roles").val();
@@ -214,10 +295,10 @@
                         html += '<span class="badge bg-light-secondary">Nhân viên</span>'
                     }
                     html += '</td><td>';
-                    html += '<a href="javascript:;" class="product-update" product-id=';
+                    html += '<a href="javascript:;" class="employee-update" product-id=';
                     html += element.id;
                     html += '><i class="fa fa-edit text-primary"></i></a>&nbsp;';
-                    html += '<a href="javascript:;" class="product-delete" product-id="';
+                    html += '<a href="javascript:;" class="employee-delete" product-id="';
                     html += element.id;
                     html += '"><i class="fa fa-trash text-danger"></i></a>';
                     html += '</td>';
@@ -225,9 +306,87 @@
                 });
 
                 $("#employees-list").html(html);
+
+                $("a.employee-delete").click(function () {
+                    let row = $(this).closest("tr");
+                    let id = row.attr("id");
+                    let url = '@Url.Action("DeleteEmployee","Admin")';
+
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        data: { id: id },
+                        success: function (data) {
+                            row.remove();
+                            showMessage("danger", data);
+                        }
+                    });
+
+                });
+
+                $("a.employee-update").click(function () {
+                    let id = $(this).closest("tr").attr("id");
+                    GetEmployeeUpdate(id);
+                });
             }
 
         });
     }
-            
+
+    function GetEmployeeUpdate(id) {
+        let url = '@Url.Action("GetEmployee","Admin")';
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: { id: id },
+            success: function (data) {
+                $("#update-employee-username").val(data.username);
+                $("#update-employee-name").val(data.name);
+                $("#update-employee-role").val(+data.role);
+                $("#update-employee-phone").val(data.phone);
+                $("#update-employee-id").val(id);
+                $("#modal-update-employee").modal("show");
+
+            }
+        });
+    }
+
+    function UpdateEmployee() {
+        let id = $("#update-employee-id").val();
+        let name = $("#update-employee-name").val();
+        let username = $("#update-employee-username").val();
+        let role = $("#update-employee-role").val();
+        let password = $("#update-employee-password").val();
+        let phone = $("#update-employee-phone").val();
+
+        let form_Data = new FormData();
+        form_Data.append("Avatar", $("#update-employee-image").get(0).files[0]);
+        form_Data.append("Username", username);
+        form_Data.append("Password", password);
+        form_Data.append("Name", name);
+        form_Data.append("Role", role);
+        form_Data.append("Avatar", $("#employee-image").get(0).files[0]);
+        form_Data.append("Phone", phone);
+        form_Data.append("Id", id);
+
+        $.ajax({
+             url: '@Url.Action("UpdateEmployee","Admin")',
+             type: "POST",
+             contentType: false, // Not to set any content header
+             processData: false, // Not to process data
+             data: form_Data,
+             success: function (result) {
+                 $("#modal-update-employee").modal("hide");
+                 GetEmployees();
+                 showMessage("success", result);
+             }
+            });
+    }
 </script>

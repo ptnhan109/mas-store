@@ -25,5 +25,15 @@ namespace Mas.Common
             }
             return $"/assets/images/{dest}/{fileName}";
         }
+
+        public static async Task Remove(string path)
+        {
+            var isExist = File.Exists(path);
+            if (isExist)
+            {
+                File.Delete(path);
+                await Task.Yield();
+            }
+        }
     }
 }

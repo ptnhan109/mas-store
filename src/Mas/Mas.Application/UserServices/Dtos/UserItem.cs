@@ -1,4 +1,5 @@
-﻿using Mas.Core.Entities;
+﻿using Mas.Core.Contants;
+using Mas.Core.Entities;
 using Mas.Core.Enums;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,14 @@ namespace Mas.Application.UserServices.Dtos
             Role = user.Role;
             Name = user.Name;
             Id = user.Id;
-            Image = user.Image;
+            if (!string.IsNullOrEmpty(user.Image))
+            {
+                Image = user.Image;
+            }
+            else
+            {
+                Image = ContantsFolder.DefaultAvatar;
+            }
         }
     }
 }
