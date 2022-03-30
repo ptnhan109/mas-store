@@ -38,7 +38,8 @@ namespace Mas.Application.CustomerServices
 
         public async Task<CustomerItem> GetCustomer(Guid id)
         {
-            var entity = await _repository.FindAsync(id, null);
+            var entity = await _repository.FindAsync(id, new List<string>() { "CustomerGroup" });
+
             return new CustomerItem(entity);
         }
 
@@ -56,7 +57,7 @@ namespace Mas.Application.CustomerServices
                 query = query.Where(c => c.Name.Contains(keyword));
             }
 
-            var paged = await _repository.FindPagedAsync(query,null,page.Value,pageSize.Value);
+            var paged = await _repository.FindPagedAsync(query, null, page.Value, pageSize.Value);
 
             return paged.ChangeType(CustomerItem.FromEntity);
         }

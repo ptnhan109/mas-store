@@ -5,6 +5,8 @@ using Mas.Application.CustomerGroupServices.Dtos;
 using Mas.Application.CustomerServices;
 using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
+using Mas.Application.ManufactureGroupServices;
+using Mas.Application.ManufactureGroupServices.Dtos;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
 using Mas.Application.UserServices;
@@ -28,13 +30,15 @@ namespace Mas.Web.Controllers
         private readonly ICustomerService _cusService;
         private readonly ICustomerGroupService _cusGroupService;
         private readonly IUserService _userService;
+        private readonly IManufactureGroupService _manufactureGroupService;
 
         public AdminController(
             ICategoryService catSerivce,
             IProductService prodService,
             ICustomerService cusService,
             ICustomerGroupService cusGroupService,
-            IUserService userService
+            IUserService userService,
+            IManufactureGroupService manufactureGroupService
             )
         {
             _catSerivce = catSerivce;
@@ -42,6 +46,7 @@ namespace Mas.Web.Controllers
             _cusService = cusService;
             _cusGroupService = cusGroupService;
             _userService = userService;
+            _manufactureGroupService = manufactureGroupService;
         }
         #region PRODUCT
         [Route("quan-tri/them-san-pham")]
@@ -252,6 +257,45 @@ namespace Mas.Web.Controllers
             await _userService.UpdateUser(request);
 
             return Json("Cập nhật nhân viên thành công.");
+        }
+        #endregion
+
+        #region MANUFACTURE GROUP
+        public IActionResult ManufactureGroups()
+        {
+            return View();
+        }
+        
+        [HttpGet]
+        public async Task<JsonResult> GetManufactureGroups()
+        {
+            var items = await _manufactureGroupService.GetAllAsync();
+            return Json(items);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> AddManufactureGroup([FromBody] AddManufactureGroup request)
+        {
+            await _manufactureGroupService.AddAsync(request);
+
+            return Json("Thêm mới nhóm nhà cung cấp thành công.");
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateManufactureGroup([FromBody] UpdateManufactureGroup request)
+        {
+            await _manufactureGroupService.UpdateAsync(request);
+
+            return Json("Cập nhật nhóm nhà cung cấp thành công.");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> DeleteManufactureGroup(Guid id)
+        {
+            await _manufactureGroupService.DeleteAsync(id);
+
+            return Json("Xóa nhóm nhà cung cấp thành công.");
         }
         #endregion
 

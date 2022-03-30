@@ -5,6 +5,18 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
+    var availableTags = [
+        "ActionScript",
+        "AppleScript"
+    ];
+
+    $("#productCode").autocomplete({
+        source: availableTags,
+    });
+
+    $("li.ui-menu-item").addClass("list-group-item");
+    $("ul").addClass("list-group");
+
     $('#productCode').focus();
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();

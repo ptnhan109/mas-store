@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ManufactureServices\" />
+    <Folder Include="ManufactureServices\Dtos\" />
   </ItemGroup>
 
 </Project>

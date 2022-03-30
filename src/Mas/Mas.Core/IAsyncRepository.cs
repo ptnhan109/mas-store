@@ -11,9 +11,7 @@ namespace Mas.Core
     public interface IAsyncRepository<TEntity> where TEntity : BaseEntity
     {
         Task<TEntity> AddAsync(TEntity entity);
-
         Task AddRangeAsync(IEnumerable<TEntity> entities);
-
 
         Task DeleteAsync(Guid id);
 
@@ -26,7 +24,6 @@ namespace Mas.Core
         Task DeleteRangeAsync(Expression<Func<TEntity, bool>> where = null);
 
         Task UpdateAsync(TEntity entity);
-
 
         Task<TEntity> FindAsync(Guid id, IEnumerable<string> includes = null);
 
