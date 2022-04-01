@@ -299,6 +299,15 @@ namespace Mas.Web.Controllers
         }
         #endregion
 
+        #region MANUFACTURE
+        [AllowAnonymous]
+        public async Task<IActionResult> AddManufacture()
+        {
+            var manufactureGroups = await _manufactureGroupService.GetAllAsync();
+            return View(manufactureGroups);
+        }
+        #endregion
+
         #region API
         [HttpGet]
         public async Task<JsonResult> Categories()

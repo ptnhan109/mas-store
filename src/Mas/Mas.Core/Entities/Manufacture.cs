@@ -21,5 +21,9 @@ namespace Mas.Core.Entities
         public string Address { get; set; }
 
         public string Province { get; set; }
+
+        public string Note { get; set; }
+
+        public string Code { get; set; }
     }
 }

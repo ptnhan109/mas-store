@@ -1,4 +1,6 @@
-﻿using Mas.Core.Entities;
+﻿using Mas.Common;
+using Mas.Core.Contants;
+using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +22,7 @@ namespace Mas.Application.CustomerGroupServices.Dtos
             Description = Description,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Code = string.Empty,
+            Code = StringExtentions.GenerateCode(4,ContantPrefix.CustomerGroup),
         };
     }
 

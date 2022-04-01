@@ -28,4 +28,12 @@ namespace Mas.Core.Contants
             }
         }
     }
+
+    public class ContantPrefix
+    {
+        public const string CustomerGroup = "NKH";
+        public const string Customer = "KH";
+        public const string ManufacureGroup = "NNCC";
+        public const string Manufacture = "NCC";
+    }
 }

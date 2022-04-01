@@ -32,5 +32,17 @@ namespace Mas.Common
             return input.ToString("#,###", cul.NumberFormat);
         }
 
+        public static string GenerateCode(int length,string prefix)
+        {
+            var random = new Random();
+            var result = new StringBuilder(prefix.ToUpper());
+            for(int i = 0; i < length; i++)
+            {
+                result.Append(random.Next(1, 9));
+            }
+
+            return result.ToString();
+        }
+
     }
 }
