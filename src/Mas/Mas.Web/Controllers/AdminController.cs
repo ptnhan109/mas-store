@@ -7,6 +7,8 @@ using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
 using Mas.Application.ManufactureGroupServices;
 using Mas.Application.ManufactureGroupServices.Dtos;
+using Mas.Application.ManufactureServices;
+using Mas.Application.ManufactureServices.Dtos;
 using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
 using Mas.Application.UserServices;
@@ -31,6 +33,7 @@ namespace Mas.Web.Controllers
         private readonly ICustomerGroupService _cusGroupService;
         private readonly IUserService _userService;
         private readonly IManufactureGroupService _manufactureGroupService;
+        private readonly IManufactureService _manufactureService;
 
         public AdminController(
             ICategoryService catSerivce,
@@ -38,7 +41,8 @@ namespace Mas.Web.Controllers
             ICustomerService cusService,
             ICustomerGroupService cusGroupService,
             IUserService userService,
-            IManufactureGroupService manufactureGroupService
+            IManufactureGroupService manufactureGroupService,
+            IManufactureService manufactureService
             )
         {
             _catSerivce = catSerivce;
@@ -47,6 +51,7 @@ namespace Mas.Web.Controllers
             _cusGroupService = cusGroupService;
             _userService = userService;
             _manufactureGroupService = manufactureGroupService;
+            _manufactureService = manufactureService;
         }
         #region PRODUCT
         [Route("quan-tri/them-san-pham")]
@@ -261,6 +266,7 @@ namespace Mas.Web.Controllers
         #endregion
 
         #region MANUFACTURE GROUP
+        [Route("quan-tri/nhom-nha-cung-cap")]
         public IActionResult ManufactureGroups()
         {
             return View();
@@ -300,11 +306,36 @@ namespace Mas.Web.Controllers
         #endregion
 
         #region MANUFACTURE
-        [AllowAnonymous]
+        [Route("quan-tri/them-nha-cung-cap")]
+        [HttpGet]
         public async Task<IActionResult> AddManufacture()
         {
             var manufactureGroups = await _manufactureGroupService.GetAllAsync();
             return View(manufactureGroups);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateManufacture([FromForm] AddManufacture request)
+        {
+            await _manufactureService.Add(request);
+
+            return RedirectToAction("Manufactures");
+        }
+
+        [Route("quan-tri/nha-cung-cap")]
+        [HttpGet]
+        public async Task<IActionResult> Manufactures()
+        {
+            await Task.Yield();
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetManufactures(string keyword, Guid? group, int? page = 1, int? pageSize = 10)
+        {
+            var result = await _manufactureService.GetPaged(keyword, group, page, pageSize);
+
+            return Json(result);
         }
         #endregion
 
