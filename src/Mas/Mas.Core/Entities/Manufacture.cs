@@ -25,5 +25,7 @@ namespace Mas.Core.Entities
         public string Note { get; set; }
 
         public string Code { get; set; }
+
+        public string TaxCode { get; set; }
     }
 }

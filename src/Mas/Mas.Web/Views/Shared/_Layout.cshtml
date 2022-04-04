@@ -230,34 +230,11 @@
 
 
 
-                            <li class="menu-item  has-sub">
-                                <a href="#" class='menu-link'>
+                            <li class="menu-item">
+                                <a href="@Url.Action("Inventories","Admin")" class='menu-link'>
                                     <i class="bi bi-table"></i>
                                     <span>Kho hàng</span>
                                 </a>
-                                <div class="submenu ">
-                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
-                                    <div class="submenu-group-wrapper">
-
-
-                                        <ul class="submenu-group">
-
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Nhập kho</a>
-                                            </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Xuất kho</a>
-                                            </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Kiểm kê kho</a>
-                                            </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Tính giá xuất kho</a>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                                </div>
                             </li>
 
                             <li class="menu-item  has-sub">
@@ -274,12 +251,6 @@
 
                                             <li class="submenu-item ">
                                                 <a href="@Url.Action("Employees","Admin")">Nhân viên</a>
-                                            </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Ca làm việc</a>
-                                            </li>
-                                            <li class="submenu-item ">
-                                                <a href="javascript:;">Bank</a>
                                             </li>
 
                                         </ul>
@@ -306,10 +277,10 @@
             </header>
 
             <div class="content-wrapper container">
-                <div class="div-loading">
+                @*<div class="div-loading">
                     <div class="spinner-border text-primary" role="status" id="spinner-loading">
                     </div>
-                </div>
+                </div>*@
                 
                 @RenderBody()
             </div>
@@ -332,14 +303,14 @@
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/pages/horizontal-layout.js"></script>
     <script>
-        var $loading = $('.div-loading').hide();
-        $(document)
-            .ajaxStart(function () {
-                $loading.show();
-            })
-            .ajaxStop(function () {
-                $loading.hide();
-            });
+        //var $loading = $('.div-loading').hide();
+        //$(document)
+        //    .ajaxStart(function () {
+        //        $loading.show();
+        //    })
+        //    .ajaxStop(function () {
+        //        $loading.hide();
+        //    });
     </script>
 </body>
 

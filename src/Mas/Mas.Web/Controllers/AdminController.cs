@@ -5,6 +5,8 @@ using Mas.Application.CustomerGroupServices.Dtos;
 using Mas.Application.CustomerServices;
 using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
+using Mas.Application.InventoryServices;
+using Mas.Application.InventoryServices.Dtos;
 using Mas.Application.ManufactureGroupServices;
 using Mas.Application.ManufactureGroupServices.Dtos;
 using Mas.Application.ManufactureServices;
@@ -34,6 +36,7 @@ namespace Mas.Web.Controllers
         private readonly IUserService _userService;
         private readonly IManufactureGroupService _manufactureGroupService;
         private readonly IManufactureService _manufactureService;
+        private readonly IInventoryService _inventoryService;
 
         public AdminController(
             ICategoryService catSerivce,
@@ -42,7 +45,8 @@ namespace Mas.Web.Controllers
             ICustomerGroupService cusGroupService,
             IUserService userService,
             IManufactureGroupService manufactureGroupService,
-            IManufactureService manufactureService
+            IManufactureService manufactureService,
+            IInventoryService inventoryService
             )
         {
             _catSerivce = catSerivce;
@@ -52,6 +56,7 @@ namespace Mas.Web.Controllers
             _userService = userService;
             _manufactureGroupService = manufactureGroupService;
             _manufactureService = manufactureService;
+            _inventoryService = inventoryService;
         }
         #region PRODUCT
         [Route("quan-tri/them-san-pham")]
@@ -65,6 +70,8 @@ namespace Mas.Web.Controllers
         public async Task<JsonResult> AddProductJson([FromBody] AddProductModel request)
         {
             var prod = await _prodService.AddProduct(request);
+            var add = new AddInventoryItem(prod.Id, request.CurrentQuantity);
+            await _inventoryService.AddInventoryItem(add);
             return Json("Thêm mới hàng hóa thành công");
         }
 
@@ -336,6 +343,32 @@ namespace Mas.Web.Controllers
             var result = await _manufactureService.GetPaged(keyword, group, page, pageSize);
 
             return Json(result);
+        }
+
+        [Route("quan-tri/nha-cung-cap-chi-tiet")]
+        [HttpGet]
+        public async Task<IActionResult> ManufactureById(Guid id)
+        {
+            var result = await _manufactureService.GetById(id);
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateManufacture([FromForm] UpdateManufacture request)
+        {
+            await _manufactureService.UpdateAsync(request);
+
+            return RedirectToAction("Manufactures");
+        }
+        #endregion
+
+        #region INVENTORY
+        [AllowAnonymous]
+        [Route("quan-tri/quan-ly-kho")]
+        public async Task<IActionResult> Inventories(string keyword, Guid? groupId, bool? limit,int? page = 1, int? pageSize = 10)
+        {
+            return View();
         }
         #endregion
 

@@ -27,7 +27,7 @@ namespace Mas.Application.ProductServices.Dtos
             Id = product.Id;
             BarCode = product.BarCode;
             Name = product.Name;
-            Inventory = product.Inventory;
+            CurrentQuantity = product.InventoryLimit;
             CategoryId = product.CategoryId;
             UnitId = defaultPrice.UnitId;
             DefaultImportPrice = defaultPrice.ImportPrice;

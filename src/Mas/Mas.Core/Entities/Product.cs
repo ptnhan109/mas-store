@@ -18,6 +18,6 @@ namespace Mas.Core.Entities
         [ForeignKey(nameof(CategoryId))]
         public virtual Category Category { get; set; }
 
-        public int Inventory { get; set; }
+        public int InventoryLimit { get; set; }
     }
 }

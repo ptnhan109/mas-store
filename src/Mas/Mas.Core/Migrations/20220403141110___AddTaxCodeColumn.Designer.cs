@@ -4,14 +4,16 @@ using Mas.Core.AppDbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mas.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220403141110___AddTaxCodeColumn")]
+    partial class __AddTaxCodeColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,31 +123,6 @@ namespace Mas.Core.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomerGroups");
-                });
-
-            modelBuilder.Entity("Mas.Core.Entities.InventoryItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InventoryItems");
                 });
 
             modelBuilder.Entity("Mas.Core.Entities.Invoice", b =>
@@ -360,7 +337,7 @@ namespace Mas.Core.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("InventoryLimit")
+                    b.Property<int>("Inventory")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -416,15 +393,6 @@ namespace Mas.Core.Migrations
                     b.HasOne("Mas.Core.Entities.CustomerGroup", "CustomerGroup")
                         .WithMany("Customers")
                         .HasForeignKey("GroupId");
-                });
-
-            modelBuilder.Entity("Mas.Core.Entities.InventoryItem", b =>
-                {
-                    b.HasOne("Mas.Core.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Mas.Core.Entities.Invoice", b =>

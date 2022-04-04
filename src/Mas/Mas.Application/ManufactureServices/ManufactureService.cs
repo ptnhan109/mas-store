@@ -1,4 +1,5 @@
-﻿using Mas.Application.ManufactureServices.Dtos;
+﻿using Mas.Application.CustomerServices.Dtos;
+using Mas.Application.ManufactureServices.Dtos;
 using Mas.Common;
 using Mas.Core;
 using Mas.Core.Entities;
@@ -21,7 +22,19 @@ namespace Mas.Application.ManufactureServices
 
         public async Task Add(AddManufacture request)
         {
+            if (string.IsNullOrEmpty(request.Code))
+            {
+                request.Code = "NCC".GenerateCode(4);
+            }
+
             await _repo.AddAsync(request.ToEntity());
+        }
+
+        public async Task<ManufactureDetail> GetById(Guid id)
+        {
+            var entity = await _repo.FindAsync(id, new List<string>() { "Group" });
+
+            return new ManufactureDetail(entity);
         }
 
         public async Task<PagedResult<ManufactureItem>> GetPaged(string keyword, Guid? group, int? page = 1, int? pageSize = 10)
@@ -40,6 +53,12 @@ namespace Mas.Application.ManufactureServices
             var paged = await _repo.FindPagedAsync(query, null, page.Value, pageSize.Value);
 
             return paged.ChangeType<ManufactureItem>(c => new ManufactureItem(c));
+        }
+
+        public async Task UpdateAsync(UpdateManufacture request)
+        {
+            var entity = request.ToEntity();
+            await _repo.UpdateAsync(entity);
         }
     }
 }

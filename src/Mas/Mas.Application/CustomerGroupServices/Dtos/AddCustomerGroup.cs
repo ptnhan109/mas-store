@@ -22,7 +22,7 @@ namespace Mas.Application.CustomerGroupServices.Dtos
             Description = Description,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Code = StringExtentions.GenerateCode(4,ContantPrefix.CustomerGroup),
+            Code = ContantPrefix.CustomerGroup.GenerateCode(4),
         };
     }
 

@@ -18,7 +18,9 @@ namespace Mas.Application.ProductServices.Dtos
 
         public double WholeSellPrice { get; set; }
 
-        public int Inventory { get; set; }
+        public int CurrentQuantity { get; set; }
+
+        public int InventoryLimit { get; set; }
 
         public Guid CategoryId { get; set; }
 
@@ -37,7 +39,7 @@ namespace Mas.Application.ProductServices.Dtos
                 BarCode = BarCode,
                 CategoryId = CategoryId,
                 Name = Name,
-                Inventory = Inventory,
+                InventoryLimit = InventoryLimit,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
