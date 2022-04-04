@@ -5,3 +5,11 @@
 .pd-b-0{
     padding-bottom: 0rem !important;
 }
+
+.pd-l-10{
+    padding-left: 10px;
+}
+
+.dropdown-menu.list-group:not(.show) {
+    display: none;
+}

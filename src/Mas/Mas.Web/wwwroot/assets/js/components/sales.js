@@ -5,13 +5,58 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
-    var availableTags = [
-        "ActionScript",
-        "AppleScript"
-    ];
+    //var availableTags = [
+    //    "ActionScript",
+    //    "AppleScript"
+    //];
 
-    $("#productCode").autocomplete({
-        source: availableTags,
+    //$("#productCode").autocomplete({
+    //    source: availableTags,
+    //});
+
+    // remove it if u have ajax
+    var data = ["aaaa", "bbab2", "cccc", "dddd"];
+
+    $('.input-search #productCode').focusout(function () {
+        $('.input-search .dropdown .dropdown-menu').hide();
+    });
+
+    $('.input-search .dropdown-menu').hide();
+
+    $('.input-search .dropdown #productCode').keyup(function () {
+
+        // write function ajax to here.
+        var productCode = $('.input-search .dropdown #productCode').val();
+
+        $('.input-search .dropdown-menu').hide();
+        var stringValue = "";
+        data.forEach(function (text) {
+            if (text.indexOf(productCode) > -1) {
+                stringValue = stringValue + "<li class='pd-l-10'>" + text + "<li>";
+            }
+        });
+
+
+        if (stringValue != "") {
+            $('.input-search .dropdown .dropdown-menu').html(stringValue);
+            $('.input-search .dropdown .dropdown-menu').show();
+        }
+        if (productCode == "") {
+            $('.input-search .dropdown .dropdown-menu').html("");
+            $('.input-search .dropdown .dropdown-menu').hide();
+        }
+    });
+
+    $('.input-search #productCode ul').click(function (event) {
+        alert(event);
+    });
+
+    $('.input-search #productCode ul li').click(function (event) {
+        alert(event);
+    });
+
+    $('.input-search #productCode ul').on('click', 'li', function () {
+        alert('aaaaaaaaaaaa');
     });
 
     $("li.ui-menu-item").addClass("list-group-item");
