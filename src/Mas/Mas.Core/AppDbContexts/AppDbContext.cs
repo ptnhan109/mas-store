@@ -31,6 +31,8 @@ namespace Mas.Core.AppDbContexts
 
         public DbSet<InvoiceDetail> InvoiceDetails { get; set; }
 
+        public DbSet<InventoryItem> InventoryItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

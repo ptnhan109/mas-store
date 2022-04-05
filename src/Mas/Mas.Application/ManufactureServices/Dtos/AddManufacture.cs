@@ -29,7 +29,7 @@ namespace Mas.Application.ManufactureServices.Dtos
 
         public string Province { get; set; }
 
-        public Manufacture ToEntity() => new Manufacture()
+        public virtual Manufacture ToEntity() => new Manufacture()
         {
             CreatedAt = DateTime.Now,
             Id = Guid.NewGuid(),
@@ -41,7 +41,21 @@ namespace Mas.Application.ManufactureServices.Dtos
             Note = Note,
             Phone = Phone,
             Province = Province,
-            Code = Code
+            Code = Code,
+            TaxCode = TaxCode
         };
+    }
+
+    public class UpdateManufacture : AddManufacture
+    {
+        public Guid Id { get; set; }
+
+        public override Manufacture ToEntity()
+        {
+            var entity =  base.ToEntity();
+            entity.Id = Id;
+
+            return entity;
+        }
     }
 }

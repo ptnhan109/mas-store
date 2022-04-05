@@ -33,7 +33,8 @@
         let importPrice = $("#txtDefaultImportPrice").val();
         let sellPrice = $("#txtDefaultSellPrice").val();
         let wholeSellPrice = $("#txtDefaultWholeSalePrice").val();
-
+        let currentQuantity = $("#txtCurrentQuantity").val();
+        let inventoryLimit = $("#txtInventoryLimit").val();
         var prices = [];
 
         $("#list-prices > tr").each(function () {
@@ -64,7 +65,9 @@
             CloseToDate: 0, // TODO:
             UnitId: +unit,
             Prices: prices,
-            WholeSellPrice: +wholeSellPrice
+            WholeSellPrice: +wholeSellPrice,
+            CurrentQuantity: +currentQuantity,
+            InventoryLimit: +inventoryLimit
         };
 
         // submit

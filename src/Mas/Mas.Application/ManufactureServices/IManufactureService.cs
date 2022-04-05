@@ -1,4 +1,5 @@
-﻿using Mas.Application.ManufactureServices.Dtos;
+﻿using Mas.Application.CustomerServices.Dtos;
+using Mas.Application.ManufactureServices.Dtos;
 using Mas.Common;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,9 @@ namespace Mas.Application.ManufactureServices
         Task Add(AddManufacture request);
 
         Task<PagedResult<ManufactureItem>> GetPaged(string keyword, Guid? group, int? page = 1, int? pageSize = 10);
+
+        Task UpdateAsync(UpdateManufacture request);
+
+        Task<ManufactureDetail> GetById(Guid id);
     }
 }
