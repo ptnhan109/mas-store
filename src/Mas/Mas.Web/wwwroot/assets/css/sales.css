@@ -5,3 +5,27 @@
 .half-height {
     height: 30vh !important;
 }
+
+.input-search .dropdown .dropdown-menu li:hover {
+    background-color: #ddd;
+}
+
+.input-search .dropdown .dropdown-menu {
+    width: 100%;
+    transform: translate(0px, 38px) !important;
+}
+
+.input-search .dropdown .dropdown-menu.list-group:not(.show) {
+    transform: translate(0px, 0px) !important;
+}
+
+
+.dropdown-menu.list-group.show {
+    transform: translate(-25px, 40px) !important;
+}
+
+
+
+/*.input-search .dropdown .dropdown-menu li {
+    color:red;
+}*/

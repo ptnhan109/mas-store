@@ -47,7 +47,7 @@
                                         <p class="user-dropdown-status text-sm text-muted">@Context.Session.GetString("Role")</p>
                                     </div>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end shadow-lg"
+                                <ul class="dropdown-menu"
                                     aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="javascript:;">Cập nhật</a></li>
                                     <li>
@@ -80,14 +80,12 @@
                                             <div class="form">
                                                 <div class="row">
                                                     <!-- <div class="col-md-12 col-12"> -->
-                                                    <div class="col-md-9 col-12">
-                                                        <div class="form-group position-relative  has-icon-left">
+                                                    <div class="col-md-9 col-12 input-search">
+                                                        <div class="form-group dropdown">
                                                             <input type="text" class="form-control"
                                                                    placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
                                                                    id="productCode">
-                                                            <div class="form-control-icon">
-                                                                <i class="bi bi-file-earmark-break-fill text-primary"></i>
-                                                            </div>
+                                                            <ul class="dropdown-menu"></ul>
                                                         </div>
 
                                                         
@@ -161,12 +159,15 @@
                                                             <h6 class="badge bg-success">Tổng tiền</h6>
 
                                                         </div>
-                                                        <div class="col-md-8 col-12">
+                                                    </div>
+                                                    <div class="row float-end d-block">
+                                                        <div class="col-md-8 col-12 float-end">
                                                             <div class="col-12 d-flex justify-content-end">
                                                                 <h2><strong id="order-total-money">0</strong></h2>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <br />
                                                     <div class="row">
                                                         <div class="col-md-4 col-12 d-flex justify-content-end">
@@ -184,12 +185,17 @@
                                                             <h6 class="badge bg-primary">Cần thanh toán</h6>
 
                                                         </div>
-                                                        <div class="col-md-8 col-12">
+                                                        
+                                                    </div>
+
+                                                    <div class="row float-end d-block">
+                                                        <div class="col-md-8 col-12 float-end">
                                                             <div class="col-12 d-flex justify-content-end">
                                                                 <h2><strong id="order-total-money-checkout">0</strong></h2>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <hr />
                                                     <h6 for="floatingTextarea">Ghi chú đơn hàng</h6>
                                                     <textarea class="form-control half-height" placeholder="ghi chú về đơn hàng"
