@@ -5,58 +5,52 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
-    //var availableTags = [
-    //    "ActionScript",
-    //    "AppleScript"
-    //];
-
-    //$("#productCode").autocomplete({
-    //    source: availableTags,
-    //});
-
-    // remove it if u have ajax
-    var data = ["aaaa", "bbab2", "cccc", "dddd"];
 
     $('.input-search #productCode').focusout(function () {
         $('.input-search .dropdown .dropdown-menu').hide();
     });
 
     $('.input-search .dropdown-menu').hide();
-
+    $("#product-search-suggestion").on("click", "a", function (event) {
+        var elem = $(this);
+        console.log(elem.attr("prod-barcode"));
+    });
     $('.input-search .dropdown #productCode').keyup(function () {
 
-        // write function ajax to here.
         var productCode = $('.input-search .dropdown #productCode').val();
+        let html = "";
+        $.ajax({
+            url: urlSearchProd,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                keyword: productCode
+            },
+            success: function (data) {
+                data.items.forEach(function (prod) {
+                    html += '<li class="pd-l-10"><a prod-barcode="';
+                    html += prod.barCode;
+                    html += '" class="dropdown-item" href="javascript:;">';
+                    html += prod.name.toUpperCase();
+                    html += '</a></li>';
+                    html += '<li><hr class="dropdown-divider"></li>';
+                });
+                if (html != "") {
+                    $('.input-search .dropdown .dropdown-menu').html(html);
+                    $('.input-search .dropdown .dropdown-menu').show();
 
-        $('.input-search .dropdown-menu').hide();
-        var stringValue = "";
-        data.forEach(function (text) {
-            if (text.indexOf(productCode) > -1) {
-                stringValue = stringValue + "<li class='pd-l-10'>" + text + "<li>";
+                    $("a.dropdown-item").click(function () {
+                        console.log("aa");
+                    });
+                }
             }
         });
-
-
-        if (stringValue != "") {
-            $('.input-search .dropdown .dropdown-menu').html(stringValue);
-            $('.input-search .dropdown .dropdown-menu').show();
-        }
         if (productCode == "") {
             $('.input-search .dropdown .dropdown-menu').html("");
             $('.input-search .dropdown .dropdown-menu').hide();
         }
-    });
-
-    $('.input-search #productCode ul').click(function (event) {
-        alert(event);
-    });
-
-    $('.input-search #productCode ul li').click(function (event) {
-        alert(event);
-    });
-
-    $('.input-search #productCode ul').on('click', 'li', function () {
-        alert('aaaaaaaaaaaa');
     });
 
     $("li.ui-menu-item").addClass("list-group-item");

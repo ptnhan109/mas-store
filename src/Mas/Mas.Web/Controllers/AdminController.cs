@@ -430,6 +430,14 @@ namespace Mas.Web.Controllers
             await Task.Yield();
             return Json(templates);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> SearchProduct(string keyword)
+        {
+            var items = await _prodService.Products(keyword, null, 1, 10);
+
+            return Json(items);
+        }
         #endregion
     }
 }

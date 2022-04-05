@@ -85,7 +85,7 @@
                                                             <input type="text" class="form-control"
                                                                    placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
                                                                    id="productCode">
-                                                            <ul class="dropdown-menu"></ul>
+                                                            <ul class="dropdown-menu" id="product-search-suggestion"></ul>
                                                         </div>
 
                                                         
@@ -363,7 +363,7 @@
         var urlGetProd = '@Url.Action("GetProduct","Employee")';
         var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
         var addInvoiceUrl = '@Url.Action("AddInvoice","Employee")';
-
+        var urlSearchProd = '@Url.Action("SearchProduct","Admin")';
     </script>
     <script src="~/assets/js/components/sales.js"></script>
 </body>
