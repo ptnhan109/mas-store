@@ -45,4 +45,38 @@ namespace Mas.Application.ProductServices.Dtos
         public static ProductItem FromEntity(Product entity) => new ProductItem(entity);
         private Unit GetUnits(int defaultUnit) => ContantsUnit.Units().FirstOrDefault(c => c.Id == defaultUnit);
     }
+
+    public class ProductInventoryItem
+    {
+        public Guid Id { get; set; }
+
+        public string BarCode { get; set; }
+
+        public string Name { get; set; }
+
+        public Unit Unit { get; set; }
+
+        public string DefaultImport { get; set; }
+
+        public double? Price { get; set; }
+
+        public int InventoryLimit { get; set; }
+
+
+        public ProductInventoryItem(Product entity)
+        {
+            var price = entity?.Prices?.FirstOrDefault(c => c.IsDefault);
+
+            Id = entity.Id;
+            BarCode = entity.BarCode;
+            Name = entity.Name;
+            DefaultImport = price?.ImportPrice.ToCurrencyFormat();
+            Price = price?.ImportPrice;
+            Unit = GetUnits(price.UnitId);
+            InventoryLimit = entity.InventoryLimit;
+        }
+
+        public static ProductItem FromEntity(Product entity) => new ProductItem(entity);
+        private Unit GetUnits(int defaultUnit) => ContantsUnit.Units().FirstOrDefault(c => c.Id == defaultUnit);
+    }
 }

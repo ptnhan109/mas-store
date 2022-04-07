@@ -370,6 +370,29 @@ namespace Mas.Web.Controllers
         {
             return View();
         }
+
+        [Route("quan-tri/hang-ton")]
+        public async Task<IActionResult> ProductInventory()
+        {
+            await Task.Yield();
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> SearchInventories(string keyword, Guid? categoryId, int? isPassQuota, int? page = 1, int? pageSize = 10)
+        {
+            if(isPassQuota != null)
+            {
+                bool pass = isPassQuota.Value == 1 ? true : false;
+                var items = await _inventoryService.GetInventories(keyword, categoryId, pass, page, pageSize);
+                
+                return Json(items);
+            }
+
+            var result = await _inventoryService.GetInventories(keyword, categoryId, null, page, pageSize);
+
+            return Json(result);
+        }
         #endregion
 
         #region API

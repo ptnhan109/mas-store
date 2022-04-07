@@ -5,7 +5,9 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
-
+    $('.dropdown-menu li a').on('click', function () {
+        console.log("TEST");
+    });
     $('.input-search #productCode').focusout(function () {
         $('.input-search .dropdown .dropdown-menu').hide();
     });
@@ -32,19 +34,24 @@ $(document).ready(function () {
                 data.items.forEach(function (prod) {
                     html += '<li class="pd-l-10"><a prod-barcode="';
                     html += prod.barCode;
-                    html += '" class="dropdown-item" href="javascript:;">';
+                    html += '" class="dropdown-item suggestion-item" href="#">';
                     html += prod.name.toUpperCase();
                     html += '</a></li>';
                     html += '<li><hr class="dropdown-divider"></li>';
                 });
-                if (html != "") {
-                    $('.input-search .dropdown .dropdown-menu').html(html);
-                    $('.input-search .dropdown .dropdown-menu').show();
 
-                    $("a.dropdown-item").click(function () {
-                        console.log("aa");
-                    });
-                }
+                $('.input-search .dropdown .dropdown-menu').html(html);
+                $("#product-search-suggestion").dropdown();
+                $('.input-search .dropdown .dropdown-menu').show();
+
+                $("a.suggestion-item").click(function () {
+                    console.log("aa");
+                });
+
+                $("li.pd-l-10").click(function () {
+                    console.log("aa");
+                });
+
             }
         });
         if (productCode == "") {
@@ -99,7 +106,7 @@ $(document).ready(function () {
                 if (discountValue > 0) {
                     $(row).find("td:nth-child(4)").append(html);
                 }
-                
+
                 let quantity = $(this).find("input[type=number]").val();
                 $(row).find("strong.item-price-total").html((newValue * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
                 updateTotalMoney();
@@ -139,7 +146,7 @@ function AddProductToCart(barcode) {
 
                     $(this).find('input[type=number]').val(quantity);
                     data.prices.forEach(function (element) {
-                        
+
                         if (element.isDefault) {
                             let newPrice = element.sellPrice * quantity;
                             total = newPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
@@ -179,13 +186,13 @@ function AppendProductHtml(data) {
             quantity = element.quantity;
             html += '<option selected value="';
             html += element.barCode;
-            html +='">';
+            html += '">';
             html += element.unit.name;
             html += '</option>';
         } else {
             html += '<option value="';
             html += element.barCode;
-            html +='">';
+            html += '">';
             html += element.unit.name;
             html += '</option>';
         }
@@ -194,7 +201,7 @@ function AppendProductHtml(data) {
     html += quantity;
     html += '"></div></td><td product-price="';
     html += sellPrice;
-    html +='"><a href="javascript:;" class="add-discount"><strong class="item-price">';
+    html += '"><a href="javascript:;" class="add-discount"><strong class="item-price">';
     html += sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     html += '</strong></a></td><td class="text-primary text-bold-500"><strong class="item-price-total">';
     html += (sellPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
@@ -204,7 +211,7 @@ function AppendProductHtml(data) {
     html += '"><i class="bi bi-trash text-danger"></i></a></td>';
     html += '<td class="d-none" product-price="';
     html += sellPrice;
-    html +='"></td></tr>';
+    html += '"></td></tr>';
 
     $("#cart-list").append(html);
     totalMoney += sellPrice;
@@ -230,7 +237,7 @@ function AppendProductHtml(data) {
         $("#modal-discount").modal("show");
     });
 
-    
+
 
     $("select.form-select").change(function () {
         let currentBarCode = $(this).val();
@@ -322,9 +329,9 @@ function AddInvoices() {
             CurrentPrice: +price,
             Discount: +discount,
             Quantity: +quantity,
-            ProductId : id
+            ProductId: id
         });
-        
+
         let totalAmount = 0;
         let totalDiscount = 0;
         items.forEach(function (item) {
@@ -364,7 +371,7 @@ function AddInvoices() {
             showMessage("success", data);
         }
     });
-    
+
 }
 
 function PrintInvoice(html) {

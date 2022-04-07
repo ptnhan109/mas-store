@@ -13,3 +13,7 @@
 .dropdown-menu.list-group:not(.show) {
     display: none;
 }
+
+.bg-product-below-limit {
+    background-color: #ffe0e0;
+}

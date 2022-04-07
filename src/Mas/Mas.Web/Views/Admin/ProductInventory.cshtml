@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "ProductInventory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>HÀNG HÓA</h3>
+            <p class="text-subtitle text-muted">Quản lý hàng hóa trong cửa hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hàng hóa</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <button type="button" class="btn btn-success me-1 mb-1">Xuất file</button>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+
+                                    <div class="col-md-4 col-12">
+                                        <h6>Tìm kiếm</h6>
+                                        <div class="form-group position-relative has-icon-left">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên hàng / mã vạch / mô tả" name="keyword" id="keyword">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpCategory" name="categoryId">
+                                                <option value="" selected>Tất cả</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpQuota" name="quota">
+                                                <option value="" selected>Tất cả</option>
+                                                <option value="1">Trên định mức</option>
+                                                <option value="0">Dưới định mức</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="inventoryProducts(1);">
+                                            Lọc mặt
+                                            hàng
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh mục hàng hóa
+            </div>
+            <div class="card-body">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá vốn</th>
+                            <th>Đơn vị</th>
+                            <th>Số lượng</th>
+                            <th>Giá trị</th>
+                            <th></th>
+                        </tr>              
+                    </thead>
+                    <tbody id="inventory-products">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<script src="/assets/vendors/jquery/jquery.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendors/fontawesome/all.min.js"></script>
+
+<script src="/assets/js/mazer.js"></script>
+
+<script>
+    const currencyFractionDigits = new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'VND',
+    }).resolvedOptions().maximumFractionDigits;
+
+    $(document).ready(function () {
+        GetCategories();
+        inventoryProducts(1);
+    });
+
+    function inventoryProducts(page) {
+        let url = "@Url.Action("SearchInventories","Admin")";
+        let keyword = $("#keyword").val();
+        let category = $("#drpCategory").val();
+        let quota = $("#drpQuota").val();
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: {
+                keyword: keyword,
+                categoryId: category,
+                page: page,
+                pageSize: 10,
+                isPassQuota: quota
+            },
+            success: function (response) {
+                let html = "";
+                console.log(response);
+                if (response.items.length > 0) {
+                    response.items.forEach(function (item, index) {
+                        if (item.quantity <= item.product.inventoryLimit) {
+                            html += '<tr  class="bg-product-below-limit"><td>';
+                        } else {
+                            html += "<tr><td>";
+                        }
+                        html += index + 1;
+                        html += "</td><td>";
+                        html += item.product.name;
+                        html += "";
+                        html += '</td><td><strong class="text-success">';
+                        html += item.product.defaultImport;
+                        html += '</strong></td><td><span class="';
+                        html += item.product.unit.description;
+                        html += '">';
+                        html += item.product.unit.name;
+                        html += "</span></td><td>";
+                        html += item.quantity;
+                        html += '</td><td><strong class="text-success">';
+                        html += (item.quantity * item.product.price).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</strong></td><td>";
+                        html += '<a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+                        html += "</td></tr>";
+                    });
+
+                    $("#inventory-products").html(html);
+
+                    generatePaging(page, response.totalPage, inventoryProducts);
+                } else {
+                    html += '<tr><td colspan="7" class="text-center">Không tồn tại sản phẩm</td></tr>';
+                    $("#inventory-products").html(html);
+
+                    generatePaging(page, response.totalPage, inventoryProducts);
+                }
+            }
+        });
+    };
+</script>
