@@ -186,6 +186,15 @@ namespace Mas.Core
             return queryable;
         }
 
-        
+        public virtual async Task UpdateRangeAsync(List<TEntity> entities)
+        {
+            foreach(var entity in entities)
+            {
+                _context.Entry(entity).State = EntityState.Modified;
+                _context.Entry(entity).Property(c => c.CreatedAt).IsModified = false;
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

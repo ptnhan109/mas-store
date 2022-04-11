@@ -25,6 +25,8 @@ namespace Mas.Core
 
         Task UpdateAsync(TEntity entity);
 
+        Task UpdateRangeAsync(List<TEntity> entities);
+
         Task<TEntity> FindAsync(Guid id, IEnumerable<string> includes = null);
 
         Task<TEntity> FindAsync(Expression<Func<TEntity,bool>> where = null, IEnumerable<string> includes = null);
