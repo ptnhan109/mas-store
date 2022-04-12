@@ -368,14 +368,15 @@ namespace Mas.Web.Controllers
         [Route("quan-tri/quan-ly-kho")]
         public async Task<IActionResult> Inventories(string keyword, Guid? groupId, bool? limit,int? page = 1, int? pageSize = 10)
         {
+            await Task.Yield();
             return View();
         }
 
         [Route("quan-tri/hang-ton")]
         public async Task<IActionResult> ProductInventory()
         {
-            await Task.Yield();
-            return View();
+            var dashboard = await _inventoryService.Dashboard();
+            return View(dashboard);
         }
 
         [HttpGet]
@@ -392,6 +393,15 @@ namespace Mas.Web.Controllers
             var result = await _inventoryService.GetInventories(keyword, categoryId, null, page, pageSize);
 
             return Json(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<JsonResult> InventoryInfo(Guid id)
+        {
+            var data = await _inventoryService.GetItemInfoAsync(id);
+
+            return Json(data);
         }
         #endregion
 

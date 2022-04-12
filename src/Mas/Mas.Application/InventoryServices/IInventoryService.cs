@@ -14,5 +14,7 @@ namespace Mas.Application.InventoryServices
         Task<PagedResult<InventoryListItem>> GetInventories(string keyword, Guid? categoryId, bool? isPassQuota, int? page = 1, int? pageSize = 10);
 
         Task<InventoryDashboard> Dashboard();
+
+        Task<InventoryItemInfo> GetItemInfoAsync(Guid id);
     }
 }

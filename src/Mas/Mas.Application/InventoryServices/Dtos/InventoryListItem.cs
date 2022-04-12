@@ -8,6 +8,8 @@ namespace Mas.Application.InventoryServices.Dtos
 {
     public class InventoryListItem
     {
+        public Guid Id { get; set; }
+
         public ProductInventoryItem Product { get; set; }
 
         public int Quantity { get; set; }
@@ -20,7 +22,8 @@ namespace Mas.Application.InventoryServices.Dtos
             {
                 Product = new ProductInventoryItem(entity.Product),
                 Quantity = entity.Quantity,
-                LastDayImport = entity.UpdatedAt.ToString("dd-MM-yyyy")
+                LastDayImport = entity.UpdatedAt.ToString("dd-MM-yyyy"),
+                Id = entity.Id
             };
         }
     }

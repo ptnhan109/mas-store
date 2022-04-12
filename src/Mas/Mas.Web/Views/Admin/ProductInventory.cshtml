@@ -1,4 +1,4 @@
-﻿
+﻿@model Mas.Application.InventoryServices.Dtos.InventoryDashboard
 @{
     ViewData["Title"] = "ProductInventory";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,6 +24,18 @@
 
     <section id="multiple-column-form">
         <div class="row match-height">
+            <div class="col-6">
+                <div class="alert alert-info">
+                    <h4 class="alert-heading">@Model.TotalProductQuantity</h4>
+                    <p>Sản phẩm trong kho.</p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="alert alert-warning">
+                    <h4 class="alert-heading">@Model.BelowQuota</h4>
+                    <p>Sản phẩm dưới định mức.</p>
+                </div>
+            </div>
             <div class="col-12">
                 <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
                     <button type="button" class="btn btn-success me-1 mb-1">Xuất file</button>
@@ -53,7 +65,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-md-4 col-12">
-                                        <h6>Nhóm hàng</h6>
+                                        <h6>Định mức</h6>
                                         <fieldset class="form-group">
                                             <select class="form-select" id="drpQuota" name="quota">
                                                 <option value="" selected>Tất cả</option>
@@ -74,6 +86,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
     <!-- Basic Tables start -->
@@ -93,7 +106,7 @@
                             <th>Số lượng</th>
                             <th>Giá trị</th>
                             <th></th>
-                        </tr>              
+                        </tr>
                     </thead>
                     <tbody id="inventory-products">
                     </tbody>
@@ -108,6 +121,64 @@
         </div>
 
     </section>
+
+    <!--Modal-->
+    <div class="modal fade text-left modal-" id="modal-product-info" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">CHI TIẾT SẢN PHẨM</h5>
+                    <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form">
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <input id="update-customer-id" type="text" hidden />
+                                <div class="form-group">
+                                    <label for="first-name-column">Tên sản phẩm</label>
+                                    <input type="text" id="product-name" class="form-control" value="Mì ăn liền hảo hảo">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Danh mục</label>
+                                    <input type="text" id="product-category" class="form-control" value="Đồ ăn nhanh">
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-12">
+                                <table class="table" id="product-prices">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Đơn vị</th>
+                                            <th>Giá nhập</th>
+                                            <th>Giá bán lẻ</th>
+                                            <th>Giá bán buôn</th>
+                                            <th>Tồn kho</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody id="inventory-product-info">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer pd-t-0">
+                    <button type="button" class="btn btn-default ml-1" id="btn-close-modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Đóng</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
@@ -125,6 +196,9 @@
     $(document).ready(function () {
         GetCategories();
         inventoryProducts(1);
+        $("#btn-close-modal").click(function () {
+            $("#modal-product-info").modal("hide");
+        });
     });
 
     function inventoryProducts(page) {
@@ -169,12 +243,19 @@
                         html += item.quantity;
                         html += '</td><td><strong class="text-success">';
                         html += (item.quantity * item.product.price).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                        html += "</strong></td><td>";
-                        html += '<a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+                        html += '</strong></td><td inventory-id="';
+                        html += item.id;
+                        html += '">';
+                        html += '<a href="javascript:;" class="product-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
                         html += "</td></tr>";
                     });
 
                     $("#inventory-products").html(html);
+
+                    $("a.product-info").click(function () {
+                        let id = $(this).closest("td").attr("inventory-id");
+                        getInventoryItem(id);
+                    });
 
                     generatePaging(page, response.totalPage, inventoryProducts);
                 } else {
@@ -186,4 +267,50 @@
             }
         });
     };
+
+    function getInventoryItem(id) {
+        let url = "@Url.Action("InventoryInfo","Admin")";
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $("#product-name").val(data.name);
+                $("#product-category").val(data.category);
+                let html = "";
+                data.prices.forEach(function (price, index) {
+                    html += "<tr><td>";
+                    html += index + 1;
+                    html += "</td><td>";
+                    html += price.unit;
+                    html += "</td><td>";
+                    html += price.importPrice;
+                    html += "</td><td>";
+                    html += price.sellPrice;
+                    html += "</td><td>";
+                    html += price.wholeSellPrice;
+                    html += "</td><td>";
+                    html += price.quantity;
+                    html += "</td></tr>";
+                });
+
+                $("#inventory-product-info").html(html);
+                $("#modal-product-info").modal("show");
+            }
+        })
+    }
 </script>
+
+<tr>
+    <td>1</td>
+    <td>Thùng</td>
+    <td>200.000</td>
+    <td>200.000</td>
+    <td>200.000</td>
+    <td>100</td>
+</tr>

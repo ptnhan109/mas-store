@@ -26,38 +26,33 @@ namespace Mas.Application.InventoryServices
 
         public async Task<InventoryDashboard> Dashboard()
         {
-            var query = _repository.GetQueryable(new List<string>() { "Product","Product.Prices","Product.Category"});
+            var query = _repository.GetQueryable(new List<string>() { "Product", "Product.Prices", "Product.Category" });
             int below = await query.CountAsync(c => c.Quantity < c.Product.InventoryLimit);
             int total = await query.CountAsync();
-            double money = 0;
-            foreach(var pro in query)
-            {
-                money += pro.Quantity * (pro.Product.Prices.FirstOrDefault(c => c.IsDefault).ImportPrice);
-            }
 
             return new InventoryDashboard()
             {
                 BelowQuota = below,
-                TotalMoney = money,
+                TotalMoney = 0,
                 TotalProductQuantity = total
             };
         }
 
         public async Task<PagedResult<InventoryListItem>> GetInventories(string keyword, Guid? categoryId, bool? isPassQuota, int? page = 1, int? pageSize = 10)
         {
-            var query = _repository.GetQueryable(new List<string>() { "Product" , "Product.Prices" });
+            var query = _repository.GetQueryable(new List<string>() { "Product", "Product.Prices" });
 
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(c => c.Product.Name.Contains(keyword));
             }
 
-            if(categoryId != null)
+            if (categoryId != null)
             {
                 query = query.Where(c => c.Product.CategoryId == categoryId.Value);
             }
 
-            if(isPassQuota != null)
+            if (isPassQuota != null)
             {
                 if (isPassQuota.Value)
                 {
@@ -72,6 +67,13 @@ namespace Mas.Application.InventoryServices
             var paged = await _repository.FindPagedAsync(query, null, page.Value, pageSize.Value);
 
             return paged.ChangeType(InventoryListItem.FromEntity);
+        }
+
+        public async Task<InventoryItemInfo> GetItemInfoAsync(Guid id)
+        {
+            var entity = await _repository.FindAsync(id, new List<string>() { "Product", "Product.Prices", "Product.Category" });
+
+            return new InventoryItemInfo(entity);
         }
     }
 }

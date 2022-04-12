@@ -5,9 +5,7 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
-    $('.dropdown-menu li a').on('click', function () {
-        console.log("TEST");
-    });
+
     $('.input-search #productCode').focusout(function () {
         $('.input-search .dropdown .dropdown-menu').hide();
     });
@@ -44,12 +42,10 @@ $(document).ready(function () {
                 $("#product-search-suggestion").dropdown();
                 $('.input-search .dropdown .dropdown-menu').show();
 
-                $("a.suggestion-item").click(function () {
-                    console.log("aa");
-                });
-
-                $("li.pd-l-10").click(function () {
-                    console.log("aa");
+                $(".dropdown-menu").hover(function () {
+                    $(".dropdown-item").on("click", (function () {
+                        alert("click detected");
+                    }));
                 });
 
             }
