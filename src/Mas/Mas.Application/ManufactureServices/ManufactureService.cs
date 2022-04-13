@@ -42,7 +42,7 @@ namespace Mas.Application.ManufactureServices
             var query = _repo.GetQueryable(new string[] { "Group" });
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(c => c.Name.Contains(keyword));
+                query = query.Where(c => c.SearchParams.Contains(keyword.ToLower()));
             }
 
             if(group != null)

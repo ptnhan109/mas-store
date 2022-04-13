@@ -54,7 +54,7 @@ namespace Mas.Application.CustomerServices
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(c => c.Name.Contains(keyword));
+                query = query.Where(c => c.SearchParams.Contains(keyword));
             }
 
             var paged = await _repository.FindPagedAsync(query, null, page.Value, pageSize.Value);

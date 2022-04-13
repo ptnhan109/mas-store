@@ -86,7 +86,7 @@ namespace Mas.Application.ProductServices
             var query = _repository.GetQueryable(new List<string>() { "Category", "Prices" });
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(c => c.Name.Contains(keyword) || c.BarCode.Contains(keyword));
+                query = query.Where(c => c.SearchParams.Contains(keyword.ToLower()) || c.BarCode.Contains(keyword));
             }
 
             if (category != null)

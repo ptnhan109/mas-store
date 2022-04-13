@@ -1,4 +1,5 @@
-﻿using Mas.Core.Entities;
+﻿using Mas.Common;
+using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -42,7 +43,8 @@ namespace Mas.Application.ManufactureServices.Dtos
             Phone = Phone,
             Province = Province,
             Code = Code,
-            TaxCode = TaxCode
+            TaxCode = TaxCode,
+            SearchParams = Name.ToRemoveUnicode()
         };
     }
 

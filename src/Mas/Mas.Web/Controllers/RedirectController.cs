@@ -17,5 +17,10 @@ namespace Mas.Web.Controllers
         {
             return View();
         }
+
+        public IActionResult 500()
+        {
+            return View();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Mas.Core.Entities;
+﻿using Mas.Common;
+using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,8 @@ namespace Mas.Application.ProductServices.Dtos
                 Name = Name,
                 InventoryLimit = InventoryLimit,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                SearchParams = Name.ToRemoveUnicode()
             };
 
             var defaultPrice = new Price()
@@ -116,7 +118,7 @@ namespace Mas.Application.ProductServices.Dtos
                 UnitId = ParentUnitId,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                WholeSalePrice = WholeSalePrice
+                WholeSalePrice = WholeSalePrice,
             };
         }
     }

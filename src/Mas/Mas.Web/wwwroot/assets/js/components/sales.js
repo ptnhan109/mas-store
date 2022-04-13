@@ -4,6 +4,7 @@
 }).resolvedOptions().maximumFractionDigits;
 
 var totalMoney = 0;
+var customerId = "";
 $(document).ready(function () {
     $("#product-search-suggestion").css({
         'width': ($("#productCode").width() + 'px')
@@ -337,7 +338,8 @@ function DisplayCustomerSuggestion(keyword) {
 
                 $('#customer-search-suggestion').html(html);
                 $("a.suggestion-item").click(function () {
-                    let barcode = $(this).attr("prod-barcode");
+                    customerId = $(this).attr("customer-id");
+                    $("#customer-name").val($(this).text().split('-')[0]);
                     $('#customer-search-suggestion').html("");
                 });
             }
@@ -388,6 +390,10 @@ function AddInvoices() {
         Discount: +discount,
         InvoiceDetails: items
     };
+
+    if (customerId != "") {
+        request.CustomerId = customerId
+    }
 
     if ($('#is-print-invoice').is(":checked")) {
         $.ajax({

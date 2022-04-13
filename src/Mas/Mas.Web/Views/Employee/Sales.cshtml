@@ -21,8 +21,10 @@
     <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/sales.css">
     <link rel="stylesheet" href="/assets/css/app.css">
-    <link href="~/assets/css/common.css" rel="stylesheet" />
-    <script src="~/assets/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link href="/assets/css/common.css" rel="stylesheet" />
+    <script src="/assets/js/common.js"></script>
 </head>
 
 <body>
@@ -84,7 +86,7 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control"
                                                                    placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
-                                                                   id="productCode" >
+                                                                   id="productCode" autocomplete="off" >
                                                             <ul class="suggestion list-group" id="product-search-suggestion">
                                                             </ul>
                                                         </div>
@@ -144,7 +146,7 @@
                                                         <div class="form-group position-relative has-icon-left">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control"
-                                                                       placeholder="Để trống nếu khách lẻ" id="customer-name">
+                                                                       placeholder="Để trống nếu khách lẻ" id="customer-name" autocomplete="off">
                                                                 <ul class="suggestion list-group" id="customer-search-suggestion">
                                                                 </ul>
                                                                 <div class="form-control-icon">

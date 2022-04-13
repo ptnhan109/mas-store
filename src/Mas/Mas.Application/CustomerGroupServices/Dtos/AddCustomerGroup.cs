@@ -23,6 +23,7 @@ namespace Mas.Application.CustomerGroupServices.Dtos
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Code = ContantPrefix.CustomerGroup.GenerateCode(4),
+            SearchParams = Name.ToRemoveUnicode()
         };
     }
 

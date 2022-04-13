@@ -28,15 +28,15 @@ namespace Mas.Common
 
         public static string ToCurrencyFormat(this double input)
         {
-            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN"); 
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             return input.ToString("#,###", cul.NumberFormat);
         }
 
-        public static string GenerateCode(this string prefix,int length)
+        public static string GenerateCode(this string prefix, int length)
         {
             var random = new Random();
             var result = new StringBuilder(prefix.ToUpper());
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < length; i++)
             {
                 result.Append(random.Next(1, 9));
             }
@@ -44,5 +44,19 @@ namespace Mas.Common
             return result.ToString();
         }
 
+        public static string ToRemoveUnicode(this string input)
+        {
+            string[] VietnameseSigns = new string[]{ "aAeEoOuUiIdDyY", "áàạảãâấầậẩẫăắằặẳẵ", "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+                "éèẹẻẽêếềệểễ", "ÉÈẸẺẼÊẾỀỆỂỄ", "óòọỏõôốồộổỗơớờợởỡ","ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ","úùụủũưứừựửữ","ÚÙỤỦŨƯỨỪỰỬỮ",
+                "íìịỉĩ", "ÍÌỊỈĨ", "đ", "Đ","ýỳỵỷỹ","ÝỲỴỶỸ"
+            };
+
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                    input = input.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+            }
+            return input.ToLower();
+        }
     }
 }

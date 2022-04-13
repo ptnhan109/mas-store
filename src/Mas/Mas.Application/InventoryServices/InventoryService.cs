@@ -44,7 +44,7 @@ namespace Mas.Application.InventoryServices
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(c => c.Product.Name.Contains(keyword));
+                query = query.Where(c => c.Product.SearchParams.Contains(keyword));
             }
 
             if (categoryId != null)
