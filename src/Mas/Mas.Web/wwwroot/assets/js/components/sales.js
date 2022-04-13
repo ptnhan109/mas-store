@@ -5,61 +5,20 @@
 
 var totalMoney = 0;
 $(document).ready(function () {
-
-    $('.input-search #productCode').focusout(function () {
-        $('.input-search .dropdown .dropdown-menu').hide();
+    $("#product-search-suggestion").css({
+        'width': ($("#productCode").width() + 'px')
     });
-
-    $('.input-search .dropdown-menu').hide();
-    $("#product-search-suggestion").on("click", "a", function (event) {
-        var elem = $(this);
-        console.log(elem.attr("prod-barcode"));
+    $("#customer-search-suggestion").css({
+        'width': ($("#customer-name").width() + 'px')
     });
-    $('.input-search .dropdown #productCode').keyup(function () {
-
-        var productCode = $('.input-search .dropdown #productCode').val();
-        let html = "";
-        $.ajax({
-            url: urlSearchProd,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: {
-                keyword: productCode
-            },
-            success: function (data) {
-                data.items.forEach(function (prod) {
-                    html += '<li class="pd-l-10"><a prod-barcode="';
-                    html += prod.barCode;
-                    html += '" class="dropdown-item suggestion-item" href="#">';
-                    html += prod.name.toUpperCase();
-                    html += '</a></li>';
-                    html += '<li><hr class="dropdown-divider"></li>';
-                });
-
-                $('.input-search .dropdown .dropdown-menu').html(html);
-                $("#product-search-suggestion").dropdown();
-                $('.input-search .dropdown .dropdown-menu').show();
-
-                $(".dropdown-menu").hover(function () {
-                    $(".dropdown-item").on("click", (function () {
-                        alert("click detected");
-                    }));
-                });
-
-            }
-        });
-        if (productCode == "") {
-            $('.input-search .dropdown .dropdown-menu').html("");
-            $('.input-search .dropdown .dropdown-menu').hide();
-        }
-    });
-
-    $("li.ui-menu-item").addClass("list-group-item");
-    $("ul").addClass("list-group");
 
     $('#productCode').focus();
+
+    $('#productCode').keyup(function () {
+        var productCode = $('#productCode').val();
+        DisplaySuggestion(productCode);
+    });
+
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
         if (e.keyCode == 13) {
@@ -70,6 +29,22 @@ $(document).ready(function () {
                 alert("Hãy nhập từ khóa");
             }
         }
+
+        if (e.keyCode == 8) {
+            DisplaySuggestion(qrCode);
+        }
+    });
+
+    $('#customer-name').on("keypress", function (e) {
+        let customer = $("#customer-name").val();
+        if (e.keyCode == 8) {
+            DisplayCustomerSuggestion(customer);
+        }
+    });
+
+    $('#customer-name').keyup(function () {
+        var productCode = $('#customer-name').val();
+        DisplayCustomerSuggestion(productCode);
     });
 
     $("#btn-checkout").click(function () {
@@ -297,6 +272,78 @@ function DiscountOrder() {
     $("#order-total-money-checkout").html(newValue.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
 }
 
+function DisplaySuggestion(keyword) {
+    console.log("keyword: " + keyword);
+    let html = "";
+    if (keyword == "") {
+        $('#product-search-suggestion').html("");
+    } else {
+        $.ajax({
+            url: urlSearchProd,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                keyword: keyword
+            },
+            success: function (data) {
+                console.log(data);
+                data.items.forEach(function (prod) {
+                    html += '<li class="list-group-item"><a prod-barcode="';
+                    html += prod.barCode;
+                    html += '" class="suggestion-item" href="javascript:;"><strong>';
+                    html += prod.name.toUpperCase();
+                    html += " - ";
+                    html += prod.defaultSell;
+                    html += '</strong></a></li>';
+                });
+
+                $('#product-search-suggestion').html(html);
+                $("a.suggestion-item").click(function () {
+                    let barcode = $(this).attr("prod-barcode");
+                    AddProductToCart(barcode);
+                    $('#product-search-suggestion').html("");
+                });
+            }
+        });
+    }
+}
+
+function DisplayCustomerSuggestion(keyword) {
+    let html = "";
+    if (keyword == "") {
+        $("#customer-search-suggestion").html("");
+    } else {
+        $.ajax({
+            url: urlSearchCustomer,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                keyword: keyword
+            },
+            success: function (data) {
+                data.items.forEach(function (cust) {
+                    html += '<li class="list-group-item"><a customer-id="';
+                    html += cust.id;
+                    html += '" class="suggestion-item" href="javascript:;"><strong>';
+                    html += cust.name.toUpperCase();
+                    html += " - ";
+                    html += cust.province;
+                    html += '</strong></a></li>';
+                });
+
+                $('#customer-search-suggestion').html(html);
+                $("a.suggestion-item").click(function () {
+                    let barcode = $(this).attr("prod-barcode");
+                    $('#customer-search-suggestion').html("");
+                });
+            }
+        });
+    }
+}
 // ===========================================================================================================================
 
 function AddInvoices() {

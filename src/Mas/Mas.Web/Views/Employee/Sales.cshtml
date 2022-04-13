@@ -81,12 +81,11 @@
                                                 <div class="row">
                                                     <!-- <div class="col-md-12 col-12"> -->
                                                     <div class="col-md-9 col-12 input-search">
-                                                        <div class="form-group dropdown">
+                                                        <div class="form-group">
                                                             <input type="text" class="form-control"
                                                                    placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
-                                                                   id="productCode">
-
-                                                            <ul class="dropdown-menu list-group hide" id="product-search-suggestion" aria-labelledby="productCode">
+                                                                   id="productCode" >
+                                                            <ul class="suggestion list-group" id="product-search-suggestion">
                                                             </ul>
                                                         </div>
 
@@ -136,26 +135,25 @@
                                 <div class="card">
                                     <div class="card-content overflow-auto full-height">
                                         <div class="card-body">
-                                            <i class="text-primary bi bi-calendar-date"></i> 25/02/2022 - 00:14
+                                            <i class="text-primary bi bi-calendar-date"></i> @DateTime.Now.ToString("dd-MM-yyyy hh:mm")
                                             <br>
                                             <br>
                                             <div class="form">
                                                 <div class="row">
                                                     <div class="col-md-12 col-12">
-                                                        <div class="form-group position-relative has-icon-left input-group">
-                                                            <input type="text" class="form-control"
-                                                                   placeholder="Để trống nếu khách lẻ" id="customer-name">
-                                                            <div class="form-control-icon">
-                                                                <i class="bi bi-person-fill text-primary"></i>
+                                                        <div class="form-group position-relative has-icon-left">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="Để trống nếu khách lẻ" id="customer-name">
+                                                                <ul class="suggestion list-group" id="customer-search-suggestion">
+                                                                </ul>
+                                                                <div class="form-control-icon">
+                                                                    <i class="bi bi-person"></i>
+                                                                </div>
                                                             </div>
-                                                            <button class="btn btn-primary" type="button"
-                                                                    id="button-addon2">
-                                                                Thêm
-                                                            </button>
                                                         </div>
                                                     </div>
-                                                    <br>
-                                                    <br>
+                                                    <hr />
                                                     <div class="row">
                                                         <div class="col-md-4 col-12">
                                                             <h6 class="badge bg-success">Tổng tiền</h6>
@@ -206,16 +204,7 @@
                                             </div>
                                         </div>
                                         <div class="container-fluid" style="position: absolute; bottom: 10px;">
-                                            <div class="col-md-12 col-12">
-                                                <div class="form-check">
-                                                    <div class="checkbox">
-                                                        <input type="checkbox" id="is-print-invoice" class="form-check-input"
-                                                               checked="">
-                                                        <label for="checkbox1">In hóa đơn</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
+                                            
                                             <div class="col-md-12 col-12">
                                                 <button class="btn btn-success btn-lg btn-block" id="btn-checkout">(F10) Thu tiền</button>
                                             </div>
@@ -297,8 +286,6 @@
         </div>
     </div>
 
-
-
     <div class="modal fade text-left modal-borderless" id="modal-order-discount" tabindex="-1"
          role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -361,6 +348,7 @@
         var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
         var addInvoiceUrl = '@Url.Action("AddInvoice","Employee")';
         var urlSearchProd = '@Url.Action("SearchProduct","Admin")';
+        var urlSearchCustomer = '@Url.Action("GetCustomers","Admin")'
     </script>
     <script src="~/assets/js/components/sales.js"></script>
 </body>

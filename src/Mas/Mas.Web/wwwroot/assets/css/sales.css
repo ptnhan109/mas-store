@@ -2,11 +2,18 @@
     height: 79vh !important;
 }
 
-.half-height {
-    height: 30vh !important;
+.form-group #productCode{
+    position: relative;
 }
 
-.input-search .dropdown .dropdown-menu li:hover {
+.form-group .suggestion {
+    position: absolute;
+    display: none;
+    z-index: 1;
+    background: white;
+    display: block;
+} 
+/*.input-search .dropdown .dropdown-menu li:hover {
     background-color: #ddd;
 }
 
@@ -22,7 +29,7 @@
 
 .dropdown-menu.list-group.show {
     transform: translate(-25px, 40px) !important;
-}
+}*/
 
 
 
