@@ -8,6 +8,8 @@ namespace Mas.Core
     {
         public Guid Id { get; set; }
 
+        public string SearchParams { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }

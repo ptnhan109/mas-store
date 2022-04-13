@@ -1,0 +1,162 @@
+﻿@using Mas.Core.Contants;
+@model Mas.Application.ManufactureServices.Dtos.ManufactureDetail
+@{
+    ViewData["Title"] = "ManufactureById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-heading">
+    <h3>CHI TIẾT NHÀ CUNG CẤP</h3>
+
+    <p class="text-subtitle text-muted">Chi tiết nhà cung cấp trong cửa hàng</p>
+</div>
+<form asp-action="UpdateManufacture" asp-controller="Admin" method="post">
+    <div class="page-content">
+        <div id="addProductForm">
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>THÔNG TIN NHÀ CUNG CẤP</strong>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="form">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Tên nhà cung cấp</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" hidden value="@Model.Id" name="Id" />
+                                                        <input type="text" class="form-control" placeholder="Tên nhà cung cấp" name="Name" id="txtName" value="@Model.Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Mã nhà cung cấp</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" value="@Model.Code" placeholder="Hệ thống tự động tạo mới khi để trống" name="Code" id="txtName">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Thư điện tử</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Thư điện tử" name="Mail" id="txtMail" value="@Model.Mail">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Mã số thuế</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Mã số thuế" value="@Model.TaxCode" name="TaxCode" id="txtTaxCode">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Số điện thoại</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Số điện thoại" name="Phone" id="txtPhone" value="@Model.Phone">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Nhóm nhà cung cấp</h6>
+                                                    <fieldset class="form-group">
+                                                        <select class="form-select" id="drpManufactureGroups" name="GroupId">
+                                                            
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+
+                                                <div class="row">
+                                                    <div class="col-md-4 col-12">
+                                                        <h6>Khu vực</h6>
+                                                        <fieldset class="form-group">
+                                                            <select class="form-select" id="drpCategory" name="Province">
+                                                                @foreach (var province in ContantsAddress.Provinces)
+                                                                {
+                                                                    if (province.Equals(Model.Province))
+                                                                    {
+
+                                                                        <option value="@province" selected>@province</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@province">@province</option>
+
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+
+                                                    <div class="col-md-8 col-12">
+                                                        <h6>Địa chỉ</h6>
+                                                        <div class="form-group position-relative">
+                                                            <input type="text" class="form-control" placeholder="Địa chỉ" name="Address" id="txtPhone" value="@Model.Address">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Ghi chú</h6>
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" id="customer-group-description" rows="4" name="Note">@Model.Note</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="add-transfer">
+                <table id="list-prices">
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-1 mb-1" id="addProduct">Cập nhật nhà cung cấp</button>
+        <a href="@Url.Action("Manufactures","Admin")" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</a>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        let url = "@Url.Action("GetManufactureGroups", "Admin")";
+        $.ajax({
+            url: url,
+            success: function (manufactureGroups) {
+                let html = "";
+                manufactureGroups.forEach(function (element, index) {
+                    html += '<option value="';
+                    html += element.id;
+                    html += '"';
+                    if (element.id == '@Model.GroupId') {
+                        html += 'selected >';
+                    } else {
+                        html += '>';
+                    }
+                    html += element.name;
+                    html += '</option>';
+                });
+                $("#drpManufactureGroups").html(html);
+            }
+        })
+    });
+</script>
+

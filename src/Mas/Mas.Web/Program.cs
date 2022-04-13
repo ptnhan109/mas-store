@@ -21,6 +21,7 @@ namespace Mas.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSetting("https_port", "8088");
                 });
     }
 }

@@ -1,8 +1,86 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Mas.Application.UserServices.Dtos.LoginModel
+@{
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minh Anh Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" href="/assets/css/pages/auth.css">
+    <script src="/assets/vendors/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="auth">
+
+        <div class="row h-100">
+            <div class="col-lg-5 col-12">
+                <div id="auth-left">
+                    <div class="auth-logo">
+                        <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Logo"></a>
+                    </div>
+                    <h1 class="auth-title">Đăng nhập</h1>
+                    <p class="auth-subtitle mb-5">Nhập tài khoản để sử dụng hệ thống.</p>
+
+                    <form asp-action="Index" asp-controller="Home" method="POST" id="loginForm" >
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Tên đăng nhập" name="Username" id="username">
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" placeholder="Mật khẩu" name="Password" id="password">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-lg d-flex align-items-end">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" name="IsRemember">
+                            <label class="form-check-label text-gray-600" for="flexCheckDefault">
+                                Lưu tên đăng nhập
+                            </label>
+                        </div>
+                        <div>
+                            <span class="text-danger" id="message">@Model.Message</span>
+                        </div>
+                    </form>
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" id="btnLogin">Đăng nhập hệ thống</button>
+                    <div class="text-center mt-5 text-lg fs-4">
+                        <p><a class="font-bold" href="auth-forgot-password.html">Tìm mật khẩu</a>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $("#btnLogin").click(function(){
+                let account = $("#username").val();
+                let password = $("#password").val();
+                if(account == "" || password == ""){
+                    $("#message").html("Tên đăng nhập không được để trống");
+                    $("#message").removeClass("d-none");
+                    return;
+                }
+                else{
+                    $("#loginForm").submit();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

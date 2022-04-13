@@ -1,6 +1,11 @@
+using Mas.Application;
+using Mas.Application.Options;
 using Mas.Core.AppDbContexts;
+using Mas.Core.Enums;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Mas.Web
@@ -29,7 +35,39 @@ namespace Mas.Web
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddScoped<AppDbContext>();
             #endregion
+
+            services.Configure<AppOptions>(Configuration.GetSection("AppOptions"));
+
+            services.AddDependencies();
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromHours(8);
+            });
+
             services.AddControllersWithViews();
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
+
+            #region Authenticate
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Home/Index";
+                options.Cookie.Name = "mas.cookie";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
+                options.SlidingExpiration = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.AccessDeniedPath = "/Redirect/Unauthorize";
+            });
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, EnumRole.Admin.ToString()));
+                opt.AddPolicy("Employee", policy => policy.RequireClaim(ClaimTypes.Role, EnumRole.Admin.ToString(),EnumRole.Employee.ToString()));
+            });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,14 +80,14 @@ namespace Mas.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

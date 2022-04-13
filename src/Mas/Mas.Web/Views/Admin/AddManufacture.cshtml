@@ -1,0 +1,131 @@
+﻿@using Mas.Core.Contants;
+@model IEnumerable<Mas.Application.ManufactureGroupServices.Dtos.ManufactureGroupItem>
+@{
+    ViewData["Title"] = "AddManufacture";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-heading">
+    <h3>THÊM MỚI NHÀ CUNG CẤP</h3>
+
+    <p class="text-subtitle text-muted">Thêm mới nhà cung cấp trong cửa hàng</p>
+</div>
+<form asp-action="CreateManufacture" asp-controller="Admin" method="post">
+    <div class="page-content">
+        <div id="addProductForm">
+            <section id="multiple-column-form">
+                <div class="row match-height">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>THÔNG TIN NHÀ CUNG CẤP</strong>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="form">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Tên nhà cung cấp</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Tên nhà cung cấp" name="Name" id="txtName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Mã nhà cung cấp</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Hệ thống tự động tạo mới khi để trống" name="Code" id="txtName">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Thư điện tử</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Thư điện tử" name="Mail" id="txtMail">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Mã số thuế</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Mã số thuế" name="TaxCode" id="txtTaxCode">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-12">
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Số điện thoại</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="text" class="form-control" placeholder="Số điện thoại" name="Phone" id="txtPhone">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Nhóm nhà cung cấp</h6>
+                                                    <fieldset class="form-group">
+                                                        <select class="form-select" id="drpCategory" name="GroupId">
+                                                            @foreach (var group in Model)
+                                                            {
+                                                                <option value="@group.Id" selected>@group.Name</option>
+                                                            }
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-12">
+
+                                                <div class="row">
+                                                    <div class="col-md-4 col-12">
+                                                        <h6>Khu vực</h6>
+                                                        <fieldset class="form-group">
+                                                            <select class="form-select" id="drpCategory" name="Province">
+                                                                @foreach (var province in ContantsAddress.Provinces)
+                                                                {
+                                                                    <option value="@province" selected>@province</option>
+                                                                }
+                                                            </select>
+                                                        </fieldset>
+                                                    </div>
+
+                                                    <div class="col-md-8 col-12">
+                                                        <h6>Địa chỉ</h6>
+                                                        <div class="form-group position-relative">
+                                                            <input type="text" class="form-control" placeholder="Địa chỉ" name="Address" id="txtPhone">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12">
+                                                    <h6>Ghi chú</h6>
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" id="customer-group-description" rows="4" name="Note"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="add-transfer">
+                <table id="list-prices">
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-1 mb-1" id="addProduct">Thêm mới nhà cung cấp</button>
+        <a href="@Url.Action("Manufactures","Admin")" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</a>
+    </div>
+</form>
+
+

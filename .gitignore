@@ -36,3 +36,6 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 packages/
+publish/
+obj/
+src/Mas/Mas.Application/obj/

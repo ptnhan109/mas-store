@@ -1,48 +1,289 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using Microsoft.AspNetCore.Http
+
+
+<!DOCTYPE html>
+<html lang="vi">
+
+@using Mas.Application.UserServices.Dtos;
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mas.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minh Anh Market</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/assets/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="~/assets/js/common.js"></script>
+    <link href="~/assets/css/common.css" rel="stylesheet" />
+    <script>
+        var categoryUrl = '@Url.Action("Categories","Admin")';
+    </script>
+    <script src="/assets/vendors/jquery/jquery.min.js"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mas.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <style>
+        .div-loading {
+            position: fixed;
+            display: block;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            text-align: center;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Mas.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        #spinner-loading{
+            position: absolute;
+            top: 50%;
+        }
+    </style>
+    <div id="app">
+        <div id="main" class="layout-horizontal">
+            <header class="mb-5">
+                <div class="header-top">
+                    <div class="container">
+                        <div class="logo">
+                            <a href="@Url.Action("Dashboard","Dashboard")"><img src="/assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="header-top-right">
+
+                            <div class="dropdown">
+                                <a href="#" class="user-dropdown d-flex dropend" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <div class="avatar avatar-md2">
+                                        <img src="@Context.Session.GetString("Avatar")" alt="Avatar">
+                                    </div>
+                                    <div class="text">
+                                        <h6 class="user-dropdown-name">@Context.Session.GetString("Name")</h6>
+                                        <p class="user-dropdown-status text-sm text-muted">@Context.Session.GetString("Role")</p>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu"
+                                    aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="javascript:;">Cập nhật</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Logout","Home")">Thoát</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Burger button responsive -->
+                            <a href="#" class="burger-btn d-block d-xl-none">
+                                <i class="bi bi-justify fs-3"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <nav class="main-navbar">
+                    <div class="container">
+                        <ul>
+
+
+
+                            <li class="menu-item  ">
+                                <a href="javascript:;" class='menu-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Tổng quan</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="@Url.Action("Sales","Employee")" target="_blank" class='menu-link'>
+                                    <i class="bi bi-plus-square-fill"></i>
+                                    <span>Bán hàng</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item  has-sub">
+                                <a href="javascript:;" class='menu-link'>
+                                    <i class="bi bi-stack"></i>
+                                    <span>Báo cáo</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+                                            <li class="submenu-item ">
+                                                <a href="javascript:;">Bán hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="javascript:;">Mua hàng</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="javascript:;">Kho</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="javascript:;">Công nợ</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="javascript:;">Lợi nhuận</a>
+                                            </li>
+
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item active has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-grid-1x2-fill"></i>
+                                    <span>Cửa hàng</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item ">
+                                                <a href="@Url.Action("Products","Admin")">Hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="@Url.Action("GetCategories","Admin")">Nhóm hàng hóa</a>
+                                            </li>
+                                            <li class="submenu-item ">
+                                                <a href="@Url.Action("BarCode","Admin")">In tem mã</a>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item  has-sub">
+                                <a href="#" class='menu-link'>
+                                    <i class="bi bi-file-earmark-medical-fill"></i>
+                                    <span>Danh mục</span>
+                                </a>
+                                <div class="submenu ">
+                                    <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
+                                    <div class="submenu-group-wrapper">
+
+
+                                        <ul class="submenu-group">
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="javascript:;"
+                                                   class='submenu-link'>Khách hàng</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("Customers","Admin")" class="subsubmenu-link">Danh sách</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("CustomerGroups","Admin")" class="subsubmenu-link">Nhóm khách hàng</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                            <li class="submenu-item  has-sub">
+                                                <a href="javascript:;"
+                                                   class='submenu-link'>Nhà cung cấp</a>
+
+
+                                                <!-- 3 Level Submenu -->
+                                                <ul class="subsubmenu">
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("Manufactures","Admin")" class="subsubmenu-link">Danh sách</a>
+                                                    </li>
+
+                                                    <li class="subsubmenu-item ">
+                                                        <a href="@Url.Action("ManufactureGroups","Admin")" class="subsubmenu-link">Nhóm NCC</a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+
+
+                            <li class="menu-item">
+                                <a href="@Url.Action("Inventories","Admin")" class='menu-link'>
+                                    <i class="bi bi-table"></i>
+                                    <span>Kho hàng</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="@Url.Action("Employees","Admin")" class='menu-link'>
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Nhân viên</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
+                                <a href="javascript:;" class='menu-link'>
+                                    <i class="bi bi-life-preserver"></i>
+                                    <span>Hỗ trợ</span>
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </nav>
+
+            </header>
+
+            <div class="content-wrapper container">
+                @*<div class="div-loading">
+                    <div class="spinner-border text-primary" role="status" id="spinner-loading">
+                    </div>
+                </div>*@
+                
+                @RenderBody()
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="container">
+                        <div class="float-start">
+                            <p>2021 &copy; Nhan111Oi</p>
+                        </div>
+                        <div class="float-end">
+                            <p>Minh Anh Shop - 521/65 Cổ Nhuế 2, Từ Liêm, Hà Nội</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    </div>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/pages/horizontal-layout.js"></script>
 </body>
+
 </html>

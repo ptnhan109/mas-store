@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "GetManufactures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>NHÀ CUNG CÁP</h3>
+            <p class="text-subtitle text-muted">Quản lý nhà cung cấp</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nhà cung cấp</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <a href="@Url.Action("AddManufacture","Admin")" class="btn btn-success me-1 mb-1">
+                        <i class="bi bi-lock-open"></i> Thêm mới
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpManufactureGroups" name="categoryId">
+                                                <option selected>Tất cả</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    
+                                    <div class="col-md-8 col-12">
+                                        <h6>Tìm kiếm</h6>
+                                        <div class="form-group position-relative has-icon-left">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên nhà cung cấp" name="keyword" id="keyword">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetManufactures(1);">
+                                            Lọc nhà cung cấp
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables start -->
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh mục hàng hóa
+            </div>
+            <div class="card-body">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên nhà cung cấp</th>
+                            <th>Nhóm</th>
+                            <th>Số lượng đơn</th>
+                            <th>Khu vực</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbtManufactures">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+<script src="/assets/vendors/jquery/jquery.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendors/fontawesome/all.min.js"></script>
+
+<script src="/assets/js/mazer.js"></script>
+
+<script>
+    $(document).ready(function () {
+        GetCategories();
+        GetManufactures(1);
+    });
+
+    function GetCategories() {
+        let url = "@Url.Action("GetManufactureGroups", "Admin")";
+        $.ajax({
+            url: url,
+            success: function (manufactureGroups) {
+                let html = "";
+                manufactureGroups.forEach(function (element, index) {
+                    html += '<option value="';
+                    html += element.id;
+                    html += '">';
+                    html += element.name;
+                    html += '</option>';
+                });
+                $("#drpManufactureGroups").append(html);
+            }
+        });
+    }
+
+    function GetManufactures(page) {
+        let url = "@Url.Action("GetManufactures","Admin")";
+        let keyword = $("#keyword").val();
+        let group = $("#drpManufactureGroups").val();
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            data: {
+                keyword: keyword,
+                group: group,
+                page: page,
+                pageSize: 10
+            },
+            success: function (data) {
+                let html = '';
+                if (data.items.length > 0) {
+                    data.items.forEach(function (manufacture, index) {
+                        html += '<tr manufacute-id="';
+                        html += manufacture.id;
+                        html += '"><td>';
+                        html += index + 1;
+                        html += '</td><td>';
+                        html += manufacture.name;
+                        html += '</td><td>';
+                        html += manufacture.group;
+                        html += '</td><td>';
+                        html += manufacture.totalOrder;
+                        html += '</td><td>';
+                        html += manufacture.province;
+                        html += '</td><td>';
+                        html += '<a href="/quan-tri/nha-cung-cap-chi-tiet?id=';
+                        html += manufacture.id;
+                        html += '" class="manufacture-update" manufacture-id=';
+                        html += manufacture.id;
+                        html += '><i class="fa fa-edit text-primary"></i></a>&nbsp;';
+                        html += '<a href="javascript:;" class="manufacture-delete" manufacture-id="';
+                        html += manufacture.id;
+                        html += '"><i class="fa fa-trash text-danger"></i></a>';
+                        html += '</td>';
+                        html += '</tr>';
+                    });
+
+                    $("#tbtManufactures").html(html);
+
+                    generatePaging(page, data.totalPage, GetManufactures);
+                } else {
+                    html += '<tr><td colspan="6" class="text-center">Không có nhà cung cấp</td></tr>';
+                    $("#tbtManufactures").html(html);
+                }
+            }
+        })
+    }
+
+</script>

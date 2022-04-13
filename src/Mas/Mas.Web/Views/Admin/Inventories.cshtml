@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "Inventories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Quản lý kho</h3>
+                <p class="text-subtitle text-muted">
+                    Nhập hàng, truy vấn hóa đơn nhập, tồn kho ...
+                </p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Quản lý kho</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-12 col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <a href="#">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <i class="bi bi-clipboard-data text-primary" style="font-size: 40px"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Phiếu nhập</h6>
+                                    <h6 class="font-extrabold mb-0">Phiếu nhập hàng</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <a href="@Url.Action("ProductInventory","Admin")">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <i class="bi bi-box text-primary" style="font-size: 40px"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Kho hàng</h6>
+                                    <h6 class="font-extrabold mb-0">Quản lý kho hàng</h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-body px-3 py-4-5">
+                        <a href="javascript:;">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <i class="bi bi-trash text-primary" style="font-size: 40px"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted font-semibold">Hàng hủy</h6>
+                                    <h6 class="font-extrabold mb-0">Quản lý hủy hàng</h6>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

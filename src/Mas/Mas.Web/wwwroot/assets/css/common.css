@@ -1,0 +1,19 @@
+﻿.pd-t-0{
+    padding-top: 0rem !important;
+}
+
+.pd-b-0{
+    padding-bottom: 0rem !important;
+}
+
+.pd-l-10{
+    padding-left: 10px;
+}
+
+.dropdown-menu.list-group:not(.show) {
+    display: none;
+}
+
+.bg-product-below-limit {
+    background-color: #ffe0e0;
+}
