@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -23,7 +24,8 @@ namespace Mas.Core.Entities
         public string Province { get; set; }
 
         public string Note { get; set; }
-
+        
+        [StringLength(30)]
         public string Code { get; set; }
 
         public string TaxCode { get; set; }

@@ -16,5 +16,10 @@ namespace Mas.Application.InventoryServices
         Task<InventoryDashboard> Dashboard();
 
         Task<InventoryItemInfo> GetItemInfoAsync(Guid id);
+
+
+
+
+        Task AddDestruction(AddDestruction request);
     }
 }

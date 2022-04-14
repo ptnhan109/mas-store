@@ -4,14 +4,16 @@ using Mas.Core.AppDbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Mas.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220414051811___AddDestructionTable")]
+    partial class __AddDestructionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,7 @@ namespace Mas.Core.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -111,8 +112,7 @@ namespace Mas.Core.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -140,12 +140,8 @@ namespace Mas.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -182,9 +178,6 @@ namespace Mas.Core.Migrations
                     b.Property<double>("CurrentImport")
                         .HasColumnType("float");
 
-                    b.Property<Guid>("DestructionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -193,6 +186,9 @@ namespace Mas.Core.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("ReasonDestruction")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SearchParams")
                         .HasColumnType("nvarchar(max)");
@@ -204,8 +200,6 @@ namespace Mas.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DestructionId");
 
                     b.HasIndex("ProductId");
 
@@ -342,8 +336,7 @@ namespace Mas.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -536,12 +529,6 @@ namespace Mas.Core.Migrations
 
             modelBuilder.Entity("Mas.Core.Entities.DestructionDetail", b =>
                 {
-                    b.HasOne("Mas.Core.Entities.Destruction", "Destruction")
-                        .WithMany("DestructionDetails")
-                        .HasForeignKey("DestructionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Mas.Core.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")

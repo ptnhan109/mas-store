@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mas.Core.Entities
 {
@@ -15,6 +17,7 @@ namespace Mas.Core.Entities
 
         public int UnitId { get; set; }
 
+        [StringLength(55)]
         public string BarCode { get; set; }
 
         public double CurrentPrice { get; set; }

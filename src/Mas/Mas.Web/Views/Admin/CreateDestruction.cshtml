@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "CreateDestruction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="/assets/css/sales.css" rel="stylesheet" />
+<script src="/assets/js/components/destruction.js"></script>
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>HÀNG HỦY</h3>
+            <p class="text-subtitle text-muted">Tạo phiếu hủy hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:;">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hàng hủy</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <section id="multiple-column-form">
+        <div class="row match-height">
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+
+
+                                    <div class="col-md-4 col-12">
+                                        <h6>Mã phiếu hủy</h6>
+                                        <div class="form-group position-relative">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Hệ thống tự sinh khi để trống" name="code" id="destruction-code">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-12">
+                                        <h6>Lý do hủy hàng</h6>
+                                        <div class="form-group position-relative">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tóm tắt lý do hủy hàng" name="keyword" id="destruction-description">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" id="add-destruction-button">
+                                            Thêm phiếu hủy
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card full-height">
+                    <div class="card-content">
+                        <div class="card-body">
+
+                            <div class="form">
+                                <div class="row">
+                                    <!-- <div class="col-md-12 col-12"> -->
+                                    <div class="col-md-12 col-12 input-search">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"
+                                                   placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
+                                                   id="productCode" autocomplete="off">
+                                            <ul class="suggestion list-group" id="product-search-suggestion">
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+                                    <hr>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0 table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 45%">HÀNG HÓA </th>
+                                            <th style="width: 10%">ĐƠN VỊ</th>
+                                            <th style="width: 10%">SL</th>
+                                            <th style="width: 15%">GIÁ NHẬP</th>
+                                            <th style="width: 15%">THÀNH TIỀN</th>
+                                            <th style="width: 15%"></th>
+                                            <th class="d-none"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    var urlGetProd = '@Url.Action("GetProduct","Employee")';
+    var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
+    var addDestructionUrl = '@Url.Action("AddDestruction", "Admin")';
+    var urlSearchProd = '@Url.Action("SearchProduct","Admin")';
+    var urlSearchCustomer = '@Url.Action("GetCustomers","Admin")';
+    var user = '@Context.Session.GetString("Name")';
+</script>
+

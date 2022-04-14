@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "Destructions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title">
+    <div class="row">
+        <div class="col-12 col-md-6 order-md-1 order-last">
+            <h3>HÀNG HÓA</h3>
+            <p class="text-subtitle text-muted">Quản lý hàng hóa trong cửa hàng</p>
+        </div>
+        <div class="col-12 col-md-6 order-md-2 order-first">
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hàng hóa</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                    <a href="@Url.Action("CreateDestruction","Admin")" class="btn btn-success me-1 mb-1">
+                        <i class="bi bi-lock-open"></i> Tạo phiếu hủy hàng
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-8 col-12">
+                                        <h6>Tìm kiếm</h6>
+                                        <div class="form-group position-relative has-icon-left">
+                                            <input type="text" class="form-control"
+                                                   placeholder="Tên hàng / mã vạch / mô tả" name="keyword" id="keyword">
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-search"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-12">
+                                        <h6>Nhóm hàng</h6>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="drpCategory" name="categoryId">
+                                                <option value="" selected>Tất cả</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetProducts(1);">
+                                            Lọc mặt
+                                            hàng
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Basic Tables start -->
+    
+</div>

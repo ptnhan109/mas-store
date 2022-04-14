@@ -379,9 +379,9 @@ function AddInvoices() {
 
         let totalAmount = 0;
         let totalDiscount = 0;
-        items.forEach(function (item) {
-            totalAmount += item.CurrentPrice * item.Quantity;
-        });
+        //items.forEach(function (item) {
+        //    totalAmount += item.CurrentPrice * item.Quantity;
+        //});
     });
 
     let request = {

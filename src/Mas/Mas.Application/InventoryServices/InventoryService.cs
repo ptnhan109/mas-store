@@ -14,11 +14,24 @@ namespace Mas.Application.InventoryServices
     public class InventoryService : IInventoryService
     {
         private readonly IAsyncRepository<InventoryItem> _repository;
+        private readonly IAsyncRepository<Destruction> _desRepo;
+        private readonly IAsyncRepository<DestructionDetail> _desDetailRepo;
+        private readonly IAsyncRepository<InventoryItem> _invtyItemRepo;
 
-        public InventoryService(IAsyncRepository<InventoryItem> repository)
+        public InventoryService(
+            IAsyncRepository<InventoryItem> repository,
+            IAsyncRepository<Destruction> desRepo,
+            IAsyncRepository<DestructionDetail> desDetailRepo,
+            IAsyncRepository<InventoryItem> invtyItemRepo
+            )
         {
             _repository = repository;
+            _desRepo = desRepo;
+            _desDetailRepo = desDetailRepo;
+            _invtyItemRepo = invtyItemRepo;
         }
+
+
         public async Task AddInventoryItem(AddInventoryItem item)
         {
             await _repository.AddAsync(item.ToEntity());
@@ -75,5 +88,33 @@ namespace Mas.Application.InventoryServices
 
             return new InventoryItemInfo(entity);
         }
+
+
+        #region DESTRUCTION
+        public async Task AddDestruction(AddDestruction request)
+        {
+            var inserted = await _desRepo.AddAsync(request.ToEntity());
+            var details = request.Items.Select(de => de.ToEntity(inserted.Id));
+            if (inserted != null)
+            {
+                await _desDetailRepo.AddRangeAsync(details);
+            }
+
+            var ids = details.Select(c => c.ProductId);
+
+            // subtract inventory items
+            var inventories = (await _invtyItemRepo.FindAllAsync(c => ids.Contains(c.ProductId), new List<string>() { "Product", "Product.Prices" }))
+                .ToList();
+            foreach(var inventory in inventories)
+            {
+                var destruction = details?.FirstOrDefault(detail => detail.ProductId == inventory.ProductId);
+                var transfer = inventory.Product.Prices.FirstOrDefault(c => c.UnitId == destruction.UnitId).TransferQuantity;
+                inventory.Quantity = inventory.Quantity - destruction.Quantity * transfer;
+            }
+
+            await _invtyItemRepo.UpdateRangeAsync(inventories);
+        }
+
+        #endregion
     }
 }

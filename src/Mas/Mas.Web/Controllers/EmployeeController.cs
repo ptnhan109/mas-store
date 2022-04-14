@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
 {
-    [Authorize(Policy = "Employee")]
+    //[Authorize(Policy = "Employee")]
     public class EmployeeController : Controller
     {
         private readonly IProductService _service;

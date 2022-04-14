@@ -2684,6 +2684,7 @@
           "Mas.Core": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "3.1.23",
           "Microsoft.EntityFrameworkCore": "3.1.22",
+          "Microsoft.EntityFrameworkCore.Abstractions": "3.1.22",
           "Microsoft.EntityFrameworkCore.Relational": "3.1.22",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.22",
           "System.Drawing.Common": "6.0.0",
@@ -2702,6 +2703,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.1.22",
           "Microsoft.AspNetCore.Http.Features": "3.1.23",
+          "Microsoft.EntityFrameworkCore.Abstractions": "3.1.22",
           "Microsoft.Extensions.Configuration": "3.1.22",
           "System.Drawing.Common": "6.0.0",
           "ZXing.Net": "0.16.8"
@@ -2719,6 +2721,7 @@
         "dependencies": {
           "Mas.Common": "1.0.0",
           "Microsoft.EntityFrameworkCore": "3.1.22",
+          "Microsoft.EntityFrameworkCore.Abstractions": "3.1.22",
           "Microsoft.EntityFrameworkCore.Relational": "3.1.22",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.22",
           "System.Drawing.Common": "6.0.0",
@@ -8951,6 +8954,7 @@
       "Mas.Application >= 1.0.0",
       "Mas.Core >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 3.1.22",
+      "Microsoft.EntityFrameworkCore.Abstractions >= 3.1.22",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.22",
       "Microsoft.EntityFrameworkCore.Relational >= 3.1.22",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.22",
@@ -9008,6 +9012,10 @@
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[3.1.22, )"
+          },
+          "Microsoft.EntityFrameworkCore.Abstractions": {
             "target": "Package",
             "version": "[3.1.22, )"
           },

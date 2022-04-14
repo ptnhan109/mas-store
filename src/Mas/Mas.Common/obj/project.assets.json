@@ -36,6 +36,15 @@
           "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Abstractions/3.1.22": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/3.1.22": {
         "type": "package",
         "dependencies": {
@@ -184,6 +193,20 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
         "microsoft.aspnetcore.http.features.3.1.23.nupkg.sha512",
         "microsoft.aspnetcore.http.features.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.Abstractions/3.1.22": {
+      "sha512": "ZuyzSpZ7g3id2v9YVD9RDhe+oKd1TsiplgeAJJ2ePAM1HkyGr6nYOe5lRkWx5FPfG2ebrzhhqlgQho4EvW2LAg==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.abstractions/3.1.22",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.xml",
+        "microsoft.entityframeworkcore.abstractions.3.1.22.nupkg.sha512",
+        "microsoft.entityframeworkcore.abstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.Configuration/3.1.22": {
@@ -416,6 +439,7 @@
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.AspNetCore.Cryptography.KeyDerivation >= 3.1.22",
       "Microsoft.AspNetCore.Http.Features >= 3.1.23",
+      "Microsoft.EntityFrameworkCore.Abstractions >= 3.1.22",
       "Microsoft.Extensions.Configuration >= 3.1.22",
       "System.Drawing.Common >= 6.0.0",
       "ZXing.Net >= 0.16.8"
@@ -467,6 +491,10 @@
           "Microsoft.AspNetCore.Http.Features": {
             "target": "Package",
             "version": "[3.1.23, )"
+          },
+          "Microsoft.EntityFrameworkCore.Abstractions": {
+            "target": "Package",
+            "version": "[3.1.22, )"
           },
           "Microsoft.Extensions.Configuration": {
             "target": "Package",

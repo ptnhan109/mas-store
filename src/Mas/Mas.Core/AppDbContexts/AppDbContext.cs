@@ -33,9 +33,13 @@ namespace Mas.Core.AppDbContexts
 
         public DbSet<InventoryItem> InventoryItems { get; set; }
 
+        public DbSet<Destruction> Destructions { get; set; }
+
+        public DbSet<DestructionDetail> DestructionDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            
         }
     }
 }

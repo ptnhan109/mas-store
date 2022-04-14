@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
 {
-    [Authorize(Policy = "Admin")]
+    //[Authorize(Policy = "Admin")]
     public class AdminController : Controller
     {
         private readonly ICategoryService _catSerivce;
@@ -402,6 +402,31 @@ namespace Mas.Web.Controllers
             var data = await _inventoryService.GetItemInfoAsync(id);
 
             return Json(data);
+        }
+        #endregion
+
+        #region DESTRUCTION
+        [Route("quan-tri/phieu-huy")]
+        public async Task<IActionResult> Destructions()
+        {
+            await Task.Yield();
+
+            return View();
+        }
+
+        [Route("quan-tri/tao-phieu-huy-hang")]
+        public async Task<IActionResult> CreateDestruction()
+        {
+            await Task.Yield();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddDestruction([FromBody] AddDestruction request)
+        {
+            await _inventoryService.AddDestruction(request);
+
+            return Json("Hủy hàng thành công");
         }
         #endregion
 

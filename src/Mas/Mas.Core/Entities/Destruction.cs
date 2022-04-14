@@ -5,15 +5,17 @@ using System.Text;
 
 namespace Mas.Core.Entities
 {
-    public class CustomerGroup : BaseEntity
+    public class Destruction : BaseEntity
     {
-        public string Name { get; set; }
-
         [StringLength(30)]
         public string Code { get; set; }
 
         public string Description { get; set; }
 
-        public virtual ICollection<Customer> Customers { get; set; }
+        public string CreatedBy { get; set; }
+
+        public double Amount { get; set; }
+
+        public virtual ICollection<DestructionDetail> DestructionDetails { get; set; }
     }
 }

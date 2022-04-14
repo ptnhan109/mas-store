@@ -31,6 +31,8 @@ namespace Mas.Application.ProductServices.Dtos
 
         public Unit Unit { get; set; }
 
+        public double ImportPrice { get; set; }
+
         public double SellPrice { get; set; }
 
         public double Discount { get; set; }
@@ -57,6 +59,7 @@ namespace Mas.Application.ProductServices.Dtos
             Quantity = 1;
             TotalMoney = SellPrice * Quantity;
             IsDefault = price.IsDefault;
+            ImportPrice = price.ImportPrice;
         }
     }
 }
