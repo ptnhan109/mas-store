@@ -1,9 +1,13 @@
 ﻿using Mas.Application.ProductServices.Dtos;
 using Mas.Common;
 using Mas.Core;
+using Mas.Core.Contants;
 using Mas.Core.Entities;
+using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -104,6 +108,55 @@ namespace Mas.Application.ProductServices
             await _repository.UpdateAsync(product);
             await _priceRepository.DeleteRangeAsync(c => c.ProductId == product.Id);
             await _priceRepository.AddRangeAsync(product.Prices);
+        }
+
+        public async Task<string> ExportProducts(Guid? categoryId)
+        {
+            var query = _repository.GetQueryable(new List<string>() { "Prices", "Category" });
+            if(categoryId != null)
+            {
+                query = query.Where(c => c.CategoryId.Equals(categoryId));
+            }
+
+            var items = await query.ToListAsync();
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "products.xlsx");
+            string fileName = $"{Guid.NewGuid()}.xlsx";
+            string newFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", $"danh-sach-hang-hoa-{fileName}");
+            var file = new FileInfo(newFile);
+            using(ExcelPackage excelPackage = new ExcelPackage(new FileInfo(path)))
+            {
+                var sheet = excelPackage.Workbook.Worksheets.First();
+                var startRow = 5;
+                for(int index = 0; index < items.Count; index++)
+                {
+                    var product = items[index];
+                    var prices = product.Prices.OrderByDescending(c => c.IsDefault)
+                        .ThenBy(c => c.TransferQuantity).ToList();
+                    
+                    sheet.Cells[$"A{startRow}"].Value = index + 1;
+
+                    for (int sub = 0; sub < prices.Count; sub++)
+                    {
+                        if (prices[sub].IsDefault)
+                        {
+                            sheet.Cells[$"B{startRow}"].Value = product.Name;
+                            sheet.Cells[$"D{startRow}"].Value = product.Category.Name;
+
+                        }
+                        sheet.Cells[$"C{startRow}"].Value = ContantsUnit.GetUnit(prices[sub].UnitId).Name;
+                        sheet.Cells[$"E{startRow}"].Value = prices[sub].ImportPrice;
+                        sheet.Cells[$"F{startRow}"].Value = prices[sub].SellPrice;
+                        sheet.Cells[$"G{startRow}"].Value = prices[sub].WholeSalePrice;
+
+                        startRow++;
+                    }
+
+                }
+
+                excelPackage.SaveAs(file);
+                return fileName;
+            }
+
         }
     }
 }

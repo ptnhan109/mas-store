@@ -24,12 +24,12 @@
     <section id="multiple-column-form">
         <div class="row match-height">
             <div class="col-12">
-                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;">
+                <div class="col-12 d-flex justify-content-end" style="margin-bottom: 7px;" id="products-menu">
                     <a href="@Url.Action("AddProduct","Admin")" class="btn btn-success me-1 mb-1">
                         <i class="bi bi-lock-open"></i> Thêm mới
                     </a>
-                    <button type="submit" class="btn btn-success me-1 mb-1">Nhập từ Excel</button>
-                    <button type="submit" class="btn btn-success me-1 mb-1">Xuất file</button>
+                    <button type="button" class="btn btn-success me-1 mb-1">Nhập từ Excel</button>
+                    <a href="javascript:;" id="export-products" class="btn btn-success me-1 mb-1">Xuất file</a>
                 </div>
                 <div class="card">
                     <div class="card-content">
@@ -114,7 +114,27 @@
     $(document).ready(function () {
         GetCategories();
         GetProducts(1);
+        $("#export-products").click(function () {
+            $(this).attr("disabled", "disabled");
+            let cate = $("#drpCategory").val();
+            let url = "@Url.Action("ExportProducts", "Admin")";
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                data: {
+                    cateId: cate
+                },
+                success: function (data) {
+                    let url = '<a download="danh-sach-san-pham" class="btn btn-primary download-file" href="/templates/' + data + '">Tải xuống</a>';
+                    $("#products-menu").append(url);
+                    showMessage("success", "Xuất file thành công mời tải xuống");
 
+                    //TODO: delete file
+                }
+            })
+        })
     });
     function GetProducts(page) {
         let url = '@Url.Action("ProductsPaging", "Admin")';

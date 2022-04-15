@@ -527,6 +527,21 @@ namespace Mas.Web.Controllers
 
             return Json(items);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> ExportProducts(Guid? cateId)
+        {
+            string result = await _prodService.ExportProducts(cateId);
+            return Json($"danh-sach-hang-hoa-{result}");
+        }
         #endregion
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<JsonResult> Test()
+        {
+            var s = await _prodService.ExportProducts(null);
+            return Json("a");
+        }
     }
 }

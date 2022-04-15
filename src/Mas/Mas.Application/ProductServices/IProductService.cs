@@ -21,5 +21,7 @@ namespace Mas.Application.ProductServices
         Task<ProductDetail> GetProductAsync(Guid id);
 
         Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale);
+
+        Task<string> ExportProducts(Guid? categoryId);
     }
 }
