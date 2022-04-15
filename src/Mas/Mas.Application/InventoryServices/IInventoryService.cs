@@ -1,5 +1,6 @@
 ﻿using Mas.Application.InventoryServices.Dtos;
 using Mas.Common;
+using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,9 +18,8 @@ namespace Mas.Application.InventoryServices
 
         Task<InventoryItemInfo> GetItemInfoAsync(Guid id);
 
-
-
-
         Task AddDestruction(AddDestruction request);
+
+        Task<PagedResult<DestructionItem>> DestructionsPaging(string keyword, DateTime? start, DateTime? end, int? page, int? pageSize);
     }
 }

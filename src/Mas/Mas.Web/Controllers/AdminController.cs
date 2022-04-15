@@ -414,6 +414,37 @@ namespace Mas.Web.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetDestructionPaging(string keyword, string startDate, string endDate, int? page = 1, int? pageSize = 10)
+        {
+            if (!string.IsNullOrEmpty(startDate) && string.IsNullOrEmpty(endDate))
+            {
+                var start = DateTime.Parse(startDate);
+                return Json(await _inventoryService.DestructionsPaging(keyword, start, null, page, pageSize));
+            }
+
+            if (!string.IsNullOrEmpty(endDate) && string.IsNullOrEmpty(startDate))
+            {
+                var end = DateTime.Parse(endDate);
+                return Json(await _inventoryService.DestructionsPaging(keyword, null, end, page, pageSize));
+            }
+
+            if(!string.IsNullOrEmpty(endDate) && !string.IsNullOrEmpty(startDate))
+            {
+                var start = DateTime.Parse(startDate);
+                var end = DateTime.Parse(endDate);
+                return Json(await _inventoryService.DestructionsPaging(keyword, start, end, page, pageSize));
+            }
+
+            if(string.IsNullOrEmpty(endDate) && string.IsNullOrEmpty(startDate))
+            {
+                return Json(await _inventoryService.DestructionsPaging(keyword, null, null, page, pageSize));
+            }
+
+            return default;
+
+        }
+
         [Route("quan-tri/tao-phieu-huy-hang")]
         public async Task<IActionResult> CreateDestruction()
         {

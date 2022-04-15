@@ -35,7 +35,7 @@
                         <div class="card-body">
                             <form>
                                 <div class="row">
-                                    <div class="col-md-8 col-12">
+                                    <div class="col-md-6 col-12">
                                         <h6>Tìm kiếm</h6>
                                         <div class="form-group position-relative has-icon-left">
                                             <input type="text" class="form-control"
@@ -45,18 +45,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-12">
-                                        <h6>Nhóm hàng</h6>
-                                        <fieldset class="form-group">
-                                            <select class="form-select" id="drpCategory" name="categoryId">
-                                                <option value="" selected>Tất cả</option>
-                                            </select>
-                                        </fieldset>
+                                    <div class="col-md-3 col-12">
+                                        <h6>Ngày bắt đầu</h6>
+                                        <input class="form-control" id="startDate" type="date" />
+                                    </div>
+                                    <div class="col-md-3 col-12">
+                                        <h6>Ngày kết thúc</h6>
+                                        <input class="form-control" id="endDate" type="date" />
+
                                     </div>
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetProducts(1);">
-                                            Lọc mặt
-                                            hàng
+                                        <button type="button" class="btn btn-primary me-1 mb-1">
+                                            Lọc đơn hủy
                                         </button>
                                     </div>
                                 </div>
@@ -67,6 +67,95 @@
             </div>
         </div>
     </section>
-    <!-- Basic Tables start -->
-    
+
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Danh mục hàng hóa
+            </div>
+            <div class="card-body">
+                <table class="table" id="table1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mã đơn hủy</th>
+                            <th>Tổng tiền</th>
+                            <th>Ngày hủy</th>
+                            <th>Người hủy</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="destructions">
+                    </tbody>
+                </table>
+
+
+                <div class="dataTable-bottom">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
 </div>
+<script>
+    $(document).ready(function () {
+        GetDestructions(1);
+    });
+    function GetDestructions(page) {
+        let url = '@Url.Action("GetDestructionPaging", "Admin")';
+        let keyword = $("#keyword").val();
+        let start = $("#startDate").val();
+        let end = $("#endDate").val();
+        let request = {
+            keyword: keyword,
+            startDate: start,
+            endDate: end,
+            page: page,
+            pageSize: 10
+        };
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            data: request,
+            success: function (data) {
+                let html = "";
+                if (data.items.length > 0) {
+                    data.items.forEach(function (item, index) {
+                        html += '<tr destruction-id="';
+                        html += item.id;
+                        html += '"><td>';
+                        html += index++;
+                        html += '</td><td>';
+                        html += item.code;
+                        html += '</td><td>';
+                        html += item.amount;
+                        html += '</td><td>';
+                        html += item.createdDate;
+                        html += '</td><td>';
+                        html += item.createdBy;
+                        html += '</td><td>';
+                        html += '<a href="javascript:;" class="destruction-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+                        html += '</td></tr>';
+                    });
+
+                    $("#destructions").html(html);
+
+                    $("a.destruction-info").click(function () {
+                        let id = $(this).closest("tr").attr("destruction-id");
+                        alert(id);
+                    });
+
+                    generatePaging(page, data.totalPage, GetDestructions);
+                } else {
+                    html += '<tr><td colspan="6" class="text-center">Không có phiếu hủy hàng</td><tr>';
+                    $("#destructions").html(html);
+                }
+            }
+        })
+    }
+</script>

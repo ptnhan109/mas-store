@@ -115,6 +115,38 @@ namespace Mas.Application.InventoryServices
             await _invtyItemRepo.UpdateRangeAsync(inventories);
         }
 
+        public async Task<PagedResult<DestructionItem>> DestructionsPaging(string keyword, DateTime? start, DateTime? end, int? page, int? pageSize)
+        {
+            var query = _desRepo.GetQueryable();
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(c => c.SearchParams.Contains(keyword));
+            }
+
+            if(start == null && end != null)
+            {
+                var endDate = end.Value.Date.AddDays(1);
+                query = query.Where(c => c.CreatedAt < endDate);
+            }
+
+            if(start != null && end == null)
+            {
+                var startDate = end.Value.Date.AddDays(-1);
+                query = query.Where(c => c.CreatedAt > startDate);
+            }
+
+            if(start != null && end != null)
+            {
+                var startDate = start.Value.AddDays(-1);
+                var endDate = end.Value.AddDays(1);
+                query = query.Where(c => c.CreatedAt > start && c.CreatedAt < end);
+            }
+
+            var paged = await _desRepo.FindPagedAsync(query, null, page.Value, pageSize.Value);
+
+            return paged.ChangeType(DestructionItem.FromEntity);
+        }
+
         #endregion
     }
 }
