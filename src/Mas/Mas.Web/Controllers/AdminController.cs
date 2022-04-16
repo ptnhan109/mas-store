@@ -461,6 +461,22 @@ namespace Mas.Web.Controllers
         }
         #endregion
 
+        #region IMPORT
+        [Route("quan-tri/nhap-hang")]
+        public async Task<IActionResult> Imports()
+        {
+            await Task.Yield();
+            return View();
+        }
+
+        [Route("quan-tri/them-phieu-nhap")]
+        public async Task<IActionResult> AddImportInvoice()
+        {
+            await Task.Yield();
+            return View();
+        }
+        #endregion
+
         #region API
         [HttpGet]
         public async Task<JsonResult> Categories()

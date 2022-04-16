@@ -133,3 +133,11 @@ function showMessage(type, message) {
     }
 }
 
+function GenerateRandom(length) {
+    let result = "";
+    for (let i = 0; i < length; i++) {
+        result += (Math.random() * 10);
+    }
+
+    return result;
+}

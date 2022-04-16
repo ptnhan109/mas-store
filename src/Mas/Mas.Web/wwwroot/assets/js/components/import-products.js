@@ -4,7 +4,9 @@
 }).resolvedOptions().maximumFractionDigits;
 
 var totalMoney = 0;
-var customerId = "";
+var manufatureId = "";
+var products = [];
+var manufactureId = "";
 $(document).ready(function () {
     $("#product-search-suggestion").css({
         'width': ($("#productCode").width() + 'px')
@@ -24,7 +26,7 @@ $(document).ready(function () {
         let qrCode = $('#productCode').val();
         if (e.keyCode == 13) {
             if (qrCode !== "") {
-                AddProductToCart(qrCode);
+                AddProductToImportInvoice(qrCode);
                 return false;
             } else {
                 alert("Hãy nhập từ khóa");
@@ -36,21 +38,21 @@ $(document).ready(function () {
         }
     });
 
-    $('#customer-name').on("keypress", function (e) {
-        let customer = $("#customer-name").val();
+    $('#manufacture-name').on("keypress", function (e) {
+        let manufacture = $("#manufacture-name").val();
         if (e.keyCode == 8) {
-            DisplayCustomerSuggestion(customer);
+            DisplayManufactureSuggestion(manufacture);
         }
     });
 
-    $('#customer-name').keyup(function () {
-        var productCode = $('#customer-name').val();
-        DisplayCustomerSuggestion(productCode);
+    $('#manufacture-name').keyup(function () {
+        var productCode = $('#manufacture-name').val();
+        DisplayManufactureSuggestion(productCode);
     });
 
     $("#btn-checkout").click(function () {
-        AddInvoices();
-        CleanOrder();
+        AddImportInvoices();
+        CleanImportInvoices();
     });
 
     $("#appendDiscount").click(function () {
@@ -99,41 +101,86 @@ $(document).ready(function () {
         $("#modal-order-discount").modal("hide");
     });
 });
-var products = [];
 
-function AddProductToCart(barcode) {
-    let isWholeSale = $("#saleType").val();
-    let url = urlGetProd + '?barcode=' + barcode + '&isWholeSale=' + isWholeSale;
+function DisplaySuggestion(keyword) {
+    let html = "";
+    if (keyword == "") {
+        $('#product-search-suggestion').html("");
+    } else {
+        $.ajax({
+            url: urlSearchProd,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                keyword: keyword
+            },
+            success: function (data) {
+                console.log(data);
+                data.items.forEach(function (prod) {
+                    html += '<li class="list-group-item"><a prod-barcode="';
+                    html += prod.barCode;
+                    html += '" class="suggestion-item" href="javascript:;"><strong>';
+                    html += prod.name.toUpperCase();
+                    html += " - ";
+                    html += prod.defaultSell;
+                    html += '</strong></a></li>';
+                });
+
+                $('#product-search-suggestion').html(html);
+                $("a.suggestion-item").click(function () {
+                    let barcode = $(this).attr("prod-barcode");
+                    AddProductToImportInvoice(barcode);
+                    $('#product-search-suggestion').html("");
+                });
+            }
+        })
+    }
+}
+
+function AddProductToImportInvoice(barcode) {
+    let url = urlGetProd + '?barcode=' + barcode;
 
     $.ajax({
         url: url,
         success: function (data) {
             let isExsit = false;
-            $("#cart-list > tr").each(function () {
-                if ($(this).attr("barcode") == data.barCode) {
-                    let total;
-                    isExsit = true;
-                    let quantity = $(this).find('input[type=number]').val();
-                    quantity++;
+            let isSplit = $('#isSplit').is(":checked");
+            console.log(isSplit);
+            // no split row
+            if (!isSplit) {
+                $("#cart-list > tr").each(function () {
+                    if ($(this).attr("barcode") == data.barCode) {
+                        let total;
+                        isExsit = true;
+                        let quantity = $(this).find('input[type=number]').val();
+                        quantity++;
 
-                    $(this).find('input[type=number]').val(quantity);
-                    data.prices.forEach(function (element) {
+                        $(this).find('input[type=number]').val(quantity);
+                        data.prices.forEach(function (element) {
 
-                        if (element.isDefault) {
-                            let newPrice = element.sellPrice * quantity;
-                            total = newPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            totalMoney += element.sellPrice;
-                        }
-                    });
+                            if (element.isDefault) {
+                                let newPrice = element.importPrice * quantity;
+                                total = newPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                                totalMoney += element.importPrice;
+                            }
+                        });
 
-                    $(this).find('strong.item-price-total').html(total);
-                    updateTotalMoney();
+                        $(this).find('strong.item-price-total').html(total);
+                        updateTotalMoney();
+                    }
+                });
+
+                if (!isExsit) {
+                    AppendProductHtml(data);
+                    products.push(data);
                 }
-            });
-            if (!isExsit) {
+            } else {
                 AppendProductHtml(data);
                 products.push(data);
             }
+            
             $("#productCode").val("");
         }
     });
@@ -141,20 +188,24 @@ function AddProductToCart(barcode) {
 
 function AppendProductHtml(data) {
 
-    let sellPrice;
+    let importPrice;
     let quantity;
     let html = '<tr barcode="';
+    let rowId = GenerateRandom(10);
     html += data.barCode;
     html += '" ';
     html += 'prod-id="';
     html += data.id;
     html += '" ';
+    html += 'row-id="';
+    html += rowId;
+    html += '"';
     html += '><td class="text-bold-500" style="text-transform: uppercase;">';
     html += data.name;
     html += '</td><td><fieldset class="form-group position-relative"><select class="form-select" id="basicSelect">';
     data.prices.forEach((element) => {
         if (element.isDefault) {
-            sellPrice = element.sellPrice;
+            importPrice = element.importPrice;
             quantity = element.quantity;
             html += '<option selected value="';
             html += element.barCode;
@@ -172,21 +223,23 @@ function AppendProductHtml(data) {
     html += '</select></fieldset></td><td class="text-bold-500"><div class="form-group position-relative"><input type="number" class="form-control" value="';
     html += quantity;
     html += '"></div></td><td product-price="';
-    html += sellPrice;
+    html += importPrice;
     html += '"><a href="javascript:;" class="add-discount"><strong class="item-price">';
-    html += sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+    html += importPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     html += '</strong></a></td><td class="text-primary text-bold-500"><strong class="item-price-total">';
-    html += (sellPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+    html += (importPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
     html += '</strong></td><td><a href="javascript:;"><i class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>';
     html += '<td><a href="javascript:;" class="product-remove" barcode="';
     html += data.barCode;
+    html += '" row-id="';
+    html += rowId;
     html += '"><i class="bi bi-trash text-danger"></i></a></td>';
     html += '<td class="d-none" product-price="';
-    html += sellPrice;
+    html += importPrice;
     html += '"></td></tr>';
 
     $("#cart-list").append(html);
-    totalMoney += sellPrice;
+    totalMoney += importPrice;
     updateTotalMoney();
 
     $("input[type=number]").change(function () {
@@ -222,20 +275,20 @@ function AppendProductHtml(data) {
             });
         });
         $(this).closest("tr").attr("barcode", priceChange.barCode);
-        $(this).closest("tr").find("td:nth-child(4)").attr("product-price", priceChange.sellPrice);
-        $(this).closest("tr").find("td:nth-child(8)").attr("product-price", priceChange.sellPrice);
-        $(this).closest("tr").find("strong.item-price").html(priceChange.sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
+        $(this).closest("tr").find("td:nth-child(4)").attr("product-price", priceChange.importPrice);
+        $(this).closest("tr").find("td:nth-child(8)").attr("product-price", priceChange.importPrice);
+        $(this).closest("tr").find("strong.item-price").html(priceChange.importPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
 
         let quantity = $(this).closest("tr").find("td:nth-child(3)").find("input[type=number]").val();
-        let money = (priceChange.sellPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+        let money = (priceChange.importPrice * quantity).toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
 
         $(this).closest("tr").find("strong.item-price-total").html(money);
         updateTotalMoney();
     });
 
     $("a.product-remove").click(function () {
-        let barcode = $(this).attr("barcode");
-        let remove = "tr[barcode=" + barcode + "]";
+        let barcode = $(this).attr("row-id");
+        let remove = "tr[row-id=" + barcode + "]";
         $(remove).remove();
         updateTotalMoney();
     });
@@ -273,86 +326,22 @@ function DiscountOrder() {
     $("#order-total-money-checkout").html(newValue.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits }));
 }
 
-function DisplaySuggestion(keyword) {
-    console.log("keyword: " + keyword);
-    let html = "";
-    if (keyword == "") {
-        $('#product-search-suggestion').html("");
-    } else {
-        $.ajax({
-            url: urlSearchProd,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: {
-                keyword: keyword
-            },
-            success: function (data) {
-                console.log(data);
-                data.items.forEach(function (prod) {
-                    html += '<li class="list-group-item"><a prod-barcode="';
-                    html += prod.barCode;
-                    html += '" class="suggestion-item" href="javascript:;"><strong>';
-                    html += prod.name.toUpperCase();
-                    html += " - ";
-                    html += prod.defaultSell;
-                    html += '</strong></a></li>';
-                });
-
-                $('#product-search-suggestion').html(html);
-                $("a.suggestion-item").click(function () {
-                    let barcode = $(this).attr("prod-barcode");
-                    AddProductToCart(barcode);
-                    $('#product-search-suggestion').html("");
-                });
-            }
-        });
+function GenerateRandom(length) {
+    let result = "";
+    for (let i = 0; i < length; i++) {
+        result += Math.floor(Math.random() * 10);
     }
+
+    return result;
 }
 
-function DisplayCustomerSuggestion(keyword) {
-    let html = "";
-    if (keyword == "") {
-        $("#customer-search-suggestion").html("");
-    } else {
-        $.ajax({
-            url: urlSearchCustomer,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: {
-                keyword: keyword
-            },
-            success: function (data) {
-                data.items.forEach(function (cust) {
-                    html += '<li class="list-group-item"><a customer-id="';
-                    html += cust.id;
-                    html += '" class="suggestion-item" href="javascript:;"><strong>';
-                    html += cust.name.toUpperCase();
-                    html += " - ";
-                    html += cust.province;
-                    html += '</strong></a></li>';
-                });
-
-                $('#customer-search-suggestion').html(html);
-                $("a.suggestion-item").click(function () {
-                    customerId = $(this).attr("customer-id");
-                    $("#customer-name").val($(this).text().split('-')[0]);
-                    $('#customer-search-suggestion').html("");
-                });
-            }
-        });
-    }
-}
-// ===========================================================================================================================
-
-function AddInvoices() {
+function AddImportInvoices() {
     let items = [];
-    let customer = $("#customer-name").val();
-    if (customer == "" || customer == undefined) {
-        customer = "Khách lẻ";
+    let manufactureName = $("#manufacture-name").val();
+    if (manufactureName == "" || manufactureName == undefined) {
+        showMessage("danger", "Vui lòng chọn nhà phân phối");
+
+        return;
     }
 
     let note = $("#order-note").val();
@@ -379,80 +368,82 @@ function AddInvoices() {
 
         let totalAmount = 0;
         let totalDiscount = 0;
-        //items.forEach(function (item) {
-        //    totalAmount += item.CurrentPrice * item.Quantity;
-        //});
     });
 
     let request = {
-        CustomerName: customer,
         Note: note,
         Discount: +discount,
-        InvoiceDetails: items
+        InvoiceDetails: items,
+        ManufactureId: manufactureId
     };
 
-    if (customerId != "") {
-        request.CustomerId = customerId
-    }
+    console.log(request);
+    //if ($('#is-print-invoice').is(":checked")) {
+    //    $.ajax({
+    //        url: invoiceUrl,
+    //        type: "POST",
+    //        dataType: "json",
+    //        contentType: "application/json; charset=utf-8",
+    //        traditional: true,
+    //        data: JSON.stringify(request),
+    //        success: function (data) {
+    //            PrintInvoice(data);
+    //        }
+    //    });
+    //}
 
-    if ($('#is-print-invoice').is(":checked")) {
-        $.ajax({
-            url: invoiceUrl,
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: JSON.stringify(request),
-            success: function (data) {
-                PrintInvoice(data);
-            }
-        });
-    }
-
-    $.ajax({
-        url: addInvoiceUrl,
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        traditional: true,
-        data: JSON.stringify(request),
-        success: function (data) {
-            showMessage("success", data);
-        }
-    });
+    //$.ajax({
+    //    url: addInvoiceUrl,
+    //    type: "POST",
+    //    dataType: "json",
+    //    contentType: "application/json; charset=utf-8",
+    //    traditional: true,
+    //    data: JSON.stringify(request),
+    //    success: function (data) {
+    //        showMessage("success", data);
+    //    }
+    //});
 
 }
 
-function PrintInvoice(html) {
-    var frame1 = document.createElement('iframe');
-    frame1.name = "frame1";
-    frame1.style.position = "absolute";
-    frame1.style.top = "-1000000px";
-    document.body.appendChild(frame1);
-    var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-    frameDoc.document.open();
-    frameDoc.document.write(html);
-    frameDoc.document.close();
-    setTimeout(function () {
-        window.frames["frame1"].focus();
-        window.frames["frame1"].print();
-        document.body.removeChild(frame1);
-    }, 200);
-
-    return false;
-}
-
-function CleanOrder() {
+function CleanImportInvoices() {
     $("#cart-list").html();
     $("#order-value-discount").val(0);
     updateTotalMoney();
 }
 
-function GenerateRandom(length) {
-    let result = "";
-    for (let i = 0; i < length; i++) {
-        result += (Math.random() * 10);
-    }
+function DisplayManufactureSuggestion(keyword) {
+    let html = "";
+    if (keyword == "") {
+        $("#customer-search-suggestion").html("");
+    } else {
+        $.ajax({
+            url: urlSearchManufacture,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                keyword: keyword
+            },
+            success: function (data) {
+                data.items.forEach(function (manufacture) {
+                    html += '<li class="list-group-item"><a manufacture-id="';
+                    html += manufacture.id;
+                    html += '" class="suggestion-item" href="javascript:;"><strong>';
+                    html += manufacture.name.toUpperCase();
+                    html += " - ";
+                    html += manufacture.group;
+                    html += '</strong></a></li>';
+                });
 
-    return result;
+                $('#customer-search-suggestion').html(html);
+                $("a.suggestion-item").click(function () {
+                    manufactureId = $(this).attr("manufacture-id");
+                    $("#manufacture-name").val($(this).text().split('-')[0]);
+                    $('#customer-search-suggestion').html("");
+                });
+            }
+        });
+    }
 }
