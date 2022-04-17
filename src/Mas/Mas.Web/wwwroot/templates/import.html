@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Example 3</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+</head>
+
+<body>
+    <style>
+        main {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header{
+            text-align: center;
+        }
+
+        .dotted-line {
+            border: none;
+            border-top: 1px dotted #000000;
+            color: #fff;
+            background-color: #fff;
+            height: 1px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .items{
+            margin-top: 10px;
+        }
+        .items-title{
+            border-bottom: 1px solid black;
+        }
+        .item{
+            border-bottom: 1px dotted black;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+        .text-left{
+            text-align: left;
+        }
+        td{
+            margin-top: 5px;
+        }
+        tr{
+            line-height: 20px;
+        }
+    </style>
+    <main>
+        <div class="info">
+            <div class="info-store">
+                <h2>BÁCH HÓA MINH ANH</h2>
+                <span>Số 521/55, Cổ Nhuế 2, Hà Nội.</span>
+                <br />
+                <span>0775.331.777</span>
+            </div>
+        </div>
+        <div class="dotted-line">
+
+        </div>
+        <div class="header">
+            <h2>HÓA ĐƠN NHẬP HÀNG</h2>
+        </div>
+        <div class="info-customer">
+            <span>Nhà phân phối: <strong>{manufacture-name}</strong></span>
+            <br />
+            <span>Địa chỉ: <i>{manufacture-address}</i></span>
+            <br />
+            <span>Ngày mua: {orderDate}</span>
+        </div>
+        <div class="dotted-line">
+
+        </div>
+        <div class="items">
+            <table style="width:100%" border="0">
+                <tr class="items-title">
+                    <th class="items-title">#</th>
+                    <th style="width: 40%" class="items-title">Sản phẩm</th>
+                    <th class="items-title">Số lượng</th>
+                    <th class="items-title">Đơn giá nhập</th>
+                    <th class="items-title">Triết khấu</th>
+                    <th class="items-title text-right">Thành tiền</th>
+                </tr>
+                {content}
+
+                <tr>
+                    <td class="text-left" colspan="3">Tổng tiền hàng</td>
+                    <td class="text-right" colspan="2">{beforeDiscount}</td>
+                </tr>
+                <tr>
+                    <td class="text-left" colspan="3">Chiết khấu</td>
+                    <td class="text-right" colspan="2">{discount}</td>
+                </tr>
+                <tr>
+                    <td class="text-left" colspan="3"><strong>Tổng tiền cần thanh toán</strong></td>
+                    <td class="text-right" colspan="2">{checkout}</td>
+                </tr>
+            </table>
+        </div>
+        
+
+    </main>
+</body>
+</html>

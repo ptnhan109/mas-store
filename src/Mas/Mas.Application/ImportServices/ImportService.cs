@@ -52,6 +52,13 @@ namespace Mas.Application.ImportServices
             await _inventoryRepository.UpdateRangeAsync(inventories);
         }
 
+        public async Task<Import> GetImport(Guid id)
+        {
+            var entity = await _repository.FindAsync(id, new List<string>() { "Manufacture", "ImportDetails" });
+
+            return entity;
+        }
+
         public async Task<PagedResult<ImportInvoiceItem>> GetPagedResult(string keyword, string startDate, string endDate, int? page = 1, int? pageSize = 10)
         {
             var query = _repository.GetQueryable(new List<string>() { "Manufacture" });

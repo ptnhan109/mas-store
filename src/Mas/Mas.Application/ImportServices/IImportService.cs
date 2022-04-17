@@ -1,5 +1,6 @@
 ﻿using Mas.Application.ImportServices.Dtos;
 using Mas.Common;
+using Mas.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,8 @@ namespace Mas.Application.ImportServices
     {
         Task AddAsync(AddImportRequest request);
 
-        Task<PagedResult<ImportInvoiceItem>> GetPagedResult(string keyword, string startDate, string endDate, int? page = 1, int? pageSize = 10); 
+        Task<PagedResult<ImportInvoiceItem>> GetPagedResult(string keyword, string startDate, string endDate, int? page = 1, int? pageSize = 10);
+
+        Task<Import> GetImport(Guid id);
     }
 }

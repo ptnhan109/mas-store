@@ -530,6 +530,49 @@ namespace Mas.Web.Controllers
 
             return Json(paged);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> PrintImportInvoice(Guid id)
+        {
+            var import = await _importService.GetImport(id);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "import.html");
+            string templates = System.IO.File.ReadAllText(path);
+            templates = templates.Replace("{manufacture-name}", import.Manufacture.Name);
+            templates = templates.Replace("{manufacture-address}", import.Manufacture.Address);
+            templates = templates.Replace("{orderDate}", import.CreatedAt.ToString("dd/MM/yyyy"));
+            var content = new StringBuilder();
+            var items = import.ImportDetails.ToList();
+            int quantity = 0;
+            double discount = 0;
+            double total = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                content.Append(@"<tr><td class='text-center-item'>");
+                content.Append((i + 1));
+                content.Append(@"</td><td class='text-left item'>");
+                content.Append(item.Name);
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.Quantity);
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.CurrentPrice.ToCurrencyFormat());
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.Discount.ToCurrencyFormat());
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.Amount.ToCurrencyFormat());
+                content.Append("</td></tr>");
+                quantity += item.Quantity;
+                discount += item.Discount;
+                total += item.Quantity * item.CurrentPrice;
+            }
+
+            templates = templates.Replace("{content}", content.ToString());
+            templates = templates.Replace("{beforeDiscount}", total.ToCurrencyFormat());
+            templates = templates.Replace("{discount}", discount.ToString());
+            templates = templates.Replace("{checkout}", import.Amount.ToString());
+
+            return Json(templates);
+        }
         #endregion
 
         #region API

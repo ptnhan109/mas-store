@@ -150,7 +150,19 @@
 
                     $("a.import-info").click(function () {
                         let id = $(this).closest("tr").attr("import-id");
-                        alert(id);
+                        $.ajax({
+                            url: "@Url.Action("PrintImportInvoice", "Admin")",
+                            type: "GET",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            traditional: true,
+                            data: {
+                                id : id
+                            },
+                            success: function (data) {
+                                PrintInvoice(data);
+                            }
+                        });
                     });
 
                     generatePaging(page, data.totalPage, GetImportInvoices);
@@ -160,5 +172,24 @@
                 }
             }
         })
+    }
+
+    function PrintInvoice(html) {
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write(html);
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 200);
+
+        return false;
     }
 </script>
