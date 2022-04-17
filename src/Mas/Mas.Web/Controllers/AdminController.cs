@@ -5,6 +5,8 @@ using Mas.Application.CustomerGroupServices.Dtos;
 using Mas.Application.CustomerServices;
 using Mas.Application.CustomerServices.Dtos;
 using Mas.Application.Helper;
+using Mas.Application.ImportServices;
+using Mas.Application.ImportServices.Dtos;
 using Mas.Application.InventoryServices;
 using Mas.Application.InventoryServices.Dtos;
 using Mas.Application.ManufactureGroupServices;
@@ -37,6 +39,7 @@ namespace Mas.Web.Controllers
         private readonly IManufactureGroupService _manufactureGroupService;
         private readonly IManufactureService _manufactureService;
         private readonly IInventoryService _inventoryService;
+        private readonly IImportService _importService;
 
         public AdminController(
             ICategoryService catSerivce,
@@ -46,7 +49,8 @@ namespace Mas.Web.Controllers
             IUserService userService,
             IManufactureGroupService manufactureGroupService,
             IManufactureService manufactureService,
-            IInventoryService inventoryService
+            IInventoryService inventoryService,
+            IImportService importService
             )
         {
             _catSerivce = catSerivce;
@@ -57,6 +61,7 @@ namespace Mas.Web.Controllers
             _manufactureGroupService = manufactureGroupService;
             _manufactureService = manufactureService;
             _inventoryService = inventoryService;
+            _importService = importService;
         }
         #region PRODUCT
         [Route("quan-tri/them-san-pham")]
@@ -83,7 +88,7 @@ namespace Mas.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ProductsPaging(string keyword, Guid? categoryId, int? page = 1, int? pageSize = 20)
+        public async Task<JsonResult> ProductsPaging(string keyword, Guid? categoryId, int? page = 1, int? pageSize = 10)
         {
             var paged = await _prodService.Products(keyword, categoryId, page, pageSize);
             return Json(paged);
@@ -395,13 +400,20 @@ namespace Mas.Web.Controllers
             return Json(result);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<JsonResult> InventoryInfo(Guid id)
         {
             var data = await _inventoryService.GetItemInfoAsync(id);
 
             return Json(data);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ImportInventory([FromBody] AddImportRequest request)
+        {
+            request.CreatedBy = HttpContext.User.FindFirst("Name").Value.ToString();
+            await _importService.AddAsync(request);
+            return Json(true);
         }
         #endregion
 
@@ -474,6 +486,13 @@ namespace Mas.Web.Controllers
         {
             await Task.Yield();
             return View();
+        }
+
+        public async Task<JsonResult> ImportInvoices(string keyword, string startDate, string endDate, int? page = 1, int? pageSize = 10)
+        {
+            var paged = await _importService.GetPagedResult(keyword, startDate, endDate, page, pageSize);
+
+            return Json(paged);
         }
         #endregion
 

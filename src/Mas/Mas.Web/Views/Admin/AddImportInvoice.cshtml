@@ -79,20 +79,32 @@
                                 <div class="card">
                                     <div class="card-content overflow-auto full-height">
                                         <div class="card-body">
-                                            <h6>Nhà phân phối</h6>
+                                            
                                             <div class="form">
                                                 <div class="row">
                                                     <div class="col-md-12 col-12">
-                                                        <div class="form-group position-relative has-icon-left">
+                                                        <div class="form-group position-relative">
+                                                            <h6>Nhà phân phối</h6>
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control"
                                                                        placeholder="Chọn nhà phân phối" id="manufacture-name" autocomplete="off">
                                                                 <ul class="suggestion list-group" id="customer-search-suggestion">
                                                                 </ul>
-                                                                <div class="form-control-icon">
-                                                                    <i class="bi bi-person"></i>
-                                                                </div>
                                                             </div>
+
+                                                            <h6>Mã nhập hàng</h6>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="Hệ thống tự sinh khi để trống" id="manufacture-code" autocomplete="off">
+                                                                
+                                                            </div>
+
+                                                            <h6>Ngày nhập</h6>
+                                                            <div class="form-group">
+                                                                <input type="date" class="form-control"
+                                                                       placeholder="Hệ thống tự sinh khi để trống" id="manufacture-date" autocomplete="off">
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                     <hr />
@@ -150,7 +162,7 @@
                                                 <button class="btn btn-success btn-lg btn-block" id="btn-checkout">Tạo đơn nhập</button>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <button class="btn btn-light-primary btn-lg btn-block" id="btn-checkout">Hủy bỏ</button>
+                                                <button class="btn btn-light-primary btn-lg btn-block" id="btn-cancel">Hủy bỏ</button>
                                             </div>
 
                                         </div>
@@ -351,9 +363,10 @@
     <script>
         var urlGetProd = '@Url.Action("GetProduct","Employee")';
         var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
-        var addInvoiceUrl = '@Url.Action("AddInvoice","Employee")';
+        var addInvoiceUrl = '@Url.Action("ImportInventory", "Admin")';
         var urlSearchProd = '@Url.Action("SearchProduct","Admin")';
-        var urlSearchManufacture = '@Url.Action("GetManufactures", "Admin")'
+        var urlSearchManufacture = '@Url.Action("GetManufactures", "Admin")';
+        var cancel = '@Url.Action("Imports","Admin")';
     </script>
     <script src="/assets/js/components/import-products.js"></script>
 </body>

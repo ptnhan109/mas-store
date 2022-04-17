@@ -37,6 +37,10 @@ namespace Mas.Core.AppDbContexts
 
         public DbSet<DestructionDetail> DestructionDetails { get; set; }
 
+        public DbSet<Import> Imports { get; set; }
+
+        public DbSet<ImportDetail> ImportDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             

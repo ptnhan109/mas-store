@@ -40,7 +40,7 @@ namespace Mas.Application.InventoryServices
         public async Task<InventoryDashboard> Dashboard()
         {
             var query = _repository.GetQueryable(new List<string>() { "Product", "Product.Prices", "Product.Category" });
-            int below = await query.CountAsync(c => c.Quantity < c.Product.InventoryLimit);
+            int below = await query.CountAsync(c => c.Quantity <= c.Product.InventoryLimit);
             int total = await query.CountAsync();
 
             return new InventoryDashboard()

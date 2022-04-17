@@ -29,6 +29,7 @@ function generatePaging(currentPage, totalPages, getDataCallBack) {
         if (currentPage + 2 <= totalPages) {
             html += '<li class="page-item"><a href="javascript:;" class="page-link" data-page="3">3</a></li>';
         }
+
     }
 
     if (currentPage > 1) {
@@ -61,7 +62,6 @@ function generatePaging(currentPage, totalPages, getDataCallBack) {
 
     $(".page-item a").click(function () {
         let page = $(this).attr("data-page");
-        alert(page);
         if (page == "prev") {
             if (currentPage > 1) {
                 currentPage--;
@@ -74,7 +74,7 @@ function generatePaging(currentPage, totalPages, getDataCallBack) {
                 getDataCallBack(currentPage);
             }
         } else {
-            currentPage = page;
+            currentPage = +page;
             getDataCallBack(currentPage);
         }
     });

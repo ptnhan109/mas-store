@@ -1,6 +1,7 @@
 ﻿using Mas.Application.CategoryServices;
 using Mas.Application.CustomerGroupServices;
 using Mas.Application.CustomerServices;
+using Mas.Application.ImportServices;
 using Mas.Application.InventoryServices;
 using Mas.Application.InvoiceServices;
 using Mas.Application.ManufactureGroupServices;
@@ -29,6 +30,7 @@ namespace Mas.Application
             service.AddScoped<IManufactureGroupService, ManufactureGroupService>();
             service.AddScoped<IManufactureService, ManufactureService>();
             service.AddScoped<IInventoryService, InventoryService>();
+            service.AddScoped<IImportService, ImportService>();
         }
     }
 }

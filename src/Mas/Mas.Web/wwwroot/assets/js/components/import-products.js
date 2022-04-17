@@ -22,6 +22,10 @@ $(document).ready(function () {
         DisplaySuggestion(productCode);
     });
 
+    $('#btn-cancel').click(function () {
+        window.location.href = cancel;
+    });
+
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
         if (e.keyCode == 13) {
@@ -373,8 +377,10 @@ function AddImportInvoices() {
     let request = {
         Note: note,
         Discount: +discount,
-        InvoiceDetails: items,
-        ManufactureId: manufactureId
+        Items: items,
+        ManufactureId: manufactureId,
+        Code: "",
+        CreatedBy: ""
     };
 
     console.log(request);
@@ -392,17 +398,17 @@ function AddImportInvoices() {
     //    });
     //}
 
-    //$.ajax({
-    //    url: addInvoiceUrl,
-    //    type: "POST",
-    //    dataType: "json",
-    //    contentType: "application/json; charset=utf-8",
-    //    traditional: true,
-    //    data: JSON.stringify(request),
-    //    success: function (data) {
-    //        showMessage("success", data);
-    //    }
-    //});
+    $.ajax({
+        url: addInvoiceUrl,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        data: JSON.stringify(request),
+        success: function (data) {
+            showMessage("success", data);
+        }
+    });
 
 }
 

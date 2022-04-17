@@ -39,7 +39,7 @@
                                         <h6>Tìm kiếm</h6>
                                         <div class="form-group position-relative has-icon-left">
                                             <input type="text" class="form-control"
-                                                   placeholder="Tên hàng / mã vạch / mô tả" name="keyword" id="keyword">
+                                                   placeholder="Mã hóa đơn, mô tả" name="keyword" id="keyword">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-search"></i>
                                             </div>
@@ -55,8 +55,8 @@
 
                                     </div>
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary me-1 mb-1">
-                                            Lọc đơn hủy
+                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetImportInvoices(1)">
+                                            Lọc đơn nhập
                                         </button>
                                     </div>
                                 </div>
@@ -80,19 +80,19 @@
                             <th>#</th>
                             <th>Mã đơn nhập</th>
                             <th>Tổng tiền</th>
-                            <th>Số lượng</th>
                             <th>Nhà cung cấp</th>
                             <th>Người nhập</th>
+                            <td>Ngày nhập</td>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="destructions">
+                    <tbody id="invoices">
                     </tbody>
                 </table>
 
 
                 <div class="dataTable-bottom">
-                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
+                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation">
                     </ul>
                 </div>
             </div>
@@ -101,12 +101,12 @@
     </section>
 
 </div>
-@*<script>
+<script>
     $(document).ready(function () {
-        GetDestructions(1);
+        GetImportInvoices(1);
     });
-    function GetDestructions(page) {
-        let url = '@Url.Action("GetDestructionPaging", "Admin")';
+    function GetImportInvoices(page) {
+        let url = '@Url.Action("ImportInvoices", "Admin")';
         let keyword = $("#keyword").val();
         let start = $("#startDate").val();
         let end = $("#endDate").val();
@@ -127,36 +127,38 @@
                 let html = "";
                 if (data.items.length > 0) {
                     data.items.forEach(function (item, index) {
-                        html += '<tr destruction-id="';
+                        html += '<tr import-id="';
                         html += item.id;
                         html += '"><td>';
-                        html += index++;
+                        html += index+1;
                         html += '</td><td>';
                         html += item.code;
-                        html += '</td><td>';
+                        html += '</td><td><strong>';
                         html += item.amount;
-                        html += '</td><td>';
-                        html += item.createdDate;
+                        html += '</strong></td><td>';
+                        html += item.manufacture;
                         html += '</td><td>';
                         html += item.createdBy;
                         html += '</td><td>';
-                        html += '<a href="javascript:;" class="destruction-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+                        html += item.createdDate;
+                        html += '</td><td>';
+                        html += '<a href="javascript:;" class="import-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
                         html += '</td></tr>';
                     });
 
-                    $("#destructions").html(html);
+                    $("#invoices").html(html);
 
-                    $("a.destruction-info").click(function () {
-                        let id = $(this).closest("tr").attr("destruction-id");
+                    $("a.import-info").click(function () {
+                        let id = $(this).closest("tr").attr("import-id");
                         alert(id);
                     });
 
-                    generatePaging(page, data.totalPage, GetDestructions);
+                    generatePaging(page, data.totalPage, GetImportInvoices);
                 } else {
-                    html += '<tr><td colspan="6" class="text-center">Không có phiếu hủy hàng</td><tr>';
-                    $("#destructions").html(html);
+                    html += '<tr><td colspan="6" class="text-center">Không có phiếu nhập hàng</td><tr>';
+                    $("#invoices").html(html);
                 }
             }
         })
     }
-</script>*@
+</script>

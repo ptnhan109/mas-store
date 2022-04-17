@@ -46,6 +46,11 @@ namespace Mas.Common
 
         public static string ToRemoveUnicode(this string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return string.Empty;
+            }
+
             string[] VietnameseSigns = new string[]{ "aAeEoOuUiIdDyY", "áàạảãâấầậẩẫăắằặẳẵ", "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
                 "éèẹẻẽêếềệểễ", "ÉÈẸẺẼÊẾỀỆỂỄ", "óòọỏõôốồộổỗơớờợởỡ","ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ","úùụủũưứừựửữ","ÚÙỤỦŨƯỨỪỰỬỮ",
                 "íìịỉĩ", "ÍÌỊỈĨ", "đ", "Đ","ýỳỵỷỹ","ÝỲỴỶỸ"
