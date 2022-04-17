@@ -82,8 +82,8 @@
                             <th>Tổng tiền</th>
                             <th>Nhà cung cấp</th>
                             <th>Người nhập</th>
-                            <td>Ngày nhập</td>
-                            <th></th>
+                            <th>Ngày nhập</th>
+                            <th>In</th>
                         </tr>
                     </thead>
                     <tbody id="invoices">
@@ -142,7 +142,7 @@
                         html += '</td><td>';
                         html += item.createdDate;
                         html += '</td><td>';
-                        html += '<a href="javascript:;" class="import-info"><i class="fa fa-info-circle" aria-hidden="true"></i></a>';
+                        html += '<a href="javascript:;" class="import-info text-primary"><i class="fa fa-print" aria-hidden="true"></i></a>';
                         html += '</td></tr>';
                     });
 

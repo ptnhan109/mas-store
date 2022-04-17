@@ -21,5 +21,7 @@ namespace Mas.Application.InventoryServices
         Task AddDestruction(AddDestruction request);
 
         Task<PagedResult<DestructionItem>> DestructionsPaging(string keyword, DateTime? start, DateTime? end, int? page, int? pageSize);
+
+        Task<Destruction> GetByIdAsync(Guid id);
     }
 }

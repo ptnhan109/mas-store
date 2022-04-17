@@ -19,10 +19,8 @@
     <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/assets/css/app.css">
-    <link href="/assets/css/toastify.min.css" rel="stylesheet" />
-    <script src="/assets/js/extensions/toastify-js.js"></script>
-    <script src="~/assets/js/common.js"></script>
-    <link href="~/assets/css/common.css" rel="stylesheet" />
+    <link href="/assets/css/common.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet" />
     <script>
         var categoryUrl = '@Url.Action("Categories","Admin")';
     </script>
@@ -43,7 +41,7 @@
             z-index: 99;
         }
 
-        #spinner-loading{
+        #spinner-loading {
             position: absolute;
             top: 50%;
         }
@@ -260,10 +258,10 @@
 
             <div class="content-wrapper container">
                 @*<div class="div-loading">
-                    <div class="spinner-border text-primary" role="status" id="spinner-loading">
-                    </div>
-                </div>*@
-                
+                        <div class="spinner-border text-primary" role="status" id="spinner-loading">
+                        </div>
+                    </div>*@
+
                 @RenderBody()
             </div>
 
@@ -281,6 +279,9 @@
             </footer>
         </div>
     </div>
+    <link href="/assets/css/toastify.min.css" rel="stylesheet" />
+    <script src="/assets/js/extensions/toastify-js.js"></script>
+    <script src="/assets/js/common.js"></script>
     <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/pages/horizontal-layout.js"></script>

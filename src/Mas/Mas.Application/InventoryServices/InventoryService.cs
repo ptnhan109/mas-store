@@ -147,6 +147,13 @@ namespace Mas.Application.InventoryServices
             return paged.ChangeType(DestructionItem.FromEntity);
         }
 
+        public async Task<Destruction> GetByIdAsync(Guid id)
+        {
+            var item = await _desRepo.FindAsync(id, new List<string>() { "DestructionDetails" });
+
+            return item;
+        }
+
         #endregion
     }
 }

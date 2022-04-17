@@ -17,6 +17,7 @@ using Mas.Application.ProductServices;
 using Mas.Application.ProductServices.Dtos;
 using Mas.Application.UserServices;
 using Mas.Application.UserServices.Dtos;
+using Mas.Common;
 using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -470,6 +471,41 @@ namespace Mas.Web.Controllers
             await _inventoryService.AddDestruction(request);
 
             return Json("Hủy hàng thành công");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> PrintDestruction(Guid id)
+        {
+            var destruction = await _inventoryService.GetByIdAsync(id);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "destruction.html");
+            string templates = System.IO.File.ReadAllText(path);
+            templates = templates.Replace("{createdBy}", destruction.CreatedBy);
+            templates = templates.Replace("{cancelDate}", destruction.CreatedAt.ToString("dd/MM/yyyy"));
+            var content = new StringBuilder();
+            var items = destruction.DestructionDetails.ToList();
+            int quantity = 0;
+            for(int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                content.Append(@"<tr><td class='text-center-item'>");
+                content.Append((i + 1));
+                content.Append(@"</td><td class='text-left item'>");
+                content.Append(item.Name);
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.CurrentImport.ToCurrencyFormat());
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.Quantity);
+                content.Append(@"</td><td class='text-center item'>");
+                content.Append(item.Amount.ToCurrencyFormat());
+                content.Append("</td></tr>");
+                quantity += item.Quantity;
+            }
+
+            templates = templates.Replace("{content}", content.ToString());
+            templates = templates.Replace("{amount}", destruction.Amount.ToCurrencyFormat());
+            templates = templates.Replace("{quantity}", quantity.ToString());
+
+            return Json(templates);
         }
         #endregion
 

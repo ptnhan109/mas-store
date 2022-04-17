@@ -395,19 +395,19 @@ function AddInvoices() {
         request.CustomerId = customerId
     }
 
-    if ($('#is-print-invoice').is(":checked")) {
-        $.ajax({
-            url: invoiceUrl,
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            data: JSON.stringify(request),
-            success: function (data) {
-                PrintInvoice(data);
-            }
-        });
-    }
+
+    $.ajax({
+        url: invoiceUrl,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        data: JSON.stringify(request),
+        success: function (data) {
+            PrintInvoice(data);
+        }
+    });
+
 
     $.ajax({
         url: addInvoiceUrl,
