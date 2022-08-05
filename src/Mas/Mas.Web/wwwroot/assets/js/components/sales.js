@@ -25,6 +25,7 @@ $(document).ready(function () {
         if (e.keyCode == 13) {
             if (qrCode !== "") {
                 AddProductToCart(qrCode);
+                $("#productCode").val("");
                 return false;
             } else {
                 alert("Hãy nhập từ khóa");
@@ -34,6 +35,8 @@ $(document).ready(function () {
         if (e.keyCode == 8) {
             DisplaySuggestion(qrCode);
         }
+
+        
     });
 
     $('#customer-name').on("keypress", function (e) {
@@ -110,6 +113,12 @@ function AddProductToCart(barcode) {
         success: function (data) {
             let isExsit = false;
             $("#cart-list > tr").each(function () {
+                if (typeof (data) == "boolean") {
+                    showMessage("danger", "Không tìm thấy sản phẩm.");
+                    $("#productCode").val("");
+                    return;
+                }
+
                 if ($(this).attr("barcode") == data.barCode) {
                     let total;
                     isExsit = true;
@@ -405,6 +414,7 @@ function AddInvoices() {
         data: JSON.stringify(request),
         success: function (data) {
             PrintInvoice(data);
+            CleanOrder();
         }
     });
 

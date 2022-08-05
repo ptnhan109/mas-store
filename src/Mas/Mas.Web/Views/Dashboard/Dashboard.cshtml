@@ -4,8 +4,190 @@
 }
 
 <div class="page-heading">
-    <h3>Đang chờ yêu cầu</h3>
+    <h3>Tổng quan tình trạng kinh doanh</h3>
 </div>
 <div class="page-content">
-   
+    <section class="row">
+        <div class="col-12 col-lg-9">
+            <div class="row">
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="text-muted font-semibold">Đang bán</h6>
+                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="text-muted font-semibold">Khách hàng</h6>
+                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="text-muted font-semibold">Nhân viên</h6>
+                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="text-muted font-semibold">Đơn hàng</h6>
+                                    <h6 class="font-extrabold mb-0">112</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Tình hình doanh thu</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="card">
+                <div class="card-body py-4 px-5">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-xl">
+                            <img src="~/assets/images/faces/632f61a6-630a-4bfe-b697-6bedca1e72a6.jpg" alt="Face 1">
+                        </div>
+                        <div class="ms-3 name">
+                            <h5 class="font-bold">Phạm Lệ Quyên</h5>
+                            <h6 class="text-muted mb-0">Chủ cửa hàng</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Ngành hàng bán chạy</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <svg class="bi text-primary" width="32" height="32" fill="blue"
+                                     style="width:10px">
+                                    <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                </svg>
+                                <h5 class="mb-0 ms-3">Thuốc lá</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="mb-0">862</h5>
+                        </div>
+                        <div class="col-12">
+                            <div id="chart-europe"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <svg class="bi text-success" width="32" height="32" fill="blue"
+                                     style="width:10px">
+                                    <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                </svg>
+                                <h5 class="mb-0 ms-3">Nước ngọt</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="mb-0">375</h5>
+                        </div>
+                        <div class="col-12">
+                            <div id="chart-america"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center">
+                                <svg class="bi text-danger" width="32" height="32" fill="blue"
+                                     style="width:10px">
+                                    <use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                </svg>
+                                <h5 class="mb-0 ms-3">Sữa</h5>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="mb-0">1025</h5>
+                        </div>
+                        <div class="col-12">
+                            <div id="chart-indonesia"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+<script src="~/assets/vendors/chartjs/Chart.js"></script>
+<script src="~/assets/vendors/apexcharts/apexcharts.js"></script>
+<script src="~/assets/js/pages/dashboard.js"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 13, 25, 12, 8, 30],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 102, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 102, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -1,5 +1,14 @@
 .full-height {
-    height: 79vh !important;
+    min-height: 79vh !important;
+}
+.sale-box{
+    min-height: 79vh !important;
+    display: block;
+    overflow: auto;
+    background: white;
+}
+.sale-header{
+    margin-bottom: 1rem !important;
 }
 
 .form-group #productCode{
@@ -12,27 +21,4 @@
     z-index: 1;
     background: white;
     display: block;
-} 
-/*.input-search .dropdown .dropdown-menu li:hover {
-    background-color: #ddd;
 }
-
-.input-search .dropdown .dropdown-menu {
-    width: 100%;
-    transform: translate(0px, 38px) !important;
-}
-
-.input-search .dropdown .dropdown-menu.list-group:not(.show) {
-    transform: translate(0px, 0px) !important;
-}
-
-
-.dropdown-menu.list-group.show {
-    transform: translate(-25px, 40px) !important;
-}*/
-
-
-
-/*.input-search .dropdown .dropdown-menu li {
-    color:red;
-}*/

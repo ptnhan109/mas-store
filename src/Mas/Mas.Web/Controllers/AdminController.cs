@@ -123,6 +123,7 @@ namespace Mas.Web.Controllers
             return RedirectToAction("Products");
         }
 
+
         #endregion
 
         #region CATEGORY
@@ -176,7 +177,7 @@ namespace Mas.Web.Controllers
         {
             return Json(await _cusService.GetCustomer(id));
         }
-        
+
         [HttpGet]
         public async Task<JsonResult> DeleteCustomer(Guid id)
         {
@@ -252,7 +253,7 @@ namespace Mas.Web.Controllers
 
             return Json("Thêm mới nhân viên thành công.");
         }
-        
+
         [HttpGet]
         public async Task<JsonResult> DeleteEmployee(Guid id)
         {
@@ -284,7 +285,7 @@ namespace Mas.Web.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         public async Task<JsonResult> GetManufactureGroups()
         {
@@ -372,7 +373,7 @@ namespace Mas.Web.Controllers
         #region INVENTORY
         [AllowAnonymous]
         [Route("quan-tri/quan-ly-kho")]
-        public async Task<IActionResult> Inventories(string keyword, Guid? groupId, bool? limit,int? page = 1, int? pageSize = 10)
+        public async Task<IActionResult> Inventories(string keyword, Guid? groupId, bool? limit, int? page = 1, int? pageSize = 10)
         {
             await Task.Yield();
             return View();
@@ -388,11 +389,11 @@ namespace Mas.Web.Controllers
         [HttpGet]
         public async Task<JsonResult> SearchInventories(string keyword, Guid? categoryId, int? isPassQuota, int? page = 1, int? pageSize = 10)
         {
-            if(isPassQuota != null)
+            if (isPassQuota != null)
             {
                 bool pass = isPassQuota.Value == 1 ? true : false;
                 var items = await _inventoryService.GetInventories(keyword, categoryId, pass, page, pageSize);
-                
+
                 return Json(items);
             }
 
@@ -442,14 +443,14 @@ namespace Mas.Web.Controllers
                 return Json(await _inventoryService.DestructionsPaging(keyword, null, end, page, pageSize));
             }
 
-            if(!string.IsNullOrEmpty(endDate) && !string.IsNullOrEmpty(startDate))
+            if (!string.IsNullOrEmpty(endDate) && !string.IsNullOrEmpty(startDate))
             {
                 var start = DateTime.Parse(startDate);
                 var end = DateTime.Parse(endDate);
                 return Json(await _inventoryService.DestructionsPaging(keyword, start, end, page, pageSize));
             }
 
-            if(string.IsNullOrEmpty(endDate) && string.IsNullOrEmpty(startDate))
+            if (string.IsNullOrEmpty(endDate) && string.IsNullOrEmpty(startDate))
             {
                 return Json(await _inventoryService.DestructionsPaging(keyword, null, null, page, pageSize));
             }
@@ -484,7 +485,7 @@ namespace Mas.Web.Controllers
             var content = new StringBuilder();
             var items = destruction.DestructionDetails.ToList();
             int quantity = 0;
-            for(int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
                 var item = items[i];
                 content.Append(@"<tr><td class='text-center-item'>");
@@ -634,6 +635,18 @@ namespace Mas.Web.Controllers
             return Json(templates);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> PrintPrice([FromBody] PrintPrice request)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "price-tag.html");
+            string templates = System.IO.File.ReadAllText(path);
+            templates = templates.Replace("{Title}", request.Title);
+            templates = templates.Replace("{Name}", request.Name);
+            templates = templates.Replace("{Price}", request.Price);
+            await Task.Yield();
+            return Json(templates);
+        }
+
         [HttpGet]
         public async Task<JsonResult> SearchProduct(string keyword)
         {
@@ -648,14 +661,18 @@ namespace Mas.Web.Controllers
             string result = await _prodService.ExportProducts(cateId);
             return Json($"danh-sach-hang-hoa-{result}");
         }
+
+        [HttpPost]
+        public async Task<JsonResult> ImportProducts()
+        {
+            if (Request.Form.Files.Count > 0)
+            {
+                var file = Request.Form.Files.FirstOrDefault();
+                await _prodService.ImportProducts(file);
+            }
+            return default;
+        }
         #endregion
 
-        [AllowAnonymous]
-        [HttpGet]
-        public async Task<JsonResult> Test()
-        {
-            var s = await _prodService.ExportProducts(null);
-            return Json("a");
-        }
     }
 }

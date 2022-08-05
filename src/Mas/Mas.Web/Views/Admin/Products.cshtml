@@ -28,7 +28,8 @@
                     <a href="@Url.Action("AddProduct","Admin")" class="btn btn-success me-1 mb-1">
                         <i class="bi bi-lock-open"></i> Thêm mới
                     </a>
-                    <button type="button" class="btn btn-success me-1 mb-1">Nhập từ Excel</button>
+                    <button type="button" class="btn btn-success me-1 mb-1" id="import-excel">Nhập từ Excel</button>
+                    <input type="file" id="upload-excel" hidden />
                     <a href="javascript:;" id="export-products" class="btn btn-success me-1 mb-1">Xuất file</a>
                 </div>
                 <div class="card">
@@ -114,7 +115,7 @@
     $(document).ready(function () {
         GetCategories();
         GetProducts(1);
-        $("#export-products").click(function () {
+        $("#export-products").click(function() {
             $(this).attr("disabled", "disabled");
             let cate = $("#drpCategory").val();
             let url = "@Url.Action("ExportProducts", "Admin")";
@@ -126,7 +127,7 @@
                 data: {
                     cateId: cate
                 },
-                success: function (data) {
+                success: function(data) {
                     let url = '<a download="danh-sach-san-pham" class="btn btn-primary download-file" href="/templates/' + data + '">Tải xuống</a>';
                     $("#products-menu").append(url);
                     showMessage("success", "Xuất file thành công mời tải xuống");
@@ -134,7 +135,55 @@
                     //TODO: delete file
                 }
             })
+        });
+
+        $("#upload-excel").on("change", function() {
+            var form_Data = new FormData();
+            form_Data.append("Avatar", $("#upload-excel").get(0).files[0]);
+            console.log(form_Data);
+            let url = '@Url.Action("ImportProducts","Admin")';
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: form_Data,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    console.log(data);
+                }
+
+            })
+
+        });
+
+        $("#import-excel").click(function() {
+            $("#upload-excel").click();
+        });
+
+        $("#btn-print-price-tag").click(function() {
+            $("#modal-print-price").modal("hide");
+            let title = $("#print-price-title").val();
+            let name = $("#print-price-name").val();
+            let price = $("#print-price-value").val();
+            let request = {
+                Title: title,
+                Name: name,
+                Price: price
+            }
+
+            $.ajax({
+                url: '@Url.Action("PrintPrice","Admin")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                data: JSON.stringify(request),
+                success: function (data) {
+                    PrintInvoice(data);
+                }
+            });
         })
+
     });
     function GetProducts(page) {
         let url = '@Url.Action("ProductsPaging", "Admin")';
@@ -176,7 +225,12 @@
                         html += '><i class="fa fa-edit text-primary"></i></a>&nbsp;';
                         html += '<a href="javascript:;" class="product-delete" product-id="';
                         html += product.id;
-                        html += '"><i class="fa fa-trash text-danger"></i></a>';
+                        html += '"><i class="fa fa-trash text-danger"></i></a>&nbsp;';
+                        html += '<a href="javascript:;" class="product-print-price" product-name="';
+                        html += product.name;
+                        html += '" product-price="';
+                        html += product.defaultSell
+                        html += '"><i class="fa fa-print text-dark"></i></a>';
                         html += '</td>';
                         html += '</tr>';
                     });
@@ -195,6 +249,12 @@
 
                         let url = '@Url.Action("UpdateProduct","Admin")' + '?id=' + $(this).attr("product-id");
                         window.location.href = url;
+                    });
+
+                    $("a.product-print-price").click(function() {
+                        $("#print-price-name").val($(this).attr("product-name"));
+                        $("#print-price-value").val($(this).attr("product-price"));
+                        $("#modal-print-price").modal("show");
                     });
                 } else {
                     html += '<tr><td colspan="7" class="text-center">Không tồn tại mặt hàng</td></tr>';
@@ -216,4 +276,75 @@
             }
         });
     }
+
+    function PrintInvoice(html) {
+    var frame1 = document.createElement('iframe');
+    frame1.name = "frame1";
+    frame1.style.position = "absolute";
+    frame1.style.top = "-1000000px";
+    document.body.appendChild(frame1);
+    var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(html);
+    frameDoc.document.close();
+    setTimeout(function () {
+        window.frames["frame1"].focus();
+        window.frames["frame1"].print();
+        document.body.removeChild(frame1);
+    }, 200);
+
+    return false;
+}
 </script>
+<div class="modal fade text-left modal-" id="modal-print-price" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input id="update-group-id" hidden />
+                <h5 class="modal-title" id="discount-title" style="text-transform: uppercase;">In giá sản phẩm</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form form-vertical">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="update-name">Tiêu đề</label>
+                                    <input type="text" id="print-price-title" class="form-control" name="fname" value="KHUYẾN MẠI">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="update-description">Tên sản phẩm</label>
+                                    <input class="form-control" id="print-price-name">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="update-description">Giá</label>
+                                    <input class="form-control" id="print-price-value">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer pd-t-0">
+                <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Hủy bỏ</span>
+                </button>
+                <button type="button" class="btn btn-primary ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block" id="btn-print-price-tag">In</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

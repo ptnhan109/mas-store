@@ -10,4 +10,13 @@ namespace Mas.Application.ProductServices.Dtos
 
         public string Name { get; set; }
     }
+
+    public class PrintPrice
+    {
+        public string Title { get; set; }
+
+        public string Name { get; set; }
+
+        public string Price { get; set; }
+    }
 }

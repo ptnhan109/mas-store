@@ -3,6 +3,7 @@ using Mas.Common;
 using Mas.Core;
 using Mas.Core.Contants;
 using Mas.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System;
@@ -19,11 +20,15 @@ namespace Mas.Application.ProductServices
     {
         private readonly IAsyncRepository<Product> _repository;
         private readonly IAsyncRepository<Price> _priceRepository;
+        private readonly IAsyncRepository<Category> _catRepository;
 
-        public ProductService(IAsyncRepository<Product> repository, IAsyncRepository<Price> priceRepository)
+        public ProductService(IAsyncRepository<Product> repository,
+            IAsyncRepository<Price> priceRepository,
+            IAsyncRepository<Category> catRepository)
         {
             _repository = repository;
             _priceRepository = priceRepository;
+            _catRepository = catRepository;
         }
         public async Task<Product> AddProduct(AddProductModel model)
         {
@@ -53,12 +58,12 @@ namespace Mas.Application.ProductServices
         {
             Expression<Func<Product, bool>> expression = c => c.BarCode.Equals(barcode);
             var prod = await _repository.FindAsync(expression, new List<string>() { "Category", "Prices" });
-            if(prod is null)
+            if (prod is null)
             {
                 Expression<Func<Price, bool>> expPrice = c => c.BarCode.Equals(barcode);
 
                 var price = await _priceRepository.FindAsync(expPrice, new List<string>() { "Product", "Product.Prices" });
-                if(price is null)
+                if (price is null)
                 {
                     return default;
                 }
@@ -67,7 +72,7 @@ namespace Mas.Application.ProductServices
                 var prices = prodParent.Prices.ToList();
                 prices.ForEach(price =>
                 {
-                    if(price.BarCode == barcode)
+                    if (price.BarCode == barcode)
                     {
                         price.IsDefault = true;
                     }
@@ -79,10 +84,10 @@ namespace Mas.Application.ProductServices
 
                 prodParent.Prices = prices;
 
-                return new ProductSell(prodParent,isWholeSale);
+                return new ProductSell(prodParent, isWholeSale);
             }
 
-            return new ProductSell(prod,isWholeSale);
+            return new ProductSell(prod, isWholeSale);
         }
 
         public async Task<PagedResult<ProductItem>> Products(string keyword, Guid? category, int? page = 1, int? pageSize = 10)
@@ -113,7 +118,7 @@ namespace Mas.Application.ProductServices
         public async Task<string> ExportProducts(Guid? categoryId)
         {
             var query = _repository.GetQueryable(new List<string>() { "Prices", "Category" });
-            if(categoryId != null)
+            if (categoryId != null)
             {
                 query = query.Where(c => c.CategoryId.Equals(categoryId));
             }
@@ -123,16 +128,16 @@ namespace Mas.Application.ProductServices
             string fileName = $"{Guid.NewGuid()}.xlsx";
             string newFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", $"danh-sach-hang-hoa-{fileName}");
             var file = new FileInfo(newFile);
-            using(ExcelPackage excelPackage = new ExcelPackage(new FileInfo(path)))
+            using (ExcelPackage excelPackage = new ExcelPackage(new FileInfo(path)))
             {
                 var sheet = excelPackage.Workbook.Worksheets.First();
                 var startRow = 5;
-                for(int index = 0; index < items.Count; index++)
+                for (int index = 0; index < items.Count; index++)
                 {
                     var product = items[index];
                     var prices = product.Prices.OrderByDescending(c => c.IsDefault)
                         .ThenBy(c => c.TransferQuantity).ToList();
-                    
+
                     sheet.Cells[$"A{startRow}"].Value = index + 1;
 
                     for (int sub = 0; sub < prices.Count; sub++)
@@ -157,6 +162,106 @@ namespace Mas.Application.ProductServices
                 return fileName;
             }
 
+        }
+
+        public async Task ImportProducts(IFormFile file)
+        {
+            var data = new List<ProductImportExcel>();
+            if (file.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+
+                    file.CopyTo(ms);
+                    var content = ms.ToArray();
+                    var stream = new MemoryStream(content);
+
+                    using (var excelPackage = new ExcelPackage(stream))
+                    {
+                        var workSheet = excelPackage.Workbook.Worksheets.FirstOrDefault();
+                        int colCount = workSheet.Dimension.End.Column;
+                        int rowCount = workSheet.Dimension.End.Row;
+                        for (int i = 5; i <= rowCount; i++)
+                        {
+                            string cat = workSheet.Cells[$"B{i}"].Value?.ToString() ?? string.Empty;
+                            string barCode = workSheet.Cells[$"C{i}"].Value?.ToString() ?? string.Empty;
+                            string name = workSheet.Cells[$"D{i}"].Value?.ToString() ?? string.Empty;
+                            string SellPrice = workSheet.Cells[$"E{i}"].Value?.ToString() ?? "0";
+                            string importPrice = workSheet.Cells[$"F{i}"].Value?.ToString() ?? "0";
+                            string unit = workSheet.Cells[$"G{i}"].Value?.ToString() ?? "Cái";
+                            string wholeSale = workSheet.Cells[$"M{i}"].Value?.ToString() ?? "0";
+                            string transferQuantity = workSheet.Cells[$"L{i}"].Value?.ToString() ?? "0";
+                            data.Add(new ProductImportExcel()
+                            {
+                                BarCode = barCode,
+                                Category = cat,
+                                ImportPrice = importPrice,
+                                Name = name,
+                                SellPrice = SellPrice,
+                                TransferQuantity = transferQuantity,
+                                Unit = unit,
+                                WholeSalePrice = wholeSale
+                            });
+                            
+                        }
+                        data.RemoveAll(c => string.IsNullOrEmpty(c.BarCode) && string.IsNullOrEmpty(c.Name));
+
+                        var excute = await ConvertToProduct(data);
+                        await _repository.AddRangeAsync(excute.products);
+                        await _priceRepository.AddRangeAsync(excute.prices);
+                    }
+                }
+
+            }
+            return;
+        }
+
+        private async Task<(List<Product> products, List<Price> prices)> ConvertToProduct(List<ProductImportExcel> data)
+        {
+            var products = new List<Product>();
+            var prices = new List<Price>();
+
+            var categories = (await _catRepository.FindAllAsync(null, null)).ToList();
+            var units = ContantsUnit.Units();
+            var id = Guid.Empty;
+            foreach (var item in data)
+            {
+                // Nếu barcode null thì đó là 1 loại của sản phẩm trước đó
+                if (!string.IsNullOrEmpty(item.BarCode))
+                {
+                    var prod = item.ToProduct(categories, units);
+                    id = prod.Id;
+                    var price = item.ToPrice(units, id, true);
+                    if (price != null)
+                    {
+                        prices.Add(price);
+                    }
+                    if (prod != null)
+                    {
+                        
+                        products.Add(prod);
+                    }
+                    if(price is null || prod is null)
+                    {
+
+                    }
+                }
+                else
+                {
+                    var price = item.ToPrice(units, id, false);
+                    if (price != null)
+                    {
+                        prices.Add(price);
+                    }
+                    if(price is null)
+                    {
+
+                    }
+                }
+            }
+
+            await Task.Yield();
+            return (products, prices);
         }
     }
 }

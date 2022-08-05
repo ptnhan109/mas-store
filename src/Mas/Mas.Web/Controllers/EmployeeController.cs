@@ -36,7 +36,10 @@ namespace Mas.Web.Controllers
         public async Task<JsonResult> GetProduct(string barcode, bool isWholeSale)
         {
             var prod = await _service.GetProductAsync(barcode, isWholeSale);
-
+            if(prod is null)
+            {
+                return Json(false);
+            }
             return Json(prod);
         }
 

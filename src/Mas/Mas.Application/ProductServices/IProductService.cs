@@ -1,6 +1,7 @@
 ﻿using Mas.Application.ProductServices.Dtos;
 using Mas.Common;
 using Mas.Core.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,5 +24,7 @@ namespace Mas.Application.ProductServices
         Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale);
 
         Task<string> ExportProducts(Guid? categoryId);
+
+        Task ImportProducts(IFormFile file);
     }
 }

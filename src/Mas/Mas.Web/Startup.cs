@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,14 @@ namespace Mas.Web
 
             services.AddDependencies();
 
+            services.Configure<FormOptions>(o =>{
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = long.MaxValue; // <-- !!! long.MaxValue
+                o.MultipartBoundaryLengthLimit = int.MaxValue;
+                o.MultipartHeadersCountLimit = int.MaxValue;
+                o.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
             services.AddSession(opt =>
             {
                 opt.IdleTimeout = TimeSpan.FromHours(8);
@@ -56,7 +65,7 @@ namespace Mas.Web
             {
                 options.LoginPath = "/Home/Index";
                 options.Cookie.Name = "mas.cookie";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(200);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(240);
                 options.SlidingExpiration = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.AccessDeniedPath = "/Redirect/Unauthorize";

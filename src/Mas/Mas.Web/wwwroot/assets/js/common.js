@@ -48,7 +48,7 @@ function generatePaging(currentPage, totalPages, getDataCallBack) {
 
         if (currentPage + 1 <= totalPages) {
             let next = currentPage + 1;
-            html += '<li class="page-item active"><a href="javascript:;" class="page-link" data-page="';
+            html += '<li class="page-item"><a href="javascript:;" class="page-link" data-page="';
             html += next;
             html += '">';
             html += next;
@@ -141,3 +141,4 @@ function GenerateRandom(length) {
 
     return result;
 }
+

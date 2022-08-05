@@ -161,7 +161,9 @@
         </section>
 
         <div id="add-transfer">
-            <table id="list-prices">
+            @if (Model.Prices != null)
+            {
+               <table id="list-prices">
                 @foreach (var price in Model.Prices)
                 {
                     <tr>
@@ -250,7 +252,9 @@
                         </td>
                     </tr>
                 }
-            </table>
+            </table> 
+            }
+            
 
         </div>
     </form>
