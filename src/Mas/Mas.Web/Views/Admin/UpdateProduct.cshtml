@@ -42,13 +42,6 @@
                                                            placeholder="Tên hàng hóa thường gọi" name="Name" id="txtName" value="@Model.Name">
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12 col-12">
-                                                <h6>Giá bán</h6>
-                                                <div class="form-group position-relative">
-                                                    <input type="number" class="form-control" value="@Model.DefaultSellPrice" name="DefaultSellPrice" id="txtDefaultSellPrice">
-                                                </div>
-                                            </div>
                                             <div class="col-md-12 col-12">
                                                 <h6>Giá nhập</h6>
                                                 <div class="form-group position-relative">
@@ -56,6 +49,13 @@
                                                 </div>
 
                                             </div>
+                                            <div class="col-md-12 col-12">
+                                                <h6 class="text-danger">Giá bán lẻ</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="@Model.DefaultSellPrice" name="DefaultSellPrice" id="txtDefaultSellPrice">
+                                                </div>
+                                            </div>
+                                            
                                             <div class="col-md-12 col-12">
                                                 <div class="row">
                                                     <div class="col-md-6 col-12">
@@ -76,15 +76,24 @@
 
                                         </div>
                                         <div class="col-md-6 col-12">
-                                            <div class="col-md-12 col-12">
-                                                <h6>Tồn kho hiện tại</h6>
+                                            <div class="row">
+                                                <div class="col-md-6 col-12">
+                                                <h6 class="text-primary">Tồn kho hiện tại</h6>
                                                 <div class="form-group position-relative">
                                                     <input type="number" class="form-control" value="@Model.CurrentQuantity" name="Inventory" id="txtInventory">
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-12">
+                                                    <h6 class="text-primary">Định mức tồn kho</h6>
+                                                    <div class="form-group position-relative">
+                                                        <input type="number" class="form-control" value="@Model.InventoryLimit" name="InventoryLimit" id="txtInventoryLimit">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
 
                                             <div class="col-md-12 col-12">
-                                                <h6>Danh mục hàng</h6>
+                                                <h6>Nhóm mặt hàng</h6>
                                                 <fieldset class="form-group">
                                                     <select class="form-select" id="drpCategory" name="CategoryId">
                                                     </select>
@@ -114,38 +123,14 @@
                                                     </select>
                                                 </fieldset>
                                             </div>
+
+                                            <div class="col-md-12 col-12">
+                                                <h6 class="text-danger">Giá bán buôn</h6>
+                                                <div class="form-group position-relative">
+                                                    <input type="number" class="form-control" value="@Model.WholeSellPrice" name="DefaultSellPrice" id="txtWholeSellPrice">
+                                                </div>
+                                            </div>
                                             <br />
-                                            <div class="d-inline-block me-2 mb-1" id="IsConsignment">
-                                                <div class="form-check">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox"
-                                                               class="form-check-input form-check-success form-check-glow" name="customCheck">
-                                                        <label class="form-check-label"
-                                                               for="customColorCheck1">
-                                                            Quản lý theo lô/ hạn sử
-                                                            dụng
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12 col-12" id="consignment">
-                                                <div class="row">
-                                                    <h6>Cận date trước</h6>
-                                                    <div class="col-md-6 col-6">
-                                                        <div class="form-group position-relative ">
-                                                            <input type="number" class="form-control" value="@Model.CloseToDate" name="CloseToDate" id="txtCloseToDate">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-6">
-                                                        <fieldset class="form-group">
-                                                            <select class="form-select" id="basicSelect">
-                                                                <option>Ngày</option>
-                                                                <option>Tháng</option>
-                                                            </select>
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                         </div>
                                         <div class="col-12 col-md-12 d-flex justify-content-end">
@@ -217,16 +202,22 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-12 col-12 row">
-                                                                <div class="col-md-6 col-12">
+                                                                <div class="col-md-4 col-12">
                                                                     <h6>Giá nhập</h6>
                                                                     <div class="form-group position-relative">
                                                                         <input type="number" class="form-control" value="@price.ParentImportPrice" min="0" name="ParentImportPrice">
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <h6>Giá bán</h6>
+                                                                <div class="col-md-4 col-12">
+                                                                    <h6 class="text-danger">Giá bán lẻ</h6>
                                                                     <div class="form-group position-relative">
                                                                         <input type="number" class="form-control" value="@price.ParentSellPrice" name="ParentSellPrice">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 col-12">
+                                                                    <h6 class="text-danger">Giá bán buôn</h6>
+                                                                    <div class="form-group position-relative">
+                                                                        <input type="number" class="form-control" value="@price.WholeSalePrice" name="ParentWholeSellPrice">
                                                                     </div>
                                                                 </div>
 
@@ -307,19 +298,24 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-12 row">
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <h6>Giá nhập</h6>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control" value="0" min="0" name="ParentImportPrice">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
-                                            <h6>Giá bán</h6>
+                                        <div class="col-md-4 col-12">
+                                            <h6 class="text-danger">Giá bán lẻ</h6>
                                             <div class="form-group position-relative">
                                                 <input type="number" class="form-control" value="0" name="ParentSellPrice">
                                             </div>
                                         </div>
-
+                                        <div class="col-md-4 col-12">
+                                            <h6 class="text-danger">Giá bán buôn</h6>
+                                            <div class="form-group position-relative">
+                                                <input type="number" class="form-control" value="0" name="ParentWholeSellPrice">
+                                            </div>
+                                        </div>
                                         <div class="form-check form-switch col-12 col-md-12">
                                             <input class="form-check-input" type="checkbox"
                                                    id="flexSwitchCheckChecked">
@@ -342,6 +338,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        let categoryUrl = "@Url.Action("Categories","Admin")";
         GetCategories('@Model.CategoryId');
         $("a").click(function () {
             if ($(this).hasClass("add-transfer-session")) {
@@ -367,30 +364,36 @@
             let id = $("#id").val();
             let barcode = $("#txtBarCode").val();
             let name = $("#txtName").val();
-            let category = $("#drpCategory").val();
-
-            let unit = $("#dtpUnit").val();
-            let importPrice = $("#txtDefaultImportPrice").val();
             let sellPrice = $("#txtDefaultSellPrice").val();
+            let importPrice = $("#txtDefaultImportPrice").val();
+            let currentQuantity = $("#txtInventory").val();
+            let wholeSalePrice = $("#txtWholeSellPrice").val();
+            let inventoryLimit = $("#txtInventoryLimit").val();
+            let category = $("#drpCategory").val();
+            let closeToDate = 0;
+            let unit = $("#dtpUnit").val();
 
             var prices = [];
 
             $("#list-prices > tr").each(function () {
-                console.log($(this));
                 let parentBarCode = $(this).find("input[name=TransferBarCode]").val();
                 let parentUnit = $(this).find("select[name=ParentUnitId]").val();
                 let parentTransfer = $(this).find("input[name=TransferQuantity]").val();
                 let parentImport = $(this).find("input[name=ParentImportPrice]").val();
                 let parentSell = $(this).find("input[name=ParentSellPrice]").val();
+                let parentWholeSalePrice = $(this).find("input[name=ParentWholeSellPrice]").val();
 
                 prices.push({
                     ParentUnitId: +parentUnit,
                     TransferQuantity: +parentTransfer,
                     ParentImportPrice: +parentImport,
                     ParentSellPrice: +parentSell,
-                    TransferBarCode: parentBarCode
+                    TransferBarCode: parentBarCode,
+                    WholeSalePrice: parentWholeSalePrice
                 });
+                console.log(parentBarCode);
             });
+
 
             let request = {
                 Id: id,
@@ -398,7 +401,9 @@
                 Name: name,
                 DefaultSellPrice: +sellPrice,
                 DefaultImportPrice: +importPrice,
-                Inventory: 0, // TODO: manage inventory module
+                WholeSalePrice: +wholeSalePrice,
+                CurrentQuantity: +currentQuantity,
+                InventoryLimit: +inventoryLimit,
                 CategoryId: category,
                 CloseToDate: 0, // TODO:
                 UnitId: +unit,
@@ -406,9 +411,9 @@
             };
 
             console.log(request);
-            @*let url = "@Url.Action("UpdateProduct","Admin")"
+            let url = "@Url.Action("UpdateProductAsync","Admin")"
             $.ajax({
-                url: addProdUrl,
+                url: url,
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -417,7 +422,7 @@
                 success: function (data) {
                     showMessage("success", data);
                 }
-            });*@
+            });
 
         });
     });
