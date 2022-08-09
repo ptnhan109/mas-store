@@ -14,7 +14,7 @@
     <p class="text-subtitle text-muted">Thêm mới hàng hóa trong cửa hàng</p>
 </div>
 <div class="page-content">
-    <form asp-action="UpdateProduct" asp-controller="Admin" id="updateProductForm" method="post">
+    <div id="updateProductForm">
         <section id="multiple-column-form">
             <div class="row match-height">
                 <div class="col-12">
@@ -248,12 +248,12 @@
             
 
         </div>
-    </form>
+    </div>
 
 </div>
 <div class="col-12 d-flex justify-content-end">
     <button type="button" class="btn btn-primary me-1 mb-1" id="updateProduct">Cập nhật mặt hàng</button>
-    <button type="button" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</button>
+    <a href="@Url.Action("Products","Admin")" class="btn btn-light-secondary me-1 mb-1">Hủy bỏ</a>
 </div>
 
 
@@ -375,7 +375,7 @@
 
             var prices = [];
 
-            $("#list-prices > tr").each(function () {
+            $("tbody > tr").each(function () {
                 let parentBarCode = $(this).find("input[name=TransferBarCode]").val();
                 let parentUnit = $(this).find("select[name=ParentUnitId]").val();
                 let parentTransfer = $(this).find("input[name=TransferQuantity]").val();
@@ -389,9 +389,9 @@
                     ParentImportPrice: +parentImport,
                     ParentSellPrice: +parentSell,
                     TransferBarCode: parentBarCode,
-                    WholeSalePrice: parentWholeSalePrice
+                    WholeSalePrice: +parentWholeSalePrice
                 });
-                console.log(parentBarCode);
+                console.log("1");
             });
 
 
@@ -411,9 +411,9 @@
             };
 
             console.log(request);
-            let url = "@Url.Action("UpdateProductAsync","Admin")"
+            var updateProdUrl = "@Url.Action("UpdateProductJson", "Admin")";
             $.ajax({
-                url: url,
+                url: updateProdUrl,
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",

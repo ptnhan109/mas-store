@@ -9,6 +9,7 @@ using Mas.Application.ManufactureServices;
 using Mas.Application.ProductServices;
 using Mas.Application.UserServices;
 using Mas.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace Mas.Application
             service.AddScoped<IManufactureService, ManufactureService>();
             service.AddScoped<IInventoryService, InventoryService>();
             service.AddScoped<IImportService, ImportService>();
+
+            service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

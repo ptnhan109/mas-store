@@ -19,6 +19,8 @@ namespace Mas.Application.InvoiceServices.Dtos
 
         public List<AddInvoiceDetail> InvoiceDetails { get; set; }
 
+        public Guid? EmployeeId { get; set; }
+
         public Invoice ToEntity()
         {
             double amount = 0;
@@ -34,7 +36,8 @@ namespace Mas.Application.InvoiceServices.Dtos
                 Type = EnumInvoice.Sell,
                 CustomerId = CustomerId,
                 Discount = Discount,
-                Amount = amount - Discount
+                Amount = amount - Discount,
+                EmployeeId = EmployeeId.Value
             };
         }
     }

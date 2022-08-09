@@ -17,7 +17,7 @@ namespace Mas.Application.ProductServices
 
         Task DeleteProduct(Guid id);
 
-        Task UpdateProduct(Product product);
+        Task UpdateProduct(UpdateProductRequest request);
 
         Task<ProductDetail> GetProductAsync(Guid id);
 

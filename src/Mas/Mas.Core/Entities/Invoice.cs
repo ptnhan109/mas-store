@@ -20,5 +20,7 @@ namespace Mas.Core.Entities
         public EnumInvoice Type { get; set; }
 
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+
+        public Guid EmployeeId { get; set; }
     }
 }

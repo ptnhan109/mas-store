@@ -108,11 +108,14 @@ namespace Mas.Application.ProductServices
             return paged.ChangeType(ProductItem.FromEntity);
         }
 
-        public async Task UpdateProduct(Product product)
+        public async Task UpdateProduct(UpdateProductRequest request)
         {
+            var product = request.ToProduct();
+            var prices = product.Prices;
+            product.Prices = null;
             await _repository.UpdateAsync(product);
             await _priceRepository.DeleteRangeAsync(c => c.ProductId == product.Id);
-            await _priceRepository.AddRangeAsync(product.Prices);
+            await _priceRepository.AddRangeAsync(prices);
         }
 
         public async Task<string> ExportProducts(Guid? categoryId)

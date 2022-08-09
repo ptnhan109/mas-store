@@ -5,11 +5,13 @@ using Mas.Common;
 using Mas.Core;
 using Mas.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,11 +22,13 @@ namespace Mas.Web.Controllers
     {
         private readonly IProductService _service;
         private readonly IInvoiceService _invoiceService;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public EmployeeController(IProductService service, IInvoiceService invoiceService)
+        public EmployeeController(IProductService service, IInvoiceService invoiceService, IHttpContextAccessor httpContext)
         {
             _service = service;
             _invoiceService = invoiceService;
+            _httpContext = httpContext;
         }
         [Route("ban-hang")]
         public IActionResult Sales()
@@ -85,6 +89,8 @@ namespace Mas.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> AddInvoice([FromBody] AddInvoiceRequest request)
         {
+            var userId = _httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            request.EmployeeId = Guid.Parse(userId);
             await _invoiceService.AddAsync(request);
             return Json("Thanh toán thành công");
         }

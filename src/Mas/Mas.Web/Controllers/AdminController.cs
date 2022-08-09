@@ -116,11 +116,10 @@ namespace Mas.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> UpdateProductAsync([FromBody] UpdateProductRequest product)
+        public async Task<JsonResult> UpdateProductJson([FromBody] UpdateProductRequest request)
         {
-            await _prodService.UpdateProduct(product.ToProduct());
-
-            return Json("Cập nhật mặt hàng thành công.");
+            await _prodService.UpdateProduct(request);
+            return Json("Cập nhật sản phẩm thành công.");
         }
 
 

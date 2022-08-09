@@ -112,12 +112,13 @@ function AddProductToCart(barcode) {
         url: url,
         success: function (data) {
             let isExsit = false;
-            $("#cart-list > tr").each(function () {
-                if (typeof (data) == "boolean") {
+            if (typeof (data) == "boolean") {
                     showMessage("danger", "Không tìm thấy sản phẩm.");
                     $("#productCode").val("");
                     return;
                 }
+            $("#cart-list > tr").each(function () {
+                
 
                 if ($(this).attr("barcode") == data.barCode) {
                     let total;
@@ -414,7 +415,6 @@ function AddInvoices() {
         data: JSON.stringify(request),
         success: function (data) {
             PrintInvoice(data);
-            CleanOrder();
         }
     });
 
@@ -434,6 +434,7 @@ function AddInvoices() {
 }
 
 function PrintInvoice(html) {
+    CleanOrder();
     var frame1 = document.createElement('iframe');
     frame1.name = "frame1";
     frame1.style.position = "absolute";
