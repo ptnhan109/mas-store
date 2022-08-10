@@ -4,7 +4,24 @@ using System.Text;
 
 namespace Mas.Application.ReportServices.Dtos
 {
-    public class ReportRevenueDtos
+    public class ReportRevenue
+    {
+        public DateTime Start { get; set; }
+
+        public DateTime End { get; set; }
+
+        public double SumImport { get; set; }
+
+        public double SumSell { get; set; }
+
+        public double SumDiscount { get; set; }
+
+        public double SumProfit { get; set; }
+
+        public IEnumerable<ReportRevenueDto> Items { get; set; }
+
+    }
+    public class ReportRevenueDto
     {
         public Guid Id { get; set; }
 

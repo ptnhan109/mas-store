@@ -1,8 +1,10 @@
 ﻿using Mas.Application.CustomerServices.Dtos;
+using Mas.Application.Options;
 using Mas.Common;
 using Mas.Core;
 using Mas.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +17,12 @@ namespace Mas.Application.CustomerServices
     public class CustomerService : ICustomerService
     {
         private readonly IAsyncRepository<Customer> _repository;
+        private readonly AppOptions _option;
 
-        public CustomerService(IAsyncRepository<Customer> repository)
+        public CustomerService(IAsyncRepository<Customer> repository, IOptions<AppOptions> option)
         {
             _repository = repository;
+            _option = option.Value;
         }
 
         public async Task AddCustomer(AddCustomerRequest request)
@@ -45,7 +49,7 @@ namespace Mas.Application.CustomerServices
 
         public async Task<PagedResult<CustomerItem>> GetCustomers(string keyword, Guid? group, int? page = 1, int? pageSize = 20)
         {
-            var query = _repository.GetQueryable().Include("CustomerGroup").Where(c => !c.IsDeleted);
+            var query = _repository.GetQueryable().Include("CustomerGroup").Where(c => !c.IsDeleted && c.Id != _option.DefaultCustomerId);
 
             if (group != null)
             {

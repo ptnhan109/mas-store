@@ -1,6 +1,8 @@
 ﻿using Mas.Application.InvoiceServices.Dtos;
+using Mas.Application.Options;
 using Mas.Core;
 using Mas.Core.Entities;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +17,27 @@ namespace Mas.Application.InvoiceServices
         private readonly IAsyncRepository<InvoiceDetail> _detailRepository;
         private readonly IAsyncRepository<Product> _prodRepository;
         private readonly IAsyncRepository<InventoryItem> _inventoryRepository;
+        private readonly AppOptions _options;
 
         public InvoiceService(
             IAsyncRepository<Invoice> repository, 
             IAsyncRepository<InvoiceDetail> detailRepository, 
             IAsyncRepository<Product> prodService,
-            IAsyncRepository<InventoryItem> inventoryRepository)
+            IAsyncRepository<InventoryItem> inventoryRepository,
+            IOptions<AppOptions> options)
         {
             _repository = repository;
             _detailRepository = detailRepository;
             _prodRepository = prodService;
             _inventoryRepository = inventoryRepository;
+            _options = options.Value;
         }
         public async Task AddAsync(AddInvoiceRequest request)
         {
+            if(request.CustomerId is null)
+            {
+                request.CustomerId = _options.DefaultCustomerId;
+            }
             // add invoice
             var inserted = await _repository.AddAsync(request.ToEntity());
             var details = request.InvoiceDetails.Select(c => c.ToEntity(inserted.Id)).ToList();
