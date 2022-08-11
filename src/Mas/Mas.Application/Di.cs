@@ -7,6 +7,7 @@ using Mas.Application.InvoiceServices;
 using Mas.Application.ManufactureGroupServices;
 using Mas.Application.ManufactureServices;
 using Mas.Application.ProductServices;
+using Mas.Application.ReportServices;
 using Mas.Application.UserServices;
 using Mas.Core;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,7 @@ namespace Mas.Application
             service.AddScoped<IManufactureService, ManufactureService>();
             service.AddScoped<IInventoryService, InventoryService>();
             service.AddScoped<IImportService, ImportService>();
+            service.AddScoped<IReportService, ReportService>();
 
             service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

@@ -6,9 +6,9 @@ namespace Mas.Application.ReportServices.Dtos
 {
     public class ReportRevenue
     {
-        public DateTime Start { get; set; }
+        public DateTime? Start { get; set; }
 
-        public DateTime End { get; set; }
+        public DateTime? End { get; set; }
 
         public double SumImport { get; set; }
 

@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mas.Web", "Mas.Web\Mas.Web.csproj", "{E0BDEF7F-BB3B-45E7-8B4B-58A3868523C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mas.Web", "Mas.Web\Mas.Web.csproj", "{E0BDEF7F-BB3B-45E7-8B4B-58A3868523C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mas.Application", "Mas.Application\Mas.Application.csproj", "{5D0A238A-E5F4-4A0E-85AC-3FCEFAD10333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mas.Application", "Mas.Application\Mas.Application.csproj", "{5D0A238A-E5F4-4A0E-85AC-3FCEFAD10333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mas.Core", "Mas.Core\Mas.Core.csproj", "{FEAC4AE7-877A-4F11-BC1F-9DF9C2A51BE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mas.Core", "Mas.Core\Mas.Core.csproj", "{FEAC4AE7-877A-4F11-BC1F-9DF9C2A51BE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mas.Common", "Mas.Common\Mas.Common.csproj", "{400433EF-AF95-4BA9-B87A-CA39EEFE4395}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mas.Common", "Mas.Common\Mas.Common.csproj", "{400433EF-AF95-4BA9-B87A-CA39EEFE4395}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "store procedures", "store procedures", "{6AF94111-2C0B-4DE6-ADFF-02A31D386519}"
+	ProjectSection(SolutionItems) = preProject
+		sp_report_revenue.sql = sp_report_revenue.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

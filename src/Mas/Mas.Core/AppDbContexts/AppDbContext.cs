@@ -43,7 +43,6 @@ namespace Mas.Core.AppDbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
         }
     }
 }

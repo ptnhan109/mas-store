@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4qDkMmpH8XbbHHasn099BdgbmlLjTz54AZdcTD6o86eSHzzim32oqi+KBbXfp58Wzse0XJder9bfEmc60rSMdQ==",
+  "dgSpecHash": "6aDSdtEeJdNOJANaqmGUTIV38wvqLR+u4bHts28oMfH+zcZxT/syltNaR+LjftWnmn+5TpNR3xG81Njp1hCurQ==",
   "success": true,
   "projectFilePath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\trong\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.22\\microsoft.aspnetcore.cryptography.internal.3.1.22.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.22\\microsoft.aspnetcore.cryptography.keyderivation.3.1.22.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\microsoft.aspnetcore.http.features\\3.1.23\\microsoft.aspnetcore.http.features.3.1.23.nupkg.sha512",
@@ -77,7 +78,7 @@
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
-    "C:\\Users\\trong\\.nuget\\packages\\system.reflection.emit.lightweight\\4.3.0\\system.reflection.emit.lightweight.4.3.0.nupkg.sha512",
+    "C:\\Users\\trong\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection.extensions\\4.3.0\\system.reflection.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\trong\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",
