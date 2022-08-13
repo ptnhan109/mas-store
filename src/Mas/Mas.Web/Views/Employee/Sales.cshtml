@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using Mas.Core.Contants
 @{
     Layout = null;
 }
@@ -28,6 +29,14 @@
 </head>
 
 <body>
+    <style>
+        #list-prices{
+            border-collapse: collapse;
+        }
+        #list-prices tr{
+            border-bottom: 1pt solid blue;
+        }
+    </style>
     <div id="app">
         <div id="main" class="layout-horizontal">
             <header class="mb-3 sale-header">
@@ -85,12 +94,12 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control"
                                                                    placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
-                                                                   id="productCode" autocomplete="off" >
+                                                                   id="productCode" autocomplete="off">
                                                             <ul class="suggestion list-group" id="product-search-suggestion">
                                                             </ul>
                                                         </div>
 
-                                                        
+
                                                     </div>
                                                     <div class="col-md-1 col-12">
                                                         <div class="form-group position-relative">
@@ -186,7 +195,7 @@
                                                             <h6 class="badge bg-primary">Cần thanh toán</h6>
 
                                                         </div>
-                                                        
+
                                                     </div>
 
                                                     <div class="row float-end d-block">
@@ -205,7 +214,7 @@
                                             </div>
                                         </div>
                                         <div class="container-fluid" style="position: absolute; bottom: 10px;">
-                                            
+
                                             <div class="col-md-12 col-12">
                                                 <button class="btn btn-success btn-lg btn-block" id="btn-checkout">(F10) Thu tiền</button>
                                             </div>
@@ -333,6 +342,117 @@
         </div>
     </div>
 
+    <div class="modal fade" id="product-update-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="update-price-name">
+                        
+                    </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="add-transfer">
+                        <table id="list-prices">
+                            <tbody id="template-price">
+                                <tr>
+                                    <td>
+                                        <section id="multiple-column-form" class="transfer-session">
+                                            <div class="row match-height">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-content">
+                                                            <div class="card-body">
+                                                                <div class="form">
+                                                                    <div class="row">
+                                                                        
+                                                                        <div class="col-md-12 col-12 row">
+                                                                            <div class="col-md-5 col-5">
+                                                                                <h6>Mã vạch</h6>
+                                                                                <div class="form-group position-relative">
+                                                                                    <input type="text" class="form-control" name="TransferBarCode" value="{transfer-barcode}" placeholder="Hệ thống tự tạo khi để trống">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-5 col-5">
+
+                                                                                <h6>Đơn vị tính cơ bản</h6>
+                                                                                <fieldset class="form-group">
+                                                                                    <select class="form-select" name="ParentUnitId">
+                                                                                        {parent-unit}
+                                                                                    </select>
+                                                                                </fieldset>
+                                                                            </div>
+
+                                                                            <div class="col-md-2 col-5">
+                                                                                <h6>Tỉ lệ quy đổi</h6>
+                                                                                <div class="form-group position-relative">
+                                                                                    <input type="number" class="form-control" value="{transfer-quantity}" name="TransferQuantity">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12 col-12 row">
+                                                                            <div class="col-md-4 col-12">
+                                                                                <h6>Giá nhập</h6>
+                                                                                <div class="form-group position-relative">
+                                                                                    <input type="number" class="form-control" value="{parent-import-price}" min="0" name="ParentImportPrice">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-12">
+                                                                                <h6 class="text-danger">Giá bán lẻ</h6>
+                                                                                <div class="form-group position-relative">
+                                                                                    <input type="number" class="form-control" value="{parent-sell-price}" name="ParentSellPrice">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-12">
+                                                                                <h6 class="text-danger">Giá bán buôn</h6>
+                                                                                <div class="form-group position-relative">
+                                                                                    <input type="number" class="form-control" value="{parent-whole-sell-price}" name="ParentWholeSellPrice">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-check form-switch col-12 col-md-12">
+                                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                                                                <label class="form-check-label" for="flexSwitchCheckChecked">
+                                                                                    Đơn vị nhỏ nhất
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary ml-1" id="btn-update-product-price">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Cập nhật</span>
+                    </button>
+                    <button type="button" class="btn btn-light-secondary"
+                            data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Đóng</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
@@ -349,7 +469,12 @@
         var invoiceUrl = '@Url.Action("PrintInvoices","Employee")';
         var addInvoiceUrl = '@Url.Action("AddInvoice","Employee")';
         var urlSearchProd = '@Url.Action("SearchProduct","Admin")';
-        var urlSearchCustomer = '@Url.Action("GetCustomers","Admin")'
+        var urlSearchCustomer = '@Url.Action("GetCustomers","Admin")';
+        var urlGetProdUpdate = '@Url.Action("GetProductUpdatePrice","Employee")';
+        var units = @Html.Raw(Json.Serialize(ContantsUnit.Units()));
+        var priceTemplate = $("#template-price").html();
+        var updateProductPriceUrl = '@Url.Action("UpdateProductPrice","Employee")';
+
     </script>
     <script src="~/assets/js/components/sales.js"></script>
 </body>

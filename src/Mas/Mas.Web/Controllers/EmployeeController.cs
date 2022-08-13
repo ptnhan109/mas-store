@@ -1,6 +1,7 @@
 ﻿using Mas.Application.InvoiceServices;
 using Mas.Application.InvoiceServices.Dtos;
 using Mas.Application.ProductServices;
+using Mas.Application.ProductServices.Dtos;
 using Mas.Common;
 using Mas.Core;
 using Mas.Core.Entities;
@@ -37,9 +38,9 @@ namespace Mas.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetProduct(string barcode, bool isWholeSale)
+        public async Task<JsonResult> GetProduct(string barcode, bool isWholeSale, Guid? id)
         {
-            var prod = await _service.GetProductAsync(barcode, isWholeSale);
+            var prod = await _service.GetProductAsync(barcode, isWholeSale,id);
             if(prod is null)
             {
                 return Json(false);
@@ -47,9 +48,32 @@ namespace Mas.Web.Controllers
             return Json(prod);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetProductUpdatePrice(Guid id)
+        {
+            var prod = await _service.GetProductUpdate(id);
+            if(prod is null)
+            {
+                return Json(false);
+            }
+
+            return Json(prod);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateProductPrice([FromBody] ProductUpdatePrice request)
+        {
+            await _service.UpdateProductPrice(request);
+            return Json(true);
+        }
+
         [HttpPost]
         public JsonResult PrintInvoices([FromBody] AddInvoiceRequest request)
         {
+            if (!request.InvoiceDetails.Any())
+            {
+                return default;
+            }
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "invoices.html");
             string templates = System.IO.File.ReadAllText(path);
             templates = templates.Replace("{customerName}", request.CustomerName);
@@ -64,11 +88,9 @@ namespace Mas.Web.Controllers
                 var invoice = request.InvoiceDetails[i];
                 var afterDiscount = invoice.CurrentPrice - invoice.Discount;
                 items.Append(@"<tr><td class='text-center item'>");
-                items.Append((i + 1).ToString());
+                items.Append((invoice.Quantity).ToString());
                 items.Append(@"</td><td class='text-left item'>");
                 items.Append(invoice.Name);
-                items.Append("<br />");
-                items.Append(invoice.Quantity);
                 items.Append(@"</td><td class='text-center item'>");
                 items.Append(invoice.CurrentPrice.ToCurrencyFormat());
                 items.Append(@"</td><td class='text-center item'>");

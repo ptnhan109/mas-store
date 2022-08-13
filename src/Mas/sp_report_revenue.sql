@@ -1,4 +1,4 @@
-﻿create procedure [mas].[sp_report_revenue]
+﻿alter procedure [mas].[sp_report_revenue]
 	@startDate datetime = null,
 	@endDate datetime = null,
 	@categoryId uniqueidentifier = null,

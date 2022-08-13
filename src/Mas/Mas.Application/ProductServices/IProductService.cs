@@ -21,10 +21,14 @@ namespace Mas.Application.ProductServices
 
         Task<ProductDetail> GetProductAsync(Guid id);
 
-        Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale);
+        Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale, Guid? id);
 
         Task<string> ExportProducts(Guid? categoryId);
 
         Task ImportProducts(IFormFile file);
+
+        Task<ProductUpdatePrice> GetProductUpdate(Guid id);
+
+        Task UpdateProductPrice(ProductUpdatePrice price);
     }
 }

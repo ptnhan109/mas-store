@@ -5,6 +5,8 @@
 
 var totalMoney = 0;
 var customerId = "";
+var currentId = "";
+var currentBarCode = "";
 $(document).ready(function () {
     $("#product-search-suggestion").css({
         'width': ($("#productCode").width() + 'px')
@@ -24,7 +26,7 @@ $(document).ready(function () {
         let qrCode = $('#productCode').val();
         if (e.keyCode == 13) {
             if (qrCode !== "") {
-                AddProductToCart(qrCode);
+                AddProductToCartByBarCode(qrCode);
                 $("#productCode").val("");
                 return false;
             } else {
@@ -52,8 +54,13 @@ $(document).ready(function () {
     });
 
     $("#btn-checkout").click(function () {
-        AddInvoices();
-        CleanOrder();
+        if (IsHasProductInCart()) {
+            AddInvoices();
+            CleanOrder();
+        } else {
+            showMessage("danger", "Vui lòng thêm sản phẩm vào giỏ hàng.");
+        }
+        
     });
 
     $("#appendDiscount").click(function () {
@@ -101,10 +108,55 @@ $(document).ready(function () {
         DiscountOrder();
         $("#modal-order-discount").modal("hide");
     });
+
+    $("#btn-update-product-price").click(function () {
+        let productId = currentId;
+        let prices = [];
+        $("#template-price > tr").each(function () {
+            let barCode = $(this).find("input[name=TransferBarCode]").val();
+            let unit = $(this).find("select[name=ParentUnitId]").val();
+            let transferQuantity = $(this).find("input[name=TransferQuantity]").val();
+            let importPrice = $(this).find("input[name=ParentImportPrice]").val();
+            let sellPrice = $(this).find("input[name=ParentSellPrice]").val();
+            let wholeSellPrice = $(this).find("input[name=ParentWholeSellPrice]").val();
+            let isDefault = $(this).find("input[type=checkbox]").prop("checked");
+            prices.push({
+                BarCode: barCode,
+                UnitId: +unit,
+                TransferQuantity: +transferQuantity,
+                ImportPrice: +importPrice,
+                SellPrice: +sellPrice,
+                WholeSalePrice: +wholeSellPrice,
+                IsDefault: isDefault
+            });
+        });
+
+        let request = {
+            Id: productId,
+            Prices: prices,
+            Category: "",
+            ProductName: ""
+        }
+        console.log(request);
+        $.ajax({
+            url: updateProductPriceUrl,
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: JSON.stringify(request),
+            success: function (data) {
+                showMessage("success", "Cập nhật giá thành công.");
+                RemoveProductCart();
+                AddProductToCartById(productId);
+                $("#product-update-modal").modal("hide");
+            }
+        });
+    })
 });
 var products = [];
 
-function AddProductToCart(barcode) {
+function AddProductToCartByBarCode(barcode) {
     let isWholeSale = $("#saleType").val();
     let url = urlGetProd + '?barcode=' + barcode + '&isWholeSale=' + isWholeSale;
 
@@ -119,6 +171,51 @@ function AddProductToCart(barcode) {
                 }
             $("#cart-list > tr").each(function () {
                 
+
+                if ($(this).attr("barcode") == data.barCode) {
+                    let total;
+                    isExsit = true;
+                    let quantity = $(this).find('input[type=number]').val();
+                    quantity++;
+
+                    $(this).find('input[type=number]').val(quantity);
+                    data.prices.forEach(function (element) {
+
+                        if (element.isDefault) {
+                            let newPrice = element.sellPrice * quantity;
+                            total = newPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                            totalMoney += element.sellPrice;
+                        }
+                    });
+
+                    $(this).find('strong.item-price-total').html(total);
+                    updateTotalMoney();
+                }
+            });
+            if (!isExsit) {
+                AppendProductHtml(data);
+                products.push(data);
+            }
+            $("#productCode").val("");
+        }
+    });
+}
+
+function AddProductToCartById(id) {
+    let isWholeSale = $("#saleType").val();
+    let url = urlGetProd + '?id=' + id + '&isWholeSale=' + isWholeSale;
+
+    $.ajax({
+        url: url,
+        success: function (data) {
+            let isExsit = false;
+            if (typeof (data) == "boolean") {
+                showMessage("danger", "Không tìm thấy sản phẩm.");
+                $("#productCode").val("");
+                return;
+            }
+            $("#cart-list > tr").each(function () {
+
 
                 if ($(this).attr("barcode") == data.barCode) {
                     let total;
@@ -190,7 +287,11 @@ function AppendProductHtml(data) {
     html += '</strong></td><td><a href="javascript:;"><i class="badge-circle badge-circle-light-secondary font-medium-1" data-feather="mail"></i></a></td>';
     html += '<td><a href="javascript:;" class="product-remove" barcode="';
     html += data.barCode;
-    html += '"><i class="bi bi-trash text-danger"></i></a></td>';
+    html += '"><i class="bi bi-trash text-danger"></i></a> &nbsp;'
+    html += '<a href="javascript:;" class="product-update" barcore="';
+    html += data.barCode;
+    html += '"><i class="bi bi-pencil-square text-primary"></a>'
+    html +='</td>';
     html += '<td class="d-none" product-price="';
     html += sellPrice;
     html += '"></td></tr>';
@@ -248,6 +349,56 @@ function AppendProductHtml(data) {
         let remove = "tr[barcode=" + barcode + "]";
         $(remove).remove();
         updateTotalMoney();
+        showMessage("success", "Đã xóa sản phẩm khỏi hóa đơn.");
+    });
+
+    $("a.product-update").click(function () {
+        let id = $(this).closest("tr").attr("prod-id");
+        currentId = id;
+        $.ajax({
+            url: urlGetProdUpdate,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (typeof (data) == "boolean") {
+                    showMessage("error", "Không thể cập nhật trực tiếp mặt hàng này");
+                } else {
+                    $("#update-price-name").text("Chỉnh sửa giá tiền - " + data.productName);
+                    let html = "";
+                    
+                    data.prices.forEach(function (price) {
+                        let template = priceTemplate;
+                        template = template.replace("{transfer-quantity}", price.transferQuantity);
+                        template = template.replace("{transfer-barcode}", price.barCode);
+                        template = template.replace("{parent-import-price}", price.importPrice);
+                        template = template.replace("{parent-sell-price}", price.sellPrice);
+                        template = template.replace("{parent-whole-sell-price}", price.wholeSalePrice);
+                        let selectItem = '<option value="{select-item-value}" selected>{select-item-name}</option>';
+                        let unitHtml = "";
+                        units.forEach(function (unit) {
+
+                            if (unit.id == price.unitId) {
+                                unitHtml += selectItem.replace("{select-item-value}", unit.id).replace("{select-item-name}",unit.name);
+                            } else {
+                                unitHtml += selectItem.replace("{select-item-value}", unit.id).replace("selected", "").replace("{select-item-name}", unit.name);
+                            }
+                        });
+                        if (!price.isDefault) {
+                            template = template.replace("checked", "");
+                        }
+                        template = template.replace("{parent-unit}", unitHtml);
+                        html += template;
+                    });
+                    $("#template-price").html(html);
+                    $("#product-update-modal").modal("show");
+                }
+            }
+        });
     });
 }
 
@@ -284,7 +435,6 @@ function DiscountOrder() {
 }
 
 function DisplaySuggestion(keyword) {
-    console.log("keyword: " + keyword);
     let html = "";
     if (keyword == "") {
         $('#product-search-suggestion').html("");
@@ -299,7 +449,6 @@ function DisplaySuggestion(keyword) {
                 keyword: keyword
             },
             success: function (data) {
-                console.log(data);
                 data.items.forEach(function (prod) {
                     html += '<li class="list-group-item"><a prod-barcode="';
                     html += prod.barCode;
@@ -313,7 +462,7 @@ function DisplaySuggestion(keyword) {
                 $('#product-search-suggestion').html(html);
                 $("a.suggestion-item").click(function () {
                     let barcode = $(this).attr("prod-barcode");
-                    AddProductToCart(barcode);
+                    AddProductToCartByBarCode(barcode);
                     $('#product-search-suggestion').html("");
                 });
             }
@@ -355,6 +504,10 @@ function DisplayCustomerSuggestion(keyword) {
             }
         });
     }
+}
+
+function fillDataPrice(html){
+
 }
 // ===========================================================================================================================
 
@@ -466,4 +619,17 @@ function GenerateRandom(length) {
     }
 
     return result;
+}
+
+function IsHasProductInCart() {
+    return $("#cart-list > tr").length > 0;
+}
+
+function RemoveProductCart() {
+    $("#cart-list > tr").each(function () {
+        let id = $(this).attr("prod-id");
+        if (id == currentId) {
+            $(this).remove();
+        }
+    });
 }

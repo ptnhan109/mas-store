@@ -43,20 +43,11 @@ namespace Mas.Application.ProductServices
         }
 
         public async Task<ProductDetail> GetProductAsync(Guid id)
+         => new ProductDetail(await GetById(id));
+
+        public async Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale, Guid? id)
         {
-            var product = await _repository.FindAsync(id, new List<string>() { "Category", "Prices" });
-
-            if (product is null)
-            {
-                return default;
-            }
-
-            return new ProductDetail(product);
-        }
-
-        public async Task<ProductSell> GetProductAsync(string barcode, bool isWholeSale)
-        {
-            Expression<Func<Product, bool>> expression = c => c.BarCode.Equals(barcode);
+            Expression<Func<Product, bool>> expression = c => c.BarCode.Equals(barcode) || c.Id.Equals(id);
             var prod = await _repository.FindAsync(expression, new List<string>() { "Category", "Prices" });
             if (prod is null)
             {
@@ -219,6 +210,9 @@ namespace Mas.Application.ProductServices
             return;
         }
 
+        public async Task<ProductUpdatePrice> GetProductUpdate(Guid id)
+            => new ProductUpdatePrice(await GetById(id));
+
         private async Task<(List<Product> products, List<Price> prices)> ConvertToProduct(List<ProductImportExcel> data)
         {
             var products = new List<Product>();
@@ -265,6 +259,16 @@ namespace Mas.Application.ProductServices
 
             await Task.Yield();
             return (products, prices);
+        }
+
+        private async Task<Product> GetById(Guid id) => await _repository.FindAsync(id, new List<string>() { "Category", "Prices" });
+
+        public async Task UpdateProductPrice(ProductUpdatePrice price)
+        {
+            await _priceRepository.DeleteRangeAsync(c => c.ProductId == price.Id);
+            var entities = price.Prices.Select(c => c.ToEntity(price.Id)).OrderBy(c => c.TransferQuantity);
+            await _priceRepository.AddRangeAsync(entities);
+
         }
     }
 }
