@@ -19,4 +19,9 @@ namespace Mas.Application.ProductServices.Dtos
 
         public string Price { get; set; }
     }
+
+    public class PrintPrices
+    {
+        public IEnumerable<Guid> ids { get; set; }
+    }
 }

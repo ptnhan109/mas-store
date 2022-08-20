@@ -38,4 +38,13 @@
     <Folder Include="wwwroot\assets\barcode\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\templates\price-tags.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\templates\prices-content.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

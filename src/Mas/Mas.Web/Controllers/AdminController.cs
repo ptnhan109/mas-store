@@ -22,6 +22,8 @@ using Mas.Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -89,7 +91,7 @@ namespace Mas.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ProductsPaging(string keyword, Guid? categoryId, int? page = 1, int? pageSize = 10)
+        public async Task<JsonResult> ProductsPaging(string keyword, Guid? categoryId, int? page = 1, int? pageSize = 20)
         {
             var paged = await _prodService.Products(keyword, categoryId, page, pageSize);
             return Json(paged);
@@ -644,6 +646,27 @@ namespace Mas.Web.Controllers
             templates = templates.Replace("{Price}", request.Price);
             await Task.Yield();
             return Json(templates);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> PrintPrices([FromBody] PrintPrices request)
+        {
+            var products = await _prodService.GetPrintPrices(request.ids);
+            
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "prices-content.html");
+            string templates = System.IO.File.ReadAllText(path);
+            var content = new StringBuilder();
+            foreach(var product in products)
+            {
+                content.Append(templates.Replace("{Title}", product.Title)
+                    .Replace("{Name}", product.Name)
+                    .Replace("{Price}", product.Price));
+            }
+
+            var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "price-tags.html");
+            string result = System.IO.File.ReadAllText(path2);
+            result = result.Replace("{content}",content.ToString());
+            return Json(result);
         }
 
         [HttpGet]

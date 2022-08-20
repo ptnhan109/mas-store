@@ -30,5 +30,7 @@ namespace Mas.Application.ProductServices
         Task<ProductUpdatePrice> GetProductUpdate(Guid id);
 
         Task UpdateProductPrice(ProductUpdatePrice price);
+
+        Task<IEnumerable<PrintPrice>> GetPrintPrices(IEnumerable<Guid> ids);
     }
 }

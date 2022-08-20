@@ -270,5 +270,16 @@ namespace Mas.Application.ProductServices
             await _priceRepository.AddRangeAsync(entities);
 
         }
+
+        public async Task<IEnumerable<PrintPrice>> GetPrintPrices(IEnumerable<Guid> ids)
+        {
+            var prices = await _priceRepository.FindAllAsync(c => ids.Contains(c.ProductId),new string[] {"Product"});
+            return prices.Where(c => c.IsDefault).Select(c => new PrintPrice()
+            {
+                Name = c.Product.Name,
+                Price = c.SellPrice.ToCurrencyFormat(),
+                Title = "KHUYẾN MẠI"
+            });
+        }
     }
 }

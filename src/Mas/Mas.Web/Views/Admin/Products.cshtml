@@ -31,11 +31,12 @@
                     <button type="button" class="btn btn-success me-1 mb-1" id="import-excel">Nhập từ Excel</button>
                     <input type="file" id="upload-excel" hidden />
                     <a href="javascript:;" id="export-products" class="btn btn-success me-1 mb-1">Xuất file</a>
+                    <a href="javascript:;" id="print-prices" class="btn btn-warning me-1 mb-1">In giá</a>
                 </div>
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form>
+                            <div>
                                 <div class="row">
 
 
@@ -64,7 +65,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,6 +106,84 @@
 
     </section>
 </div>
+<div class="modal fade" id="product-print-modal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="update-price-name">
+                        Chọn danh sách sản phẩm để in giá
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="content-wrapper container-fluid">
+                <div class="page-content">
+                    <section id="multiple-column-form">
+                        <div class="row match-height">
+                            <div class="col-12">
+                                <div class="card full-height">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <div class="form">
+                                                <div class="row">
+                                                    <!-- <div class="col-md-12 col-12"> -->
+                                                    <div class="col-md-12 col-12 input-search">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
+                                                                   id="productCode" autocomplete="off">
+                                                            <ul class="suggestion list-group" id="product-search-suggestion">
+                                                            </ul>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <hr>
+                                                    <!-- </div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-borderless mb-0 table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 45%">HÀNG HÓA </th>
+                                                            <th style="width: 10%">ĐƠN VỊ</th>
+                                                            <th style="width: 10%">SL</th>
+                                                            <th style="width: 15%">ĐƠN GIÁ</th>
+                                                            <th style="width: 15%">THÀNH TIỀN</th>
+                                                            <th style="width: 15%"></th>
+                                                            <th class="d-none"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="cart-list">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary ml-1" id="btn-update-product-price">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">In</span>
+                    </button>
+                    <button type="button" class="btn btn-light-secondary"
+                            data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Đóng</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
@@ -112,7 +191,9 @@
 
 <script src="/assets/js/mazer.js"></script>
 <script>
+    var products = [];
     $(document).ready(function () {
+        
         GetCategories();
         GetProducts(1);
         $("#export-products").click(function() {
@@ -178,11 +259,34 @@
                 contentType: "application/json; charset=utf-8",
                 traditional: true,
                 data: JSON.stringify(request),
-                success: function (data) {
-                    PrintInvoice(data);
+                success: function(data) {
+                    PrintProductPrice(data);
+                }
+            });
+        });
+
+        $("#print-prices").click(function() {
+            if (products.length < 1) {
+                showMessage("danger", "Vui lòng chọn sản phẩm cần in giá");
+                return false;
+            }
+
+            let request = {
+                ids: products
+            };
+            $.ajax({
+                url: '@Url.Action("PrintPrices","Admin")',
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                data: JSON.stringify(request),
+                success: function(data) {
+                    PrintProductPrice(data);
                 }
             });
         })
+        
 
     });
     function GetProducts(page) {
@@ -206,7 +310,14 @@
                         html += '<tr id="prod-';
                         html += product.id;
                         html += '"><td>';
-                        html += index + 1;
+                        html += '<div class="form-check">';
+                        html += '<div class="custom-control custom-checkbox">';
+                        html += '<input type="checkbox" class="form-check-input form-check-info" name="product-select"';
+                        if(products.indexOf(product.id) !== -1){
+                            html += 'checked';
+                        }
+                        html += '>';
+                        html += '</div></div>';
                         html += '</td><td>';
                         html += product.barCode;
                         html += '</td><td><strong>';
@@ -256,6 +367,16 @@
                         $("#print-price-value").val($(this).attr("product-price"));
                         $("#modal-print-price").modal("show");
                     });
+                    $("input[type=checkbox]").click(function() {
+                        let id = $(this).closest("tr").attr("id").replace("prod-", "");
+                        let index = products.indexOf(id);
+                        if (index !== -1) {
+                            products.splice(index, 1);
+                        }else{
+                            products.push(id);
+                        }
+
+                    })
                 } else {
                     html += '<tr><td colspan="7" class="text-center">Không tồn tại mặt hàng</td></tr>';
                     $("#tblProducts").html(html);
@@ -277,7 +398,7 @@
         });
     }
 
-    function PrintInvoice(html) {
+    function PrintProductPrice(html) {
     var frame1 = document.createElement('iframe');
     frame1.name = "frame1";
     frame1.style.position = "absolute";
@@ -295,6 +416,8 @@
 
     return false;
 }
+
+
 </script>
 <div class="modal fade text-left modal-" id="modal-print-price" tabindex="-1"
      role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -309,7 +432,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form form-vertical">
+                <div class="form form-vertical">
                     <div class="form-body">
                         <div class="row">
                             <div class="col-12">
@@ -333,7 +456,7 @@
 
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer pd-t-0">
                 <button type="button" class="btn btn-light-primary" data-bs-dismiss="modal">

@@ -28,6 +28,7 @@ $(document).ready(function () {
             if (qrCode !== "") {
                 AddProductToCartByBarCode(qrCode);
                 $("#productCode").val("");
+                $('#product-search-suggestion').html("");
                 return false;
             } else {
                 alert("Hãy nhập từ khóa");
