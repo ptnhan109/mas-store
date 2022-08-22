@@ -18,6 +18,8 @@ namespace Mas.Application.ProductServices.Dtos
         public string Name { get; set; }
 
         public string Price { get; set; }
+
+        public string Unit { get; set; }
     }
 
     public class PrintPrices

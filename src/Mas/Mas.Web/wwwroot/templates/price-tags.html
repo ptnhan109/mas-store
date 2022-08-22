@@ -9,14 +9,13 @@
             }
 
             .header {
-                background: red;
                 -webkit-print-color-adjust: exact;
             }
 
             .content {
-                background: yellow;
                 -webkit-print-color-adjust: exact;
             }
+
             html, body {
                 width: 210mm;
                 height: 297mm;
@@ -24,46 +23,55 @@
         }
 
         .header {
-            height: 100px;
-            background: red;
+            padding-top: 2px;
         }
 
             .header h1 {
-                color: yellow;
                 text-align: center;
-                font-size: 80px;
+                font-size: 12px;
             }
 
         .content {
-            background: yellow;
-            height: 400px;
         }
 
         .product-name h1 {
             text-align: center;
-            font-size: 50px;
-            color: black;
+            font-size: 18px;
         }
 
-        .price h1 {
-            text-align: center;
-            font-size: 120px;
+        .price {
+            padding-right: 2px;
         }
+
+            .price h1 {
+                text-align: right;
+                font-size: 14px;
+            }
+
+            .price h2 {
+                font-size: 13px;
+                text-align: right;
+            }
 
         h1 {
-            margin-top: 0px !important;
             font-family: Arial, Helvetica, sans-serif;
         }
 
         .footer h1 {
-            text-align: center;
-            font-size: 50px;
+            text-align: left;
+            font-size: 12px;
             color: black;
+        }
+
+        .price-tag {
+            height: 40mm;
+            width: 70mm;
+            border: 1px dotted black;
+            padding-left: 10px;
+            display: inline-block;
         }
     </style>
     {content}
-    
-
 
 </body>
 </html>

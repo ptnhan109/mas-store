@@ -658,9 +658,9 @@ namespace Mas.Web.Controllers
             var content = new StringBuilder();
             foreach(var product in products)
             {
-                content.Append(templates.Replace("{Title}", product.Title)
-                    .Replace("{Name}", product.Name)
-                    .Replace("{Price}", product.Price));
+                content.Append(templates.Replace("{unit}", product.Unit)
+                    .Replace("{name}", product.Name)
+                    .Replace("{price}", product.Price));
             }
 
             var path2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "templates", "price-tags.html");

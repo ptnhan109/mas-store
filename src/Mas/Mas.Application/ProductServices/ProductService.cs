@@ -276,9 +276,10 @@ namespace Mas.Application.ProductServices
             var prices = await _priceRepository.FindAllAsync(c => ids.Contains(c.ProductId),new string[] {"Product"});
             return prices.Where(c => c.IsDefault).Select(c => new PrintPrice()
             {
-                Name = c.Product.Name,
+                Name = c.Product.Name.ToUpper(),
                 Price = c.SellPrice.ToCurrencyFormat(),
-                Title = "KHUYẾN MẠI"
+                Title = "KHUYẾN MẠI",
+                Unit = ContantsUnit.GetUnit(c.UnitId)?.Name ?? ""
             });
         }
     }

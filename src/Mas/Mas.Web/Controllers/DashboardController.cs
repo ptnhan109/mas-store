@@ -20,6 +20,7 @@ namespace Mas.Web.Controllers
             return View();
         }
 
+        [Route("bao-cao/doanh-thu")]
         public async Task<IActionResult> ReportRevenue()
         {
             var data = await _service.GetReportRevenueReport(new ReportRevenueFilter()
