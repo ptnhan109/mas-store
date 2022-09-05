@@ -212,7 +212,7 @@
                     let url = '<a download="danh-sach-san-pham" class="btn btn-primary download-file" href="/templates/' + data + '">Tải xuống</a>';
                     $("#products-menu").append(url);
                     showMessage("success", "Xuất file thành công mời tải xuống");
-
+                    $("#export-products").addClass("d-none");
                     //TODO: delete file
                 }
             })

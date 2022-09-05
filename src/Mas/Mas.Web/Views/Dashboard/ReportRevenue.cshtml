@@ -7,7 +7,6 @@
     ViewData["Title"] = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <div class="page-title">
     <div class="row">
         <div class="col-12 col-md-6 order-md-1 order-last">
@@ -38,22 +37,16 @@
 
                                     <div class="col-md-4 col-12">
                                         <h6>Thời gian bắt đầu</h6>
-                                        <div class="form-group position-relative has-icon-left">
-                                            <input type="text" class="form-control"
+                                        <div class="form-group position-relative">
+                                            <input type="datetime-local" class="form-control"
                                                    placeholder="Thời gian bắt đầu" name="keyword" id="start-time">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-calendar-date"></i>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-12">
                                         <h6>Thời gian kết thúc</h6>
-                                        <div class="form-group position-relative has-icon-left">
-                                            <input type="datetime" class="form-control"
-                                                   placeholder="Thời gian kết thúc" name="keyword" id="end-time">
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-calendar-date"></i>
-                                            </div>
+                                        <div class="form-group position-relative">
+                                            <input type="datetime-local" class="form-control"
+                                                   placeholder="Thời gian bắt đầu" name="keyword" id="end-time">
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-12">
@@ -73,7 +66,7 @@
                                         </fieldset>
                                     </div>
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary me-1 mb-1" onclick="GetProducts(1);">
+                                        <button type="button" class="btn btn-primary me-1 mb-1" id="create-report">
                                             Tạo báo cáo
                                         </button>
                                     </div>
@@ -121,23 +114,32 @@
 </div>
 
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
 <script src="/assets/vendors/fontawesome/all.min.js"></script>
 <script src="/assets/js/mazer.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#start-time').datetimepicker({
-            defaultDate: "11/1/2013",
-            disabledDates: [
-                moment("12/25/2013"),
-                new Date(2013, 11 - 1, 21),
-                "11/22/2013 00:53"
-            ]
+    $(document).ready(function(){
+        $("#create-report").click(function(){
+            let start = $("#start-time").val();
+            let end = $("#end-time").val();
+            let url = '@Url.Action("ReportRevenue","Dashboard")';
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                data: {
+                    start: start,
+                    end: end
+                },
+                success: function (data) {
+                    
+                }
+            })
         });
-    });
+    })
 </script>
+
 

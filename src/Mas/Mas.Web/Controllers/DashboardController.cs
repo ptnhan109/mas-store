@@ -2,6 +2,7 @@
 using Mas.Application.ReportServices.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Mas.Web.Controllers
@@ -21,7 +22,7 @@ namespace Mas.Web.Controllers
         }
 
         [Route("bao-cao/doanh-thu")]
-        public async Task<IActionResult> ReportRevenue()
+        public async Task<IActionResult> ReportRevenue(DateTime? start,DateTime? end)
         {
             var data = await _service.GetReportRevenueReport(new ReportRevenueFilter()
             {

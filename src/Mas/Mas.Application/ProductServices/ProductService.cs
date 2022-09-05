@@ -125,7 +125,7 @@ namespace Mas.Application.ProductServices
             using (ExcelPackage excelPackage = new ExcelPackage(new FileInfo(path)))
             {
                 var sheet = excelPackage.Workbook.Worksheets.First();
-                var startRow = 5;
+                var startRow = 7;
                 for (int index = 0; index < items.Count; index++)
                 {
                     var product = items[index];
