@@ -22,7 +22,7 @@ namespace Mas.Web.Controllers
         }
 
         [Route("bao-cao/doanh-thu")]
-        public async Task<IActionResult> ReportRevenue(DateTime? start,DateTime? end)
+        public async Task<IActionResult> ReportRevenue(DateTime? start,DateTime? end, Guid? employeeId, Guid? categoryId)
         {
             var data = await _service.GetReportRevenueReport(new ReportRevenueFilter()
             {

@@ -23,7 +23,6 @@ namespace Mas.Application.ReportServices.Dtos
     }
     public class ReportRevenueDto
     {
-        public Guid Id { get; set; }
 
         public string ProductName { get; set; }
 
@@ -31,18 +30,20 @@ namespace Mas.Application.ReportServices.Dtos
 
         public double ImportPrice { get; set; }
 
+        public double SumImportPrice { get; set; }
+
         public double SellPrice { get; set; }
+
+        public double SumSellPrice { get; set; }
 
         public double Profit { get; set; }
 
-        public string User { get; set; }
+        public double  Discount { get; set; }
 
         public string Category { get; set; }
 
-        public double Discount { get; set; }
+        public string Unit { get; set; }
 
-        public int Unit { get; set; }
-
-        public int TransferQuantity { get; set; }
+        public string Reason { get; set; }
     }
 }

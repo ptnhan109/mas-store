@@ -60,7 +60,7 @@
                                     <div class="col-md-4 col-12">
                                         <h6>Người bán</h6>
                                         <fieldset class="form-group">
-                                            <select class="form-select" id="drpCategory" name="categoryId">
+                                            <select class="form-select" id="drpEmployee" name="employee">
                                                 <option value="" selected>Tất cả</option>
                                             </select>
                                         </fieldset>
@@ -121,6 +121,7 @@
 <script src="/assets/js/mazer.js"></script>
 <script>
     $(document).ready(function(){
+        getUsers();
         $("#create-report").click(function(){
             let start = $("#start-time").val();
             let end = $("#end-time").val();
@@ -139,7 +140,29 @@
                 }
             })
         });
-    })
+    });
+    function getUsers(){
+        let url = '@Url.Action("GetEmployees","Admin")';
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(data){
+                let html = "<option>Tất cả</option>";
+                data.forEach(function (emp) {
+                    html += "<option ";
+                    html += "value='";
+                    html += emp.id;
+                    html += "'> ";
+                    html += emp.name;
+                    html += " </option>"
+                });
+                console.log(html);
+                $("#drpEmployee").html(html);
+            }
+        })
+    }
 </script>
 
 
