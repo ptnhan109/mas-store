@@ -7,6 +7,16 @@
     ViewData["Title"] = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .report-content{
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+</style>
 <div class="page-title">
     <div class="row">
         <div class="col-12 col-md-6 order-md-1 order-last">
@@ -78,39 +88,122 @@
             </div>
         </div>
     </section>
-    <!-- Basic Tables start -->
-    <section class="section">
-        <div class="card">
-            <div class="card-header">
-                Danh mục hàng hóa
-            </div>
-            <div class="card-body">
-                <table class="table" id="table1">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã vạch</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Giá bán</th>
-                            <th>Đơn vị</th>
-                            <th>Danh mục</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tblProducts">
-                    </tbody>
-                </table>
+    
 
+</div>
+<div class="report-content bg-white">
+    <table class="table table-striped table-bordered table-sm" cellspacing="0"
+           width="100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Tên hàng hóa</th>
+                <th>Số lượng</th>
+                <th>Giá nhập TB</th>
+                <th>Tổng tiền nhập</th>
+                <th>Giá bán TB</th>
+                <th>Tổng tiền bán</th>
+                <th>Lợi nhuận</th>
+                <th>Giảm giá</th>
+                <th>Danh mục hàng</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Tiger</td>
+                <td>Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+                <td>5421</td>
+                <td>t.nixon@datatables.net</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+        </tbody>
+    </table>
 
-                <div class="dataTable-bottom">
-                    @*<div class="dataTable-info">Hiển thị từ @((Model.PageIndex - 1) * Model.PageSize + 1) đến @(Model.PageIndex * Model.PageSize + 1) của @Model.TotalCount</div>*@
-                    <ul class="pagination pagination-primary float-end dataTable-pagination" id="mas-pagingation" onclick="">
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </section>
 </div>
 
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
@@ -120,35 +213,40 @@
 <script src="/assets/vendors/fontawesome/all.min.js"></script>
 <script src="/assets/js/mazer.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         getUsers();
-        $("#create-report").click(function(){
+        GetCategories();
+        $("#create-report").click(function () {
             let start = $("#start-time").val();
             let end = $("#end-time").val();
-            let url = '@Url.Action("ReportRevenue","Dashboard")';
+            let categoryId = $("#drpCategory").val();
+            let employeeId = $("#drpEmployee").val();
+            let url = '@Url.Action("ReportRevenueJson","Dashboard")';
             $.ajax({
                 url: url,
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json",
                 data: {
-                    start: start,
-                    end: end
+                    Start: start,
+                    End: end,
+                    EmployeeId: employeeId,
+                    CategoryId: categoryId
                 },
                 success: function (data) {
-                    
+
                 }
             })
         });
     });
-    function getUsers(){
+    function getUsers() {
         let url = '@Url.Action("GetEmployees","Admin")';
         $.ajax({
             url: url,
             type: "GET",
             dataType: 'json',
             contentType: 'application/json',
-            success: function(data){
+            success: function (data) {
                 let html = "<option>Tất cả</option>";
                 data.forEach(function (emp) {
                     html += "<option ";
@@ -162,6 +260,25 @@
                 $("#drpEmployee").html(html);
             }
         })
+    }
+
+    function GetCategories() {
+        let url = '@Url.Action("Categories","Admin")';
+        $.ajax({
+            url: url,
+            success: function (categories) {
+                let html = "<option>Tất cả</option>";
+                categories.forEach((category) => {
+                    html += '<option value="';
+                    html += category.id;
+                    html += '"';
+                    html += '>';
+                    html += category.name;
+                    html += '</option>';
+                });
+                $("#drpCategory").html(html);
+            }
+        });
     }
 </script>
 

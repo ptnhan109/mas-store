@@ -31,32 +31,23 @@ namespace Mas.Application.ReportServices
         }
         public async Task<ReportRevenue> GetReportRevenueReport(ReportRevenueFilter request)
         {
-            string sqlQuery = "exec sp_report_revenue @startDate,@endDate,@categoryId,@userId,@customerId";
-            SqlParameter[] sqlParams = new SqlParameter[]
-            {
-                new SqlParameter("@startDate",request.StartDate),
-                new SqlParameter("@endDate",request.EndDate),
-                new SqlParameter("@categoryId",request.CategoryId),
-                new SqlParameter("@userId",request.UserId),
-                new SqlParameter("@customerId",request.CustomerId)
-            };
+            
             var connectionString = _configuration.GetSection("ConnectionStrings:Default").Value;
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 var data = await connection.QueryAsync<ReportRevenueDto>("sp_report_revenue",new
                 {
-                    startDate = request.StartDate,
-                    endDate = request.EndDate,
+                    startDate = request.Start,
+                    endDate = request.End,
                     categoryId = request.CategoryId,
-                    userId = request.UserId,
-                    customerId = request.CustomerId,
+                    userId = request.EmployeeId,
                 },null,null,CommandType.StoredProcedure);
 
                 var result = new ReportRevenue()
                 {
-                    Start = request.StartDate,
-                    End = request.EndDate,
+                    Start = request.Start,
+                    End = request.End,
                     Items = data,
                     SumDiscount = data.Sum(c => c.Discount),
                     SumImport = data.Sum(c => c.ImportPrice),
