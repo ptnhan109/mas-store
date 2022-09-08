@@ -29,33 +29,38 @@ namespace Mas.Application.ReportServices
             _context = context;
             _configuration = configuration;
         }
-        public async Task<ReportRevenue> GetReportRevenueReport(ReportRevenueFilter request)
+        public async Task<IEnumerable<ReportRevenueDto>> GetReportRevenueReport(ReportRevenueFilter request)
         {
             
             var connectionString = _configuration.GetSection("ConnectionStrings:Default").Value;
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                var data = await connection.QueryAsync<ReportRevenueDto>("sp_report_revenue",new
+                var data = (await connection.QueryAsync<ReportRevenueDto>("sp_report_revenue", new
                 {
                     startDate = request.Start,
                     endDate = request.End,
                     categoryId = request.CategoryId,
                     userId = request.EmployeeId,
-                },null,null,CommandType.StoredProcedure);
+                }, null, null, CommandType.StoredProcedure)).ToList();
 
-                var result = new ReportRevenue()
+                var total = new ReportRevenueDto()
                 {
-                    Start = request.Start,
-                    End = request.End,
-                    Items = data,
-                    SumDiscount = data.Sum(c => c.Discount),
-                    SumImport = data.Sum(c => c.ImportPrice),
-                    SumProfit = data.Sum(c => c.Profit),
-                    SumSell = data.Sum(c => c.SellPrice)
+                    Discount = data.Sum(c => c.Discount),
+                    Profit = data.Sum(c => c.Profit),
+                    SumImportPrice = data.Sum(c => c.SumImportPrice),
+                    SumSellPrice = data.Sum(C => C.SumSellPrice),
+                    ImportPrice = 0,
+                    Reason = string.Empty,
+                    Quantity = 0,
+                    SellPrice = 0,
+                    Unit = string.Empty,
+                    Category = string.Empty
                 };
-                connection.Close();
-                return result;
+
+                data.Insert(0, total);
+
+                return data;
             }
             
         }

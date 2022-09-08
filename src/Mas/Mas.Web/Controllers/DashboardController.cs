@@ -31,7 +31,7 @@ namespace Mas.Web.Controllers
         public async Task<JsonResult> ReportRevenueJson([FromQuery] ReportRevenueFilter request)
         {
             var data = await _service.GetReportRevenueReport(request);
-            return Json(null);
+            return Json(data);
         }
 
     }

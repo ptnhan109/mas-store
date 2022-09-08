@@ -8,27 +8,19 @@
           "System.Reflection.Emit.Lightweight": "4.7.0"
         },
         "compile": {
-          "lib/netstandard2.0/Dapper.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Dapper.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Dapper.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Dapper.dll": {}
         }
       },
       "Microsoft.AspNetCore.Cryptography.Internal/3.1.22": {
         "type": "package",
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         }
       },
       "Microsoft.AspNetCore.Cryptography.KeyDerivation/3.1.22": {
@@ -37,14 +29,10 @@
           "Microsoft.AspNetCore.Cryptography.Internal": "3.1.22"
         },
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
       "Microsoft.AspNetCore.Http.Features/3.1.23": {
@@ -54,27 +42,19 @@
           "System.IO.Pipelines": "4.7.5"
         },
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Http.Features.dll": {}
         }
       },
       "Microsoft.EntityFrameworkCore.Abstractions/3.1.22": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration/3.1.22": {
@@ -83,14 +63,10 @@
           "Microsoft.Extensions.Configuration.Abstractions": "3.1.22"
         },
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.dll": {}
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions/3.1.22": {
@@ -99,40 +75,28 @@
           "Microsoft.Extensions.Primitives": "3.1.22"
         },
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll": {}
         }
       },
       "Microsoft.Extensions.Primitives/3.1.23": {
         "type": "package",
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Extensions.Primitives.dll": {}
         }
       },
       "Microsoft.Win32.SystemEvents/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -150,14 +114,10 @@
           "Microsoft.Win32.SystemEvents": "6.0.0"
         },
         "compile": {
-          "lib/netcoreapp3.1/System.Drawing.Common.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/System.Drawing.Common.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/System.Drawing.Common.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/System.Drawing.Common.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -176,14 +136,10 @@
       "System.IO.Pipelines/4.7.5": {
         "type": "package",
         "compile": {
-          "ref/netcoreapp2.0/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
+          "ref/netcoreapp2.0/System.IO.Pipelines.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.0/System.IO.Pipelines.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.0/System.IO.Pipelines.dll": {}
         }
       },
       "System.Reflection.Emit.Lightweight/4.7.0": {
@@ -198,14 +154,10 @@
       "ZXing.Net/0.16.8": {
         "type": "package",
         "compile": {
-          "lib/netcoreapp3.1/zxing.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/zxing.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp3.1/zxing.dll": {
-            "related": ".xml"
-          }
+          "lib/netcoreapp3.1/zxing.dll": {}
         }
       }
     }
@@ -592,19 +544,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\trong\\.nuget\\packages\\": {}
+    "C:\\Users\\nhanpt\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+      "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
       "projectName": "Mas.Common",
-      "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
-      "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
-      "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\obj\\",
+      "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+      "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
+      "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -665,8 +617,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -675,7 +626,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

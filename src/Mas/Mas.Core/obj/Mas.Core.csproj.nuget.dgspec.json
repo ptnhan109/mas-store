@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {}
+    "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {}
   },
   "projects": {
-    "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
+    "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
         "projectName": "Mas.Common",
-        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
-        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\obj\\",
+        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
+        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -75,8 +75,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -85,21 +84,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
+    "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
+        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
         "projectName": "Mas.Core",
-        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
-        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\obj\\",
+        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
+        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
+        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -113,8 +112,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
-                "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj"
+              "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
+                "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj"
               }
             }
           }
@@ -176,8 +175,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -186,7 +184,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

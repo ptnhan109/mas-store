@@ -8,6 +8,6 @@ namespace Mas.Application.ReportServices
 {
     public interface IReportService
     {
-        Task<ReportRevenue> GetReportRevenueReport(ReportRevenueFilter request);
+        Task<IEnumerable<ReportRevenueDto>> GetReportRevenueReport(ReportRevenueFilter request);
     }
 }
