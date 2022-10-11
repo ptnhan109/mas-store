@@ -9732,6 +9732,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "D:\\sources\\shared\\flexcelnugetsreg": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

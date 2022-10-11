@@ -199,7 +199,8 @@ namespace Mas.Application.ProductServices
                             
                         }
                         data.RemoveAll(c => string.IsNullOrEmpty(c.BarCode) && string.IsNullOrEmpty(c.Name));
-
+                        var barcodes = (await _repository.FindAllAsync(null, null)).Select(c => c.BarCode.Trim());
+                        data.RemoveAll(c => barcodes.Contains(c.BarCode));
                         var excute = await ConvertToProduct(data);
                         await _repository.AddRangeAsync(excute.products);
                         await _priceRepository.AddRangeAsync(excute.prices);

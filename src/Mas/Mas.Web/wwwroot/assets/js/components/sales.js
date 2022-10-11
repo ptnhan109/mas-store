@@ -19,11 +19,14 @@ $(document).ready(function () {
 
     $('#productCode').keyup(function () {
         var productCode = $('#productCode').val();
+        console.log(productCode)
         DisplaySuggestion(productCode);
     });
 
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
+        console.log(productCode)
+
         if (e.keyCode == 13) {
             if (qrCode !== "") {
                 AddProductToCartByBarCode(qrCode);
@@ -581,9 +584,11 @@ function AddInvoices() {
         traditional: true,
         data: JSON.stringify(request),
         success: function (data) {
+            CleanOrder();
             showMessage("success", data);
         }
     });
+
 
 }
 
@@ -608,7 +613,7 @@ function PrintInvoice(html) {
 }
 
 function CleanOrder() {
-    $("#cart-list").html();
+    $("#cart-list").html("");
     $("#order-value-discount").val(0);
     updateTotalMoney();
 }

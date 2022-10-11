@@ -27,8 +27,20 @@ namespace Mas.Application.ProductServices.Dtos
 
         public Product ToProduct(List<Category> categories, List<Unit> units)
         {
-            var cate = categories.FirstOrDefault(c => c.Name.ToRemoveUnicode().Trim() == Category.ToRemoveUnicode().Trim());
-            var unit = units.FirstOrDefault(c => c.Name.ToRemoveUnicode().Trim().Equals(Unit.ToRemoveUnicode().Trim()));
+            var cate = categories.FirstOrDefault(c => c.Name.ToRemoveUnicode().ToLower().Trim() == Category.ToRemoveUnicode().ToLower().Trim());
+            var unit = units.FirstOrDefault(c => c.Name.ToRemoveUnicode().ToLower().Trim().Equals(Unit.ToRemoveUnicode().ToLower().Trim()));
+            if(unit is null)
+            {
+                unit = new Unit() { Id = 21, Name = "Cái", Description = "badge bg-light" };
+            }
+            if(cate is null)
+            {
+                cate = new Category()
+                {
+                    Id = Guid.Parse("A89B1C7B-E8EA-4BF3-A619-3EC828568625"),
+                    Code = ""
+                };
+            }
             var currentTime = DateTime.Now;
             if (cate != null && unit != null)
             {
