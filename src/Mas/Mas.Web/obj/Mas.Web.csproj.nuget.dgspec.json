@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\sources\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj": {}
+    "D:\\projects\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj": {}
   },
   "projects": {
-    "D:\\sources\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj": {
+    "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
+        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
         "projectName": "Mas.Application",
-        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
-        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
-        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Application\\obj\\",
+        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj",
+        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,15 +22,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\sources\\shared\\flexcelnugetsreg": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
-                "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj"
+              "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
+                "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj"
               }
             }
           }
@@ -108,7 +107,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -117,21 +117,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
+    "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
         "projectName": "Mas.Common",
-        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
-        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
-        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\obj\\",
+        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj",
+        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -139,7 +139,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\sources\\shared\\flexcelnugetsreg": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -193,7 +192,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -202,21 +202,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
+    "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
+        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
         "projectName": "Mas.Core",
-        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
-        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
-        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\obj\\",
+        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj",
+        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -224,15 +224,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\sources\\shared\\flexcelnugetsreg": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
-                "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj"
+              "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj": {
+                "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Common\\Mas.Common.csproj"
               }
             }
           }
@@ -294,7 +293,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -303,21 +303,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\sources\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj": {
+    "D:\\projects\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\sources\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj",
+        "projectUniqueName": "D:\\projects\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj",
         "projectName": "Mas.Web",
-        "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj",
-        "packagesPath": "C:\\Users\\nhanpt\\.nuget\\packages\\",
-        "outputPath": "D:\\sources\\mas\\src\\Mas\\Mas.Web\\obj\\",
+        "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Web\\Mas.Web.csproj",
+        "packagesPath": "C:\\Users\\trong\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\mas\\src\\Mas\\Mas.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nhanpt\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -325,18 +325,17 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\sources\\shared\\flexcelnugetsreg": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\sources\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj": {
-                "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj"
+              "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj": {
+                "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Application\\Mas.Application.csproj"
               },
-              "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
-                "projectPath": "D:\\sources\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj"
+              "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj": {
+                "projectPath": "D:\\projects\\mas\\src\\Mas\\Mas.Core\\Mas.Core.csproj"
               }
             }
           }
@@ -410,7 +409,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -422,7 +422,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

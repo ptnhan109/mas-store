@@ -316,6 +316,9 @@
                                                         <button type="button" class="btn btn-primary me-1 mb-1" id="create-report">
                                                             Tạo báo cáo
                                                         </button>
+                                                        <a class="btn btn-primary me-1 mb-1" id="export-report">
+                                                            Xuất file
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,32 +331,32 @@
 
 
                 </div>
-                
+
             </div>
             <div class="report-content bg-white">
-                    <table class="table table-striped table-bordered table-sm" cellspacing="0"
-                           width="100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tên hàng hóa</th>
-                                <th>Số lượng</th>
-                                <th>Giá nhập TB</th>
-                                <th>Tổng tiền nhập</th>
-                                <th>Giá bán TB</th>
-                                <th>Tổng tiền bán</th>
-                                <th>Lợi nhuận</th>
-                                <th>Giảm giá</th>
-                                <th>Danh mục hàng</th>
-                                <th>Đơn vị</th>
-                                <th>Ghi chú</th>
-                            </tr>
-                        </thead>
-                        <tbody id="data">
-                        </tbody>
-                    </table>
+                <table class="table table-striped table-bordered table-sm" cellspacing="0"
+                       width="100%">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên hàng hóa</th>
+                            <th>Số lượng</th>
+                            <th>Giá nhập TB</th>
+                            <th>Tổng tiền nhập</th>
+                            <th>Giá bán TB</th>
+                            <th>Tổng tiền bán</th>
+                            <th>Lợi nhuận</th>
+                            <th>Giảm giá</th>
+                            <th>Danh mục hàng</th>
+                            <th>Đơn vị</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+                    </tbody>
+                </table>
 
-                </div>
+            </div>
 
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
@@ -383,15 +386,39 @@
     <script src="/assets/vendors/fontawesome/all.min.js"></script>
     <script src="/assets/js/mazer.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const currencyFractionDigits = new Intl.NumberFormat('de-DE', {
-                            style: 'currency',
-                            currency: 'VND',
-                        }).resolvedOptions().maximumFractionDigits;
+                style: 'currency',
+                currency: 'VND',
+            }).resolvedOptions().maximumFractionDigits;
             getUsers();
             GetCategories();
+            $("#export-report").click(function () {
+                let start = $("#start-time").val();
+                let end = $("#end-time").val();
+                let categoryId = $("#drpCategory").val();
+                let employeeId = $("#drpEmployee").val();
+                let url = '@Url.Action("ExportReportRevenue","Dashboard")';
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: {
+                        Start: start,
+                        End: end,
+                        EmployeeId: employeeId,
+                        CategoryId: categoryId
+                    },
+                    success: function (data) {
+                        let download = '/templates/' + data;
+                        console.log(download);
+                        window.open(download,'_blank');
+                    }
+                });
+            });
 
-            $("#create-report").click(function() {
+            $("#create-report").click(function () {
                 let start = $("#start-time").val();
                 let end = $("#end-time").val();
                 let categoryId = $("#drpCategory").val();
@@ -408,38 +435,38 @@
                         EmployeeId: employeeId,
                         CategoryId: categoryId
                     },
-                    success: function(data) {
+                    success: function (data) {
                         let i = 1;
                         let html = "";
                         var first = data[0];
-                            html += '<tr style="font-weight:bold" ><td>';
-                            html += "";
-                            html += "</td>";
-                            html += "<td>";
-                            html += "Tổng tiền";
-                            html += "</td><td>";
-                            html += first.quantity;
-                            html += "</td><td>";
-                            html += first.importPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.sumImportPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.sumSellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.profit.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.discount.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
-                            html += "</td><td>";
-                            html += first.category;
-                            html += "</td><td>";
-                            html += first.unit;
-                            html += "</td><td>";
-                            html += first.reason;
-                            html += "</td></tr>";
+                        html += '<tr style="font-weight:bold"><td>';
+                        html += "";
+                        html += "</td>";
+                        html += "<td>";
+                        html += "Tổng tiền";
+                        html += "</td><td>";
+                        html += first.quantity;
+                        html += "</td><td>";
+                        html += first.importPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.sumImportPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.sellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.sumSellPrice.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.profit.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.discount.toLocaleString('it-IT', { maximumFractionDigits: currencyFractionDigits });
+                        html += "</td><td>";
+                        html += first.category;
+                        html += "</td><td>";
+                        html += first.unit;
+                        html += "</td><td>";
+                        html += first.reason;
+                        html += "</td></tr>";
                         data.shift();
-                        data.forEach(function(ele) {
+                        data.forEach(function (ele) {
                             html += "<tr><td>";
                             html += i;
                             html += "</td>";
@@ -480,9 +507,9 @@
                 type: "GET",
                 dataType: 'json',
                 contentType: 'application/json',
-                success: function(data) {
+                success: function (data) {
                     let html = "<option>Tất cả</option>";
-                    data.forEach(function(emp) {
+                    data.forEach(function (emp) {
                         html += "<option ";
                         html += "value='";
                         html += emp.id;
@@ -500,7 +527,7 @@
             let url = '@Url.Action("Categories","Admin")';
             $.ajax({
                 url: url,
-                success: function(categories) {
+                success: function (categories) {
                     let html = "<option>Tất cả</option>";
                     categories.forEach((category) => {
                         html += '<option value="';

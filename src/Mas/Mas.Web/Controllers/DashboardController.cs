@@ -34,5 +34,12 @@ namespace Mas.Web.Controllers
             return Json(data);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> ExportReportRevenue([FromQuery] ReportRevenueFilter request)
+        {
+            string path= await _service.ExportReportRevenueReport(request);
+            return Json($"bao-cao-doanh-thu-{path}");
+        }
+
     }
 }

@@ -79,7 +79,8 @@
                 Danh mục hàng hóa
             </div>
             <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table table-striped table-bordered table-sm" cellspacing="0"
+                       width="100%" id="table1">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -107,83 +108,83 @@
     </section>
 </div>
 <div class="modal fade" id="product-print-modal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="update-price-name">
-                        Chọn danh sách sản phẩm để in giá
-                    </h5>
-                </div>
-                <div class="modal-body">
-                    <div class="content-wrapper container-fluid">
-                <div class="page-content">
-                    <section id="multiple-column-form">
-                        <div class="row match-height">
-                            <div class="col-12">
-                                <div class="card full-height">
-                                    <div class="card-content">
-                                        <div class="card-body">
-                                            <div class="form">
-                                                <div class="row">
-                                                    <!-- <div class="col-md-12 col-12"> -->
-                                                    <div class="col-md-12 col-12 input-search">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control"
-                                                                   placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
-                                                                   id="productCode" autocomplete="off">
-                                                            <ul class="suggestion list-group" id="product-search-suggestion">
-                                                            </ul>
+     aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update-price-name">
+                    Chọn danh sách sản phẩm để in giá
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="content-wrapper container-fluid">
+                    <div class="page-content">
+                        <section id="multiple-column-form">
+                            <div class="row match-height">
+                                <div class="col-12">
+                                    <div class="card full-height">
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div class="form">
+                                                    <div class="row">
+                                                        <!-- <div class="col-md-12 col-12"> -->
+                                                        <div class="col-md-12 col-12 input-search">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                       placeholder="(F3) Nhập tên hàng hóa, mã hàng hóa, mô tả"
+                                                                       id="productCode" autocomplete="off">
+                                                                <ul class="suggestion list-group" id="product-search-suggestion">
+                                                                </ul>
+                                                            </div>
+
+
                                                         </div>
-
-
+                                                        <hr>
+                                                        <!-- </div> -->
                                                     </div>
-                                                    <hr>
-                                                    <!-- </div> -->
                                                 </div>
-                                            </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless mb-0 table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 45%">HÀNG HÓA </th>
-                                                            <th style="width: 10%">ĐƠN VỊ</th>
-                                                            <th style="width: 10%">SL</th>
-                                                            <th style="width: 15%">ĐƠN GIÁ</th>
-                                                            <th style="width: 15%">THÀNH TIỀN</th>
-                                                            <th style="width: 15%"></th>
-                                                            <th class="d-none"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="cart-list">
-                                                    </tbody>
-                                                </table>
+                                                <div class="table-responsive">
+                                                    <table class="table table-borderless mb-0 table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 45%">HÀNG HÓA </th>
+                                                                <th style="width: 10%">ĐƠN VỊ</th>
+                                                                <th style="width: 10%">SL</th>
+                                                                <th style="width: 15%">ĐƠN GIÁ</th>
+                                                                <th style="width: 15%">THÀNH TIỀN</th>
+                                                                <th style="width: 15%"></th>
+                                                                <th class="d-none"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="cart-list">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </div>
                 </div>
             </div>
-                </div>
-                <div class="modal-footer">
+            <div class="modal-footer">
 
-                    <button type="button" class="btn btn-primary ml-1" id="btn-update-product-price">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">In</span>
-                    </button>
-                    <button type="button" class="btn btn-light-secondary"
-                            data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Đóng</span>
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary ml-1" id="btn-update-product-price">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">In</span>
+                </button>
+                <button type="button" class="btn btn-light-secondary"
+                        data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Đóng</span>
+                </button>
             </div>
         </div>
     </div>
+</div>
 <script src="/assets/vendors/jquery/jquery.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/jquery.dataTables.min.js"></script>
 <script src="/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js"></script>
@@ -193,10 +194,10 @@
 <script>
     var products = [];
     $(document).ready(function () {
-        
+
         GetCategories();
         GetProducts(1);
-        $("#export-products").click(function() {
+        $("#export-products").click(function () {
             $(this).attr("disabled", "disabled");
             let cate = $("#drpCategory").val();
             let url = "@Url.Action("ExportProducts", "Admin")";
@@ -208,17 +209,14 @@
                 data: {
                     cateId: cate
                 },
-                success: function(data) {
-                    let url = '<a download="danh-sach-san-pham" class="btn btn-primary download-file" href="/templates/' + data + '">Tải xuống</a>';
-                    $("#products-menu").append(url);
-                    showMessage("success", "Xuất file thành công mời tải xuống");
-                    $("#export-products").addClass("d-none");
-                    //TODO: delete file
+                success: function (data) {
+                    let url = "/templates/" + data;
+                    window.open(url,'_blank');
                 }
             })
         });
 
-        $("#upload-excel").on("change", function() {
+        $("#upload-excel").on("change", function () {
             var form_Data = new FormData();
             form_Data.append("Avatar", $("#upload-excel").get(0).files[0]);
             console.log(form_Data);
@@ -229,7 +227,7 @@
                 data: form_Data,
                 contentType: false,
                 processData: false,
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                 }
 
@@ -237,11 +235,11 @@
 
         });
 
-        $("#import-excel").click(function() {
+        $("#import-excel").click(function () {
             $("#upload-excel").click();
         });
 
-        $("#btn-print-price-tag").click(function() {
+        $("#btn-print-price-tag").click(function () {
             $("#modal-print-price").modal("hide");
             let title = $("#print-price-title").val();
             let name = $("#print-price-name").val();
@@ -259,13 +257,13 @@
                 contentType: "application/json; charset=utf-8",
                 traditional: true,
                 data: JSON.stringify(request),
-                success: function(data) {
+                success: function (data) {
                     PrintProductPrice(data);
                 }
             });
         });
 
-        $("#print-prices").click(function() {
+        $("#print-prices").click(function () {
             if (products.length < 1) {
                 showMessage("danger", "Vui lòng chọn sản phẩm cần in giá");
                 return false;
@@ -282,12 +280,12 @@
                 contentType: "application/json; charset=utf-8",
                 traditional: true,
                 data: JSON.stringify(request),
-                success: function(data) {
+                success: function (data) {
                     PrintProductPrice(data);
                 }
             });
         })
-        
+
 
     });
     function GetProducts(page) {
@@ -300,9 +298,9 @@
             dataType: 'json',
             contentType: 'application/json',
             data: {
-                keyword : keyword,
-                categoryId : cate,
-                page : page
+                keyword: keyword,
+                categoryId: cate,
+                page: page
             },
             success: function (data) {
                 let html = '';
@@ -314,7 +312,7 @@
                         html += '<div class="form-check">';
                         html += '<div class="custom-control custom-checkbox">';
                         html += '<input type="checkbox" class="form-check-input form-check-info" name="product-select"';
-                        if(products.indexOf(product.id) !== -1){
+                        if (products.indexOf(product.id) !== -1) {
                             html += 'checked';
                         }
                         html += '>';
@@ -363,17 +361,17 @@
                         window.location.href = url;
                     });
 
-                    $("a.product-print-price").click(function() {
+                    $("a.product-print-price").click(function () {
                         $("#print-price-name").val($(this).attr("product-name"));
                         $("#print-price-value").val($(this).attr("product-price"));
                         $("#modal-print-price").modal("show");
                     });
-                    $("input[type=checkbox]").click(function() {
+                    $("input[type=checkbox]").click(function () {
                         let id = $(this).closest("tr").attr("id").replace("prod-", "");
                         let index = products.indexOf(id);
                         if (index !== -1) {
                             products.splice(index, 1);
-                        }else{
+                        } else {
                             products.push(id);
                         }
 
@@ -383,11 +381,11 @@
                     $("#tblProducts").html(html);
                 }
             }
-            });
+        });
     }
 
     function DeleteProduct(id) {
-        let deleteUrl = '@Url.Action("DeleteProduct", "Admin")' +'?id=' + id;
+        let deleteUrl = '@Url.Action("DeleteProduct", "Admin")' + '?id=' + id;
         $.ajax({
             url: deleteUrl,
             type: "GET",
@@ -400,23 +398,23 @@
     }
 
     function PrintProductPrice(html) {
-    var frame1 = document.createElement('iframe');
-    frame1.name = "frame1";
-    frame1.style.position = "absolute";
-    frame1.style.top = "-1000000px";
-    document.body.appendChild(frame1);
-    var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-    frameDoc.document.open();
-    frameDoc.document.write(html);
-    frameDoc.document.close();
-    setTimeout(function () {
-        window.frames["frame1"].focus();
-        window.frames["frame1"].print();
-        document.body.removeChild(frame1);
-    }, 200);
+        var frame1 = document.createElement('iframe');
+        frame1.name = "frame1";
+        frame1.style.position = "absolute";
+        frame1.style.top = "-1000000px";
+        document.body.appendChild(frame1);
+        var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+        frameDoc.document.open();
+        frameDoc.document.write(html);
+        frameDoc.document.close();
+        setTimeout(function () {
+            window.frames["frame1"].focus();
+            window.frames["frame1"].print();
+            document.body.removeChild(frame1);
+        }, 200);
 
-    return false;
-}
+        return false;
+    }
 
 
 </script>

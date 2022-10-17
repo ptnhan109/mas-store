@@ -9,5 +9,6 @@ namespace Mas.Application.ReportServices
     public interface IReportService
     {
         Task<IEnumerable<ReportRevenueDto>> GetReportRevenueReport(ReportRevenueFilter request);
+        Task<string> ExportReportRevenueReport(ReportRevenueFilter request);
     }
 }
