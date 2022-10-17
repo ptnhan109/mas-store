@@ -19,13 +19,11 @@ $(document).ready(function () {
 
     $('#productCode').keyup(function () {
         var productCode = $('#productCode').val();
-        console.log(productCode)
         DisplaySuggestion(productCode);
     });
 
     $('#productCode').on("keypress", function (e) {
         let qrCode = $('#productCode').val();
-        console.log(productCode)
 
         if (e.keyCode == 13) {
             if (qrCode !== "") {

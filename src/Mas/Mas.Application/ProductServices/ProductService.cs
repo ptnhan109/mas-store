@@ -83,6 +83,11 @@ namespace Mas.Application.ProductServices
 
         public async Task<PagedResult<ProductItem>> Products(string keyword, Guid? category, int? page = 1, int? pageSize = 10)
         {
+            var isNumeric = int.TryParse(keyword, out _);
+            if (isNumeric)
+            {
+                return new PagedResult<ProductItem>();
+            }
             var query = _repository.GetQueryable(new List<string>() { "Category", "Prices" });
             if (!string.IsNullOrEmpty(keyword))
             {
