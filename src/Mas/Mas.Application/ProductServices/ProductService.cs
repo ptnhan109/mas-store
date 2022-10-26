@@ -21,14 +21,17 @@ namespace Mas.Application.ProductServices
         private readonly IAsyncRepository<Product> _repository;
         private readonly IAsyncRepository<Price> _priceRepository;
         private readonly IAsyncRepository<Category> _catRepository;
+        private readonly IAsyncRepository<InventoryItem> _inventoryRepository;
 
         public ProductService(IAsyncRepository<Product> repository,
             IAsyncRepository<Price> priceRepository,
-            IAsyncRepository<Category> catRepository)
+            IAsyncRepository<Category> catRepository,
+            IAsyncRepository<InventoryItem> inventoryRepository)
         {
             _repository = repository;
             _priceRepository = priceRepository;
             _catRepository = catRepository;
+            _inventoryRepository = inventoryRepository;
         }
         public async Task<Product> AddProduct(AddProductModel model)
         {
@@ -217,7 +220,12 @@ namespace Mas.Application.ProductServices
         }
 
         public async Task<ProductUpdatePrice> GetProductUpdate(Guid id)
-            => new ProductUpdatePrice(await GetById(id));
+        {
+            var quantity = await GetRemainQuantity(id);
+            var data = new ProductUpdatePrice(await GetById(id),quantity.Quantity);
+
+            return data;
+        }
 
         private async Task<(List<Product> products, List<Price> prices)> ConvertToProduct(List<ProductImportExcel> data)
         {
@@ -269,12 +277,20 @@ namespace Mas.Application.ProductServices
 
         private async Task<Product> GetById(Guid id) => await _repository.FindAsync(id, new List<string>() { "Category", "Prices" });
 
+        private async Task<InventoryItem> GetRemainQuantity(Guid id)
+        {
+            var inventory = await _inventoryRepository.FindAsync(c => c.ProductId.Equals(id));
+
+            return inventory;
+        }
         public async Task UpdateProductPrice(ProductUpdatePrice price)
         {
             await _priceRepository.DeleteRangeAsync(c => c.ProductId == price.Id);
             var entities = price.Prices.Select(c => c.ToEntity(price.Id)).OrderBy(c => c.TransferQuantity);
             await _priceRepository.AddRangeAsync(entities);
-
+            var inventory = await _inventoryRepository.FindAsync(c => c.ProductId == price.Id);
+            inventory.Quantity = price.TotalQuantity.Value;
+            await _inventoryRepository.UpdateAsync(inventory);
         }
 
         public async Task<IEnumerable<PrintPrice>> GetPrintPrices(IEnumerable<Guid> ids)
@@ -288,5 +304,7 @@ namespace Mas.Application.ProductServices
                 Unit = ContantsUnit.GetUnit(c.UnitId)?.Name ?? ""
             });
         }
+
+
     }
 }

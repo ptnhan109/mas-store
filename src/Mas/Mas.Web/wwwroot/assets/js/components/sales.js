@@ -114,6 +114,7 @@ $(document).ready(function () {
     $("#btn-update-product-price").click(function () {
         let productId = currentId;
         let prices = [];
+        let totalQuantity = 0;
         $("#template-price > tr").each(function () {
             let barCode = $(this).find("input[name=TransferBarCode]").val();
             let unit = $(this).find("select[name=ParentUnitId]").val();
@@ -122,6 +123,8 @@ $(document).ready(function () {
             let sellPrice = $(this).find("input[name=ParentSellPrice]").val();
             let wholeSellPrice = $(this).find("input[name=ParentWholeSellPrice]").val();
             let isDefault = $(this).find("input[type=checkbox]").prop("checked");
+            let quantity = $(this).find("input[name=CurrentQuantity]").val();
+            totalQuantity += quantity * transferQuantity;
             prices.push({
                 BarCode: barCode,
                 UnitId: +unit,
@@ -137,7 +140,8 @@ $(document).ready(function () {
             Id: productId,
             Prices: prices,
             Category: "",
-            ProductName: ""
+            ProductName: "",
+            TotalQuantity: totalQuantity
         }
         console.log(request);
         $.ajax({
@@ -297,8 +301,9 @@ function AppendProductHtml(data) {
     html += '<td class="d-none" product-price="';
     html += sellPrice;
     html += '"></td></tr>';
-
-    $("#cart-list").append(html);
+    var temp = $("#cart-list").html();
+    $("#cart-list").html(html);
+    $("#cart-list").append(temp);
     totalMoney += sellPrice;
     updateTotalMoney();
 
@@ -367,6 +372,7 @@ function AppendProductHtml(data) {
                 id: id
             },
             success: function (data) {
+                console.log(data);
                 if (typeof (data) == "boolean") {
                     showMessage("error", "Không thể cập nhật trực tiếp mặt hàng này");
                 } else {
@@ -380,6 +386,7 @@ function AppendProductHtml(data) {
                         template = template.replace("{parent-import-price}", price.importPrice);
                         template = template.replace("{parent-sell-price}", price.sellPrice);
                         template = template.replace("{parent-whole-sell-price}", price.wholeSalePrice);
+                        template = template.replace("{current-quantity}",price.remainQuantity)
                         let selectItem = '<option value="{select-item-value}" selected>{select-item-name}</option>';
                         let unitHtml = "";
                         units.forEach(function (unit) {

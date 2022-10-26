@@ -14,14 +14,17 @@ namespace Mas.Application.ProductServices.Dtos
 
         public string Category { get; set; }
 
-        public IEnumerable<UpdatePriceItem> Prices { get; set; }
+        public int? TotalQuantity { get; set; } = 0;
+
+        public List<UpdatePriceItem> Prices { get; set; }
+
 
         public ProductUpdatePrice()
         {
 
         }
 
-        public ProductUpdatePrice(Product product)
+        public ProductUpdatePrice(Product product, int totalQuantity)
         {
             Id = product.Id;
             ProductName = product.Name;
@@ -35,7 +38,15 @@ namespace Mas.Application.ProductServices.Dtos
                 TransferQuantity = c.TransferQuantity,
                 UnitId = c.UnitId,
                 WholeSalePrice = c.WholeSalePrice
-            });
+            }).OrderByDescending(c => c.TransferQuantity).ToList();
+            TotalQuantity = totalQuantity;
+            int tempQuantity = totalQuantity;
+            foreach(var price in Prices)
+            {
+                price.RemainQuantity = (int)(tempQuantity - tempQuantity % price.TransferQuantity)/price.TransferQuantity;
+                tempQuantity = tempQuantity % price.TransferQuantity;
+            }
+
         }
     }
 
@@ -54,6 +65,8 @@ namespace Mas.Application.ProductServices.Dtos
         public double WholeSalePrice { get; set; }
 
         public bool IsDefault { get; set; }
+
+        public int? RemainQuantity { get; set; } = 0;
 
         public Price ToEntity(Guid id) => new Price()
         {
